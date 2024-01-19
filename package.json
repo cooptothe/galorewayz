@@ -15,6 +15,7 @@
     "@heroicons/react": "^2.1.1",
     "@heroicons/vue": "^2.1.1",
     "@shopify/shopify-api": "^9.0.1",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/react": "~18.2.14",
     "expo": "~49.0.15",
     "expo-status-bar": "~1.6.0",

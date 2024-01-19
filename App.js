@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styled } from "nativewind";
 import Carousel from "react-native-snap-carousel";
+import ProductList from "./ProductList";
 
 const Container = styled(View);
 const Section = styled(View);
@@ -98,6 +99,10 @@ const App = () => {
           autoplay={true}
           autoplayInterval={6000}
         />
+      </Section>
+      <Section className="w-96 h-72 left-[35px] top-[515px] absolute">
+      {/* ProductList */}
+      <ProductList />
       </Section>
     </Container>
   );
