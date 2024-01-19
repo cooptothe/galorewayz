@@ -100,7 +100,7 @@ const App = () => {
           autoplayInterval={6000}
         />
       </Section>
-      <Section className="w-96 h-72 left-[30px] top-[600px] absolute">
+      <Section className="w-96 h-72 left-[10px] top-[575px] relative">
       {/* ProductList */}
       <ProductList />
       </Section>

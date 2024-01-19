@@ -5,7 +5,7 @@ import { styled } from "nativewind";
 const Container = styled(View);
 const Heading = styled(Text);
 const ProductGrid = styled(FlatList); // Changed ScrollView to FlatList for better performance
-const ProductItem = styled(TouchableOpacity); // Changed View to TouchableOpacity for clickable items
+const ProductItem = styled(TouchableOpacity);
 const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
@@ -44,6 +44,7 @@ const ProductList = () => {
       key={item.id}
       onPress={() => console.log("Product View")}
       className="group"
+      style={{ padding: 20 }}
     >
       <ProductImage
         alt={item.imageAlt}
