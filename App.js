@@ -47,7 +47,7 @@ const App = () => {
   );
 
   return (
-    <Container className="Iphone1415ProMax1 w-96 h-96 relative bg-zinc-100">
+    <Container className="Iphone1415ProMax1 w-96 h-96 relative">
       {/* ... Other components ... */}
       {/* Categories */}
       <TouchableOpacity
@@ -82,7 +82,7 @@ const App = () => {
         className="GaloreLogo1 w-60 h-20 left-[70px] top-[60px] absolute"
         source={{ uri: "/Users/student/galorewayz/assets/galore-logo.png" }}
       />
-      <Trending className="Trending left-[29px] top-[475px] absolute text-black text-3xl font-normal">
+      <Trending className="Trending left-[20px] top-[455px] absolute text-black text-3xl font-normal">
         Trending
       </Trending>
       <Section className="Frame7 w-96 h-72 left-[12px] top-[185px] absolute">
@@ -100,7 +100,7 @@ const App = () => {
           autoplayInterval={6000}
         />
       </Section>
-      <Section className="w-96 h-72 left-[35px] top-[515px] absolute">
+      <Section className="w-96 h-72 left-[30px] top-[600px] absolute">
       {/* ProductList */}
       <ProductList />
       </Section>
