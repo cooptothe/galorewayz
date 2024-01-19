@@ -11,16 +11,16 @@ const Logo = styled(Image);
 
 const App = () => {
   const carouselData = [
-    { imageUrl: 'https://via.placeholder.com/382x275' },
-    { imageUrl: 'https://via.placeholder.com/382x275' },
-    { imageUrl: 'https://via.placeholder.com/382x275' },
-    { imageUrl: 'https://via.placeholder.com/382x275' },
-    { imageUrl: 'https://via.placeholder.com/382x275' },
-    { imageUrl: 'https://via.placeholder.com/382x275' },
+    { imageUrl: '/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1438-removebg-preview.png' },
+    { imageUrl: '/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1439-removebg-preview.png' },
+    { imageUrl: '/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1441-removebg-preview.png' },
+    { imageUrl: '/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1442-removebg-preview.png' },
+    { imageUrl: '/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1443-removebg-preview.png' },
+    { imageUrl: '/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1444-removebg-preview.png' },
   ];
   
   const renderItem = ({ item }) => (
-    <View className="w-95 h-72 justify-center items-center">
+    <View className="w-90 h-72 justify-center items-center">
       <Image className="w-96 h-72 rounded-2xl shadow" source={{ uri: item.imageUrl }} />
     </View>
   );
@@ -29,16 +29,16 @@ const App = () => {
     <Container className="Iphone1415ProMax1 w-96 h-96 relative ">
       {/* ... Other components ... */}
       <Trending className="Trending left-[29px] top-[475px] absolute text-black text-3xl font-normal font-['Jolly Lodger']">Trending</Trending>
-      <Section className="Frame7 w-96 h-72 left-[8px] top-[185px] absolute">
+      <Section className="Frame7 w-96 h-72 left-[12px] top-[185px] absolute">
       <Carousel
         data={carouselData}
         renderItem={renderItem}
-        sliderWidth={380}
-        itemWidth={300}
+        sliderWidth={370}
+        itemWidth={200}
         layout="stack"
-        layoutCardOffset={18}
-        inactiveSlideOpacity={0.6}
-        inactiveSlideScale={0.8}
+        layoutCardOffset={27}
+        inactiveSlideOpacity={0.3}
+        inactiveSlideScale={0.6}
       />
         </Section>
       {/* Categories */}
