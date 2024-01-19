@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 
 const Container = styled(View);
@@ -21,18 +21,18 @@ const App = () => {
         ))}
       </Section>
       {/* Categories */}
-      <View className="Group1 w-24 h-8 left-[25px] top-[145px] absolute">
+      <TouchableOpacity onPress={() => console.log('hey')} className="Group1 w-24 h-8 left-[25px] top-[145px] absolute">
         <View className="Rectangle1 w-24 h-8 left-0 top-0 absolute bg-orange-400 bg-opacity-10 rounded-lg border border-black" />
         <Text className="Men w-8 h-6 left-[34px] top-[8px] absolute text-black text-l font-normal font-['Jolly Lodger']">Tops</Text>
-      </View>
-      <View className="Group2 w-24 h-8 left-[275px] top-[145px] absolute">
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => console.log('hey')}className="Group2 w-24 h-8 left-[275px] top-[145px] absolute">
         <View className="Rectangle1 w-24 h-8 left-0 top-0 absolute bg-orange-400 bg-opacity-10 rounded-lg border border-black" />
         <Text className="Kids w-15 h-6 left-[10px] top-[8px] absolute text-black text- font-normal font-['Jolly Lodger']">Accessories</Text>
-      </View>
-      <View className="Group3 w-24 h-8 left-[150px] top-[145px] absolute">
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => console.log('hey')} className="Group3 w-24 h-8 left-[150px] top-[145px] absolute">
         <View className="Rectangle1 w-24 h-8 left-0 top-0 absolute bg-orange-400 bg-opacity-10 rounded-lg border border-black" />
         <Text className="Women w-12 h-6 left-[26.5px] top-[8px] absolute text-black text-l font-normal font-['Jolly Lodger']">Bottoms</Text>
-      </View>
+      </TouchableOpacity>
       {/* Logo */}
       <Image className="GaloreLogo1 w-64 h-20 left-[65px] top-[54px] absolute" source={{ uri: '/Users/student/galorewayz/assets/galore-logo.png' }} />
     </Container>
