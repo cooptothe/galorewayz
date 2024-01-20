@@ -1,6 +1,6 @@
 import express from 'express';
-import fetch from 'node-fetch';
 import cors from 'cors';
+import fetch from 'node-fetch';
 
 const app = express();
 const port = 3001;
@@ -9,6 +9,7 @@ const port = 3001;
 app.use(cors());
 
 app.get('/getProducts', async (req, res) => {
+  console.log('Request received at /getProducts');
   try {
     const response = await fetch('https://galorewayzlifestyle.com/api/2023-01/graphql.json', {
       method: 'POST',
