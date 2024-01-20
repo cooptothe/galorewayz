@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styled } from "nativewind";
 import Carousel from "react-native-snap-carousel";
-import ProductList from "./ProductList";
+import ProductList from "./Products/ProductList";
 import ViewPropTypes from 'deprecated-react-native-prop-types';
 
 const Container = styled(View);
