@@ -123,6 +123,66 @@ app.get('/getProducts/:productType', async (req, res) => {
   }
 });
 
+app.get('/getProductByHandle/:handle', async (req, res) => {
+  const { handle } = req.params;
+  console.log(`Request received at /getProductByHandle for handle: ${handle}`);
+
+  try {
+    const response = await fetch('https://galorewayzlifestyle.com/api/2023-01/graphql.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': '5fabebbde54d675f57255be67d7f17da',
+      },
+      body: JSON.stringify({
+        query: `
+        query getProductByHandle {
+          product(handle: "galorewayz-t-shirt") {
+            id
+            title
+            description
+            productType
+            handle
+                    media(first: 10) {
+                edges {
+                  node {
+                    previewImage {
+                      url
+                    }
+                  }
+                }
+              }
+            variants(first: 5) {
+              edges {
+                cursor
+                node {
+                  id
+                  title
+                  quantityAvailable
+                  price {
+                    amount
+                    currencyCode
+                  }
+                }
+              }
+            }
+          }
+        }        
+        `,
+        variables: {
+          handle,
+        },
+      }),
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });

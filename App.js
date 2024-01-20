@@ -9,6 +9,7 @@ import OuterwearScreen from "./screens/OuterwearScreen";
 import AccessoriesScreen from "./screens/AccessoriesScreen";
 import Carousel from "react-native-snap-carousel";
 
+
 const Container = styled(View);
 const Section = styled(View);
 const Trending = styled(Text);
