@@ -10,14 +10,14 @@ const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
 
-const ProductList = () => {
+const BottomsList = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     // Fetch products from the server
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3001/getProducts");
+        const response = await fetch('http://localhost:3001/getProducts/Bottoms');
         const data = await response.json();
         setProducts(data.data.products.edges);
       } catch (error) {
@@ -69,4 +69,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default BottomsList;
