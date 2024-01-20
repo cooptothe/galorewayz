@@ -17,11 +17,11 @@ const ProductList = () => {
     // Fetch products from the server
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/getProducts');
+        const response = await fetch(`http://localhost:3001/getProducts/${Tops}`);
         const data = await response.json();
         setProducts(data.data.products.edges);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error("Error fetching products:", error);
       }
     };
 
@@ -30,7 +30,7 @@ const ProductList = () => {
 
   const renderItem = ({ item }) => {
     const mediaNode = item.node.media.edges[0]?.node; // Access the first media node
-    const imageUrl = mediaNode?.previewImage.url || ''; // Access the preview image URL
+    const imageUrl = mediaNode?.previewImage.url || ""; // Access the preview image URL
 
     return (
       <ProductItem
@@ -41,15 +41,15 @@ const ProductList = () => {
       >
         <ProductImage
           alt={mediaNode?.alt || item.node.title}
-          style={{ height: 125, width: 125 }}
+          style={{ height: 125, width: 125, left: 0 }}
           source={{ uri: imageUrl }}
         />
         <ProductTitle className="mt-4 text-xs text-gray-700">
           {item.node.title}
         </ProductTitle>
         <ProductPrice className="mt-1 text-xs font-dark text-gray-900">
-          {item.node.variants.edges[0]?.node.price.amount}{' '}
-          {item.node.variants.edges[0]?.node.price.currencyCode}
+          {"$"}
+          {item.node.variants.edges[0]?.node.price.amount}{"0"}
         </ProductPrice>
       </ProductItem>
     );
