@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styled } from "nativewind";
 import Carousel from "react-native-snap-carousel";
 import ProductList from "./ProductList";
+import ViewPropTypes from 'deprecated-react-native-prop-types';
 
 const Container = styled(View);
 const Section = styled(View);
@@ -13,27 +14,27 @@ const App = () => {
   const carouselData = [
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1438-removebg-preview.png",
+        "/Users/student/galorewayz/jpegmini_optimized/IMG_1438-removebg-preview.png",
     },
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1439-removebg-preview.png",
+        "/Users/student/galorewayz/jpegmini_optimized/IMG_1439-removebg-preview.png",
     },
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1441-removebg-preview.png",
+        "/Users/student/galorewayz/jpegmini_optimized/IMG_1441-removebg-preview.png",
     },
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1442-removebg-preview.png",
+        "/Users/student/galorewayz/jpegmini_optimized/IMG_1442-removebg-preview.png",
     },
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1443-removebg-preview.png",
+        "/Users/student/galorewayz/jpegmini_optimized/IMG_1443-removebg-preview.png",
     },
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized (1)/IMG_1444-removebg-preview.png",
+        "/Users/student/galorewayz/jpegmini_optimized/IMG_1444-removebg-preview.png",
     },
   ];
 
@@ -49,42 +50,13 @@ const App = () => {
   return (
     <Container className="Iphone1415ProMax1 w-96 h-96 relative">
       {/* ... Other components ... */}
-      {/* Categories */}
-      <TouchableOpacity
-        onPress={() => console.log("hey")}
-        className="Group1 w-24 h-8 left-[25px] top-[145px] absolute"
-      >
-        <View className="Rectangle1 w-24 h-8 left-0 top-0 absolute bg-orange-400 bg-opacity-10 rounded-lg border border-black" />
-        <Text className="Men w-8 h-6 left-[34px] top-[8px] absolute text-black text-l font-normal font-['Jolly Lodger']">
-          Tops
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => console.log("hey")}
-        className="Group2 w-24 h-8 left-[275px] top-[145px] absolute"
-      >
-        <View className="Rectangle1 w-24 h-8 left-0 top-0 absolute bg-orange-400 bg-opacity-10 rounded-lg border border-black" />
-        <Text className="Kids w-15 h-6 left-[10px] top-[8px] absolute text-black text- font-normal font-['Jolly Lodger']">
-          Accessories
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => console.log("hey")}
-        className="Group3 w-24 h-8 left-[150px] top-[145px] absolute"
-      >
-        <View className="Rectangle1 w-24 h-8 left-0 top-0 absolute bg-orange-400 bg-opacity-10 rounded-lg border border-black" />
-        <Text className="Women w-12 h-6 left-[26.5px] top-[8px] absolute text-black text-l font-normal font-['Jolly Lodger']">
-          Bottoms
-        </Text>
-      </TouchableOpacity>
+
       {/* Logo */}
       <Logo
-        className="GaloreLogo1 w-60 h-20 left-[70px] top-[60px] absolute"
+        className="GaloreLogo1 w-80 h-40 left-[30px] top-[22px] absolute"
         source={{ uri: "/Users/student/galorewayz/assets/galore-logo.png" }}
       />
-      <Trending className="Trending left-[20px] top-[455px] absolute text-black text-3xl font-normal">
-        Trending
-      </Trending>
+
       <Section className="Frame7 w-96 h-72 left-[12px] top-[185px] absolute">
         <Carousel
           data={carouselData}
@@ -100,10 +72,61 @@ const App = () => {
           autoplayInterval={6000}
         />
       </Section>
-      <Section className="w-96 h-72 left-[10px] top-[575px] relative">
-      {/* ProductList */}
-      <ProductList />
+
+      <Section className="w-96 h-80 left-[25px] top-[495px] relative">
+        {/* ProductList */}
+        <ProductList />
       </Section>
+      {/* Trending */}
+      <TouchableOpacity
+        onPress={() => console.log("hey")}
+        className="Group1 w-28 h-8 left-[15px] top-[2px] absolute"
+      >
+        <Trending className="Trending left-[10px] top-[455px] absolute text-black text-3xl font-normal">
+          Trending
+        </Trending>
+      </TouchableOpacity>
+
+      {/* Categories */}
+      <TouchableOpacity
+        onPress={() => console.log("hey")}
+        className="Group1 w-20 h-8 left-[15px] top-[160px] absolute"
+      >
+        <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
+        <Text className="Men w-8 h-6 left-[25px] top-[4px] absolute text-black text-xs font-normal font-['Jolly Lodger']">
+          Tops
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => console.log("hey")}
+        className="Group3 w-24 h-8 left-[110px] top-[160px] absolute"
+      >
+        <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
+        <Text className="Women w-12 h-6 left-[15px] top-[4px] absolute text-black text-xs font-normal font-['Jolly Lodger']">
+          Bottoms
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => console.log("hey")}
+        className="Group2 w-22 h-8 left-[205px] top-[160px] absolute"
+      >
+        <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
+        <Text className="Kids w-15 h-6 left-[9px] top-[4px] absolute text-black font-normal text-xs font-['Jolly Lodger']">
+          Outerwear
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => console.log("hey")}
+        className="Group2 w-22 h-8 left-[300px] top-[160px] absolute"
+      >
+        <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
+        <Text className="Kids w-15 h-6 left-[6px] top-[4px] absolute text-black font-normal text-xs font-['Jolly Lodger']">
+          Accessories
+        </Text>
+      </TouchableOpacity>
     </Container>
   );
 };
