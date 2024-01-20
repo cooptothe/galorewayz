@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { styled } from "nativewind";
 
@@ -11,63 +11,60 @@ const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
 
 const ProductList = () => {
-  // Dummy product data
-  const products = [
-    {
-      id: 1,
-      title: "Earthen Bottle",
-      price: "$48",
-      imageUrl: require("/Users/student/galorewayz/jpegmini_optimized/IMG_1438-removebg-preview.png"),
-    },
-    {
-      id: 2,
-      title: "Nomad Tumbler",
-      price: "$35",
-      imageUrl: require("/Users/student/galorewayz/jpegmini_optimized/IMG_1439-removebg-preview.png"),
-    },
-    {
-      id: 3,
-      title: "Focus Paper Refill",
-      price: "$89",
-      imageUrl: require("/Users/student/galorewayz/jpegmini_optimized/IMG_1441-removebg-preview.png"),
-    },
-    {
-      id: 4,
-      title: "Machined Mechanical Pencil",
-      price: "$35",
-      imageUrl: require("/Users/student/galorewayz/jpegmini_optimized/IMG_1443-removebg-preview.png"),
-    },
-  ];
+  const [products, setProducts] = useState([]);
 
-  const renderItem = ({ item }) => (
-    <ProductItem
-      key={item.id}
-      onPress={() => console.log("Product View")}
-      className="group"
-      style={{ padding: 15 }}
-    >
-      <ProductImage
-        alt={item.imageAlt}
-        style={{ height: 125, width: 125 }}
-        source={item.imageUrl}
-      />
-      <ProductTitle className="mt-4 text-sm text-gray-700">
-        {item.title}
-      </ProductTitle>
-      <ProductPrice className="mt-1 text-lg font-medium text-gray-900">
-        {item.price}
-      </ProductPrice>
-    </ProductItem>
-  );
+  useEffect(() => {
+    // Fetch products from the server
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/getProducts');
+        const data = await response.json();
+        setProducts(data.data.products.edges);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const renderItem = ({ item }) => {
+    const mediaNode = item.node.media.edges[0]?.node; // Access the first media node
+    const imageUrl = mediaNode?.previewImage.url || ''; // Access the preview image URL
+
+    return (
+      <ProductItem
+        key={item.node.id}
+        onPress={() => console.log("Product View")}
+        className="group"
+        style={{ padding: 15 }}
+      >
+        <ProductImage
+          alt={mediaNode?.alt || item.node.title}
+          style={{ height: 125, width: 125 }}
+          source={{ uri: imageUrl }}
+        />
+        <ProductTitle className="mt-4 text-xs text-gray-700">
+          {item.node.title}
+        </ProductTitle>
+        <ProductPrice className="mt-1 text-xs font-dark text-gray-900">
+          {item.node.variants.edges[0]?.node.price.amount}{' '}
+          {item.node.variants.edges[0]?.node.price.currencyCode}
+        </ProductPrice>
+      </ProductItem>
+    );
+  };
 
   return (
     <Container>
-      <ProductGrid
-        data={products}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-      />
+      {products && products.length > 0 && (
+        <ProductGrid
+          data={products}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.node.id.toString()}
+          numColumns={2}
+        />
+      )}
     </Container>
   );
 };
