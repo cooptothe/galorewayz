@@ -26,13 +26,13 @@ const App = () => {
       case "home":
         return <HomeScreen setCarouselVisible={setCarouselVisible} />;
       case "tops":
-        return <TopsScreen />;
+        return <TopsScreen setCarouselVisible={setCarouselVisible} />;
       case "bottoms":
-        return <BottomsScreen />;
+        return <BottomsScreen setCarouselVisible={setCarouselVisible} />;
       case "outerwear":
-        return <OuterwearScreen />;
+        return <OuterwearScreen setCarouselVisible={setCarouselVisible} />;
       case "accessories":
-        return <AccessoriesScreen />;
+        return <AccessoriesScreen setCarouselVisible={setCarouselVisible} />;
 
       default:
         return null;

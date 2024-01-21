@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
-import { styled } from "nativewind";
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, FlatList, TouchableWithoutFeedback } from 'react-native';
+import { styled } from 'nativewind';
+import Product from './Product'; // Import the Product component
 
 const Container = styled(View);
-const Heading = styled(Text);
 const ProductGrid = styled(FlatList);
 const ProductItem = styled(TouchableOpacity);
 const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
 
-const TopsList = () => {
+const TopsList = ({ onSelectProduct }) => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     // Fetch products from the server
@@ -28,6 +29,16 @@ const TopsList = () => {
     fetchProducts();
   }, []);
 
+  const handleProductPress = (product) => {
+    setSelectedProduct(product);
+    onSelectProduct(product); // Pass the selected product data back to HomeScreen.js
+  };
+
+  const handleTapAway = () => {
+    // Handle tap away, set selectedProduct to null to return to the original view
+    setSelectedProduct(null);
+  };
+
   const renderItem = ({ item }) => {
     const mediaNode = item.node.media.edges[0]?.node; // Access the first media node
     const imageUrl = mediaNode?.previewImage.url || ""; // Access the preview image URL
@@ -35,7 +46,7 @@ const TopsList = () => {
     return (
       <ProductItem
         key={item.node.id}
-        onPress={() => console.log("Product View")}
+        onPress={() => handleProductPress(item.node)}
         className="group"
         style={{ padding: 15 }}
       >
@@ -56,16 +67,21 @@ const TopsList = () => {
   };
 
   return (
-    <Container>
-      {products && products.length > 0 && (
-        <ProductGrid
-          data={products}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.node.id.toString()}
-          numColumns={2}
-        />
-      )}
+
+      <Container>
+        {selectedProduct && (
+          <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} />
+        )}
+        {!selectedProduct && (
+          <ProductGrid
+            data={products}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.node.id.toString()}
+            numColumns={2}
+          />
+        )}
     </Container>
+
   );
 };
 

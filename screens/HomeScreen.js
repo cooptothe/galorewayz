@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styled } from "nativewind";
 import ProductList from "../Products/ProductList";
 
 const Container = styled(View);
 const Section = styled(View);
-const Trending = styled(Text);
 
 const HomeScreen = ({ setCarouselVisible }) => {
-
   const handleProductSelect = (selectedProduct) => {
     setCarouselVisible(false); // Hide the carousel when a product is selected
     // Handle the selected product data in HomeScreen.js
     console.log("Selected Product:", selectedProduct);
-
   };
 
   return (
@@ -22,12 +19,6 @@ const HomeScreen = ({ setCarouselVisible }) => {
         {/* ProductList */}
         <ProductList onSelectProduct={handleProductSelect} />
       </Section>
-      {/* Trending */}
-      <TouchableOpacity
-        onPress={() => console.log("hey")}
-        className="Group1 w-28 h-8 left-[15px] top-[2px] absolute"
-      >
-      </TouchableOpacity>
     </Container>
   );
 };

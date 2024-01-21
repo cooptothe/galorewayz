@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { styled } from 'nativewind';
 import Product from './Product'; // Import the Product component
 
@@ -65,21 +65,19 @@ const ProductList = ({ onSelectProduct }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handleTapAway}>
-      <Container>
-        {selectedProduct && (
-          <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} />
-        )}
-        {!selectedProduct && (
-          <ProductGrid
-            data={products}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.node.id.toString()}
-            numColumns={2}
-          />
-        )}
-      </Container>
-    </TouchableWithoutFeedback>
+    <Container onPress={handleTapAway}>
+      {selectedProduct && (
+        <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} />
+      )}
+      {!selectedProduct && (
+        <ProductGrid
+          data={products}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.node.id.toString()}
+          numColumns={2}
+        />
+      )}
+    </Container>
   );
 };
 

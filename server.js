@@ -136,8 +136,8 @@ app.get('/getProductByHandle/:handle', async (req, res) => {
       },
       body: JSON.stringify({
         query: `
-        query getProductByHandle {
-          product(handle: "galorewayz-t-shirt") {
+        query getProductByHandle($handle: String!) {
+          product(handle: $handle) {
             id
             title
             description
