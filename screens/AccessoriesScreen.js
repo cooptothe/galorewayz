@@ -19,15 +19,6 @@ const AccessoriesScreen = () => {
         {/* ProductList */}
         <AccessoriesList />
       </Section>
-      {/* Trending */}
-      <TouchableOpacity
-        onPress={() => console.log("hey")}
-        className="Group1 w-38 h-8 left-[15px] top-[2px] absolute"
-      >
-        <Trending className="Trending left-[10px] top-[455px] absolute text-black text-3xl font-normal">
-        Accessories
-        </Trending>
-      </TouchableOpacity>
 
     </Container>
   );

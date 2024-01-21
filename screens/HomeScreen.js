@@ -27,9 +27,6 @@ const HomeScreen = ({ setCarouselVisible }) => {
         onPress={() => console.log("hey")}
         className="Group1 w-28 h-8 left-[15px] top-[2px] absolute"
       >
-        <Trending className="Trending left-[10px] top-[455px] absolute text-black text-3xl font-normal">
-          Trending
-        </Trending>
       </TouchableOpacity>
     </Container>
   );
