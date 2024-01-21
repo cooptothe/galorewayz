@@ -111,16 +111,17 @@ const App = () => {
         {renderScreen()}
 
         {/* Logo */}
-        <Pressable onPress={() => setCurrentScreen("home")}>
+        <Pressable onPress={() => { setCurrentScreen("home"); setCarouselVisible(true); }}>
           <Logo
             className="GaloreLogo1 w-80 h-40 left-[30px] top-[-360px] absolute"
             source={{ uri: "/Users/student/galorewayz/assets/galore-logo.png" }}
+            
           />
         </Pressable>
 
         {/* Product Types */}
         <TouchableOpacity
-          onPress={() => setCurrentScreen("tops")}
+          onPress={() => { setCurrentScreen("tops"); setCarouselVisible(true); }}
           className="Group1 w-20 h-8 left-[15px] top-[160px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
@@ -130,7 +131,7 @@ const App = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setCurrentScreen("bottoms")}
+          onPress={() => { setCurrentScreen("bottoms"); setCarouselVisible(true); }}
           className="Group3 w-24 h-8 left-[110px] top-[160px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
@@ -140,7 +141,7 @@ const App = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setCurrentScreen("outerwear")}
+          onPress={() => { setCurrentScreen("outerwear"); setCarouselVisible(true); }}
           className="Group2 w-22 h-8 left-[205px] top-[160px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
@@ -150,7 +151,7 @@ const App = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setCurrentScreen("accessories")}
+          onPress={() => { setCurrentScreen("accessories"); setCarouselVisible(true); }}
           className="Group2 w-22 h-8 left-[300px] top-[160px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />

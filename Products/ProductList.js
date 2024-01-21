@@ -1,6 +1,5 @@
-// ProductList.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, TouchableWithoutFeedback } from 'react-native';
 import { styled } from 'nativewind';
 import Product from './Product'; // Import the Product component
 
@@ -14,7 +13,6 @@ const ProductPrice = styled(Text);
 const ProductList = ({ onSelectProduct }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
- 
 
   useEffect(() => {
     // Fetch products from the server
@@ -36,10 +34,15 @@ const ProductList = ({ onSelectProduct }) => {
     onSelectProduct(product); // Pass the selected product data back to HomeScreen.js
   };
 
+  const handleTapAway = () => {
+    // Handle tap away, set selectedProduct to null to return to the original view
+    setSelectedProduct(null);
+  };
+
   const renderItem = ({ item }) => {
     const mediaNode = item.node.media.edges[0]?.node;
     const imageUrl = mediaNode?.previewImage.url || '';
-  
+
     return (
       <ProductItem
         key={item.node.id}
@@ -62,19 +65,21 @@ const ProductList = ({ onSelectProduct }) => {
   };
 
   return (
-    <Container>
-      {selectedProduct && (
-        <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} />
-      )}
-      {!selectedProduct && (
-        <ProductGrid
-          data={products}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.node.id.toString()}
-          numColumns={2}
-        />
-      )}
-    </Container>
+    <TouchableWithoutFeedback onPress={handleTapAway}>
+      <Container>
+        {selectedProduct && (
+          <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} />
+        )}
+        {!selectedProduct && (
+          <ProductGrid
+            data={products}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.node.id.toString()}
+            numColumns={2}
+          />
+        )}
+      </Container>
+    </TouchableWithoutFeedback>
   );
 };
 
