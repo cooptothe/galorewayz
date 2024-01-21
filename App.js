@@ -114,7 +114,7 @@ const App = () => {
         {/* Logo */}
         <Pressable onPress={() => { setCurrentScreen("home"); setCarouselVisible(true); }}>
           <Logo
-            className="GaloreLogo1 w-80 h-40 left-[30px] top-[-360px] absolute"
+            className="GaloreLogo1 w-80 h-40 left-[25px] top-[-360px] absolute"
             source={{ uri: "/Users/student/galorewayz/assets/galore-logo.png" }}
             
           />

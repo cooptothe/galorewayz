@@ -62,7 +62,7 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
       <Container style={{ aspectRatio: 3 / 4, overflow: 'hidden', borderRadius: 8 }}>
         <ProductImage
           source={{ uri: imageUrl }}
-          style={{ flex: 3, height: 300, width: 375, left: -15, top: 40 }}
+          style={{ flex: 3, height: 300, width: 325, left: 15, top: 40 }}
           resizeMode="contain"
         />
       </Container>

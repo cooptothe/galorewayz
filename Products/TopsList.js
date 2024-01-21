@@ -10,7 +10,7 @@ const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
 
-const TopsList = ({ onSelectProduct }) => {
+const TopsList = ({ onSelectProduct, setCarouselVisible }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -69,7 +69,7 @@ const TopsList = ({ onSelectProduct }) => {
   return (
       <Container>
         {selectedProduct && (
-          <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} />
+          <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} setCarouselVisible={setCarouselVisible} />
         )}
         {!selectedProduct && (
           <ProductGrid
