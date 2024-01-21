@@ -80,17 +80,18 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
   onPress={handleAddToBag}
   style={{
     width: 120,
-    height: 35,
-    backgroundColor: '#FFCC80', // Set your desired background color
-    borderRadius: 15,
+    height: 30,
+    backgroundColor: '#FFCC90', // Set your desired background color
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
     left: 100,
-    borderColor: 'black'
+    borderColor: 'black', // Add black border color
+    borderWidth: 1, // Add border width
   }}
 >
-  <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>
+  <Text style={{ color: 'black', fontSize: 16, fontWeight: 'normal' }}>
     Add to Bag
   </Text>
 </TouchableOpacity>

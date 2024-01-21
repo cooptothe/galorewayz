@@ -9,7 +9,6 @@ const Section = styled(View);
 const TopsScreen = ({ setCarouselVisible }) => {
   const handleProductSelect = (selectedProduct) => {
     setCarouselVisible(false); // Hide the carousel when a product is selected
-    // Handle the selected product data in HomeScreen.js
     console.log("Selected Product:", selectedProduct);
   };
 
@@ -17,7 +16,10 @@ const TopsScreen = ({ setCarouselVisible }) => {
     <Container className="Iphone1415ProMax1 w-96 h-96 relative">
       <Section className="w-96 h-80 left-[25px] top-[495px] relative">
         {/* ProductList */}
-        <TopsList onSelectProduct={handleProductSelect} />
+        <TopsList
+          onSelectProduct={handleProductSelect}
+          setCarouselVisible={setCarouselVisible}
+        />
       </Section>
     </Container>
   );

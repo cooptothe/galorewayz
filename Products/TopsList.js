@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, TouchableWithoutFeedback } from 'react-native';
 import { styled } from 'nativewind';
-import Product from './Product'; // Import the Product component
+import Product from './Product'; // Import the Product component 
 
 const Container = styled(View);
 const ProductGrid = styled(FlatList);
@@ -67,7 +67,6 @@ const TopsList = ({ onSelectProduct }) => {
   };
 
   return (
-
       <Container>
         {selectedProduct && (
           <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} />
@@ -81,7 +80,6 @@ const TopsList = ({ onSelectProduct }) => {
           />
         )}
     </Container>
-
   );
 };
 
