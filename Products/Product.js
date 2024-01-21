@@ -1,6 +1,6 @@
 // Product.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image, Button, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 
 const Container = styled(View);
@@ -8,7 +8,7 @@ const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
 
-const Product = ({ handle, onClose }) => {
+const Product = ({ handle, onClose, setCarouselVisible }) => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -46,31 +46,54 @@ const Product = ({ handle, onClose }) => {
   // Access the price amount
   const priceAmount = variantEdges[0]?.node.price.amount || 0;
 
+
+  const handleAddToBag = () => {
+    setCarouselVisible(true);
+    // Perform the logic for adding to the bag here
+    // For now, just reset the product and close the Product component
+    setProduct(null);
+    onClose();
+
+  };
+
   return (
-    <Container style={{ backgroundColor: 'white', padding: 50, top: -400, left: -30 }}>
+    <Container style={{ backgroundColor: 'white', padding: 25, top: -400, left: -30 }}>
       {/* Image gallery */}
       <Container style={{ aspectRatio: 3 / 4, overflow: 'hidden', borderRadius: 8 }}>
         <ProductImage
           source={{ uri: imageUrl }}
-          style={{ flex: 1, height: 400, width: 400, left: -50 }}
-          resizeMode="full"
+          style={{ flex: 3, height: 300, width: 375, left: -15, top: 40 }}
+          resizeMode="contain"
         />
       </Container>
 
       {/* Product info */}
-      <Container style={{ marginTop: 16 }}>
+      <Container style={{ marginTop: 16, top: -10 }}>
         <ProductTitle style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>{title}</ProductTitle>
         <ProductPrice style={{ fontSize: 16, color: 'gray', marginTop: 8 }}>{`$${priceAmount}0`}</ProductPrice>
 
         {/* Description */}
-        <Text style={{ fontSize: 16, marginTop: 10 }}>{description}</Text>
+        <Text style={{ fontSize: 14, marginTop: 10 }}>{description}</Text>
 
-        {/* Add to bag button */}
-        <Button
-          title="Add to Bag"
-          onPress={() => console.log('Add to Bag button pressed')}
-          style={{ marginTop: 16 }}
-        />
+{/* Add to bag button */}
+<TouchableOpacity
+  onPress={handleAddToBag}
+  style={{
+    width: 120,
+    height: 35,
+    backgroundColor: '#FFCC80', // Set your desired background color
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    left: 100,
+    borderColor: 'black'
+  }}
+>
+  <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>
+    Add to Bag
+  </Text>
+</TouchableOpacity>
       </Container>
     </Container>
   );

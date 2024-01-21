@@ -20,6 +20,7 @@ const App = () => {
   const [currentScreen, setCurrentScreen] = useState("home");
   const [selectedProductHandle, setSelectedProductHandle] = useState(null);
   const [carouselVisible, setCarouselVisible] = useState(true); // State for carousel visibility
+<Product  setCarouselVisible={setCarouselVisible} />
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -33,11 +34,11 @@ const App = () => {
         return <OuterwearScreen setCarouselVisible={setCarouselVisible} />;
       case "accessories":
         return <AccessoriesScreen setCarouselVisible={setCarouselVisible} />;
-
       default:
         return null;
     }
   };
+
 
   const carouselData = [
     {
