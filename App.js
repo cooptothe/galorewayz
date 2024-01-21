@@ -8,6 +8,8 @@ import BottomsScreen from "./screens/BottomsScreen";
 import OuterwearScreen from "./screens/OuterwearScreen";
 import AccessoriesScreen from "./screens/AccessoriesScreen";
 import Carousel from "react-native-snap-carousel";
+import Product from "./Products/Product";
+import ProductList from "./Products/ProductList";
 
 
 const Container = styled(View);
@@ -17,11 +19,13 @@ const Logo = styled(Image);
 
 const App = () => {
   const [currentScreen, setCurrentScreen] = useState("home");
+  const [selectedProductHandle, setSelectedProductHandle] = useState(null);
+  const [carouselVisible, setCarouselVisible] = useState(true); // State for carousel visibility
 
   const renderScreen = () => {
     switch (currentScreen) {
       case "home":
-        return <HomeScreen />;
+        return <HomeScreen setCarouselVisible={setCarouselVisible} />;
       case "tops":
         return <TopsScreen />;
       case "bottoms":
@@ -30,6 +34,7 @@ const App = () => {
         return <OuterwearScreen />;
       case "accessories":
         return <AccessoriesScreen />;
+
       default:
         return null;
     }
@@ -61,35 +66,35 @@ const App = () => {
         "/Users/student/galorewayz/jpegmini_optimized/IMG_1444-removebg-preview.png",
     },
   ];
-
   const renderItem = ({ item }) => (
     <View className="w-90 h-72 justify-center items-center">
-      <Image
-        className="w-96 h-72 rounded-2xl shadow"
-        source={{ uri: item.imageUrl }}
-      />
+      <Image className="w-96 h-72 rounded-2xl shadow" source={{ uri: item.imageUrl }} />
     </View>
   );
 
-  return (
-    
-    <Section>
 
-<Section className="Frame7 w-96 h-72 left-[12px] top-[185px] absolute">
-        <Carousel
-          data={carouselData}
-          renderItem={renderItem}
-          sliderWidth={370}
-          itemWidth={200}
-          layout="default"
-          layoutCardOffset={30}
-          inactiveSlideOpacity={0.4}
-          inactiveSlideScale={0.4}
-          loop={true}
-          autoplay={true}
-          autoplayInterval={6000}
-        />
-      </Section>
+  return (
+    <>
+    <Section>
+        {carouselVisible && ["accessories", "bottoms", "home", "outerwear", "tops"].includes(
+          currentScreen
+        ) && (
+          <Section className="Frame7 w-96 h-72 left-[12px] top-[185px] absolute">
+            <Carousel
+              data={carouselData}
+              renderItem={renderItem}
+              sliderWidth={370}
+              itemWidth={200}
+              layout="default"
+              layoutCardOffset={30}
+              inactiveSlideOpacity={0.4}
+              inactiveSlideScale={0.4}
+              loop={true}
+              autoplay={true}
+              autoplayInterval={6000}
+            />
+          </Section>
+      )}
       {renderScreen()}
 
       {/* Logo */}
@@ -140,7 +145,12 @@ const App = () => {
           Accessories
         </Text>
       </TouchableOpacity>
+
     </Section>
+
+
+</>
+
   );
 };
 

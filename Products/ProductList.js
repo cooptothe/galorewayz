@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { styled } from 'nativewind';
-import ProductScreen from '../screens/ProductScreen';
 import Product from './Product'; // Import the Product component
 
 const Container = styled(View);
@@ -12,9 +11,10 @@ const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
 
-const ProductList = () => {
+const ProductList = ({ onSelectProduct }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+ 
 
   useEffect(() => {
     // Fetch products from the server
@@ -31,14 +31,19 @@ const ProductList = () => {
     fetchProducts();
   }, []);
 
+  const handleProductPress = (product) => {
+    setSelectedProduct(product);
+    onSelectProduct(product); // Pass the selected product data back to HomeScreen.js
+  };
+
   const renderItem = ({ item }) => {
     const mediaNode = item.node.media.edges[0]?.node;
     const imageUrl = mediaNode?.previewImage.url || '';
-
+  
     return (
       <ProductItem
         key={item.node.id}
-        onPress={() => setSelectedProduct(item.node.handle)} // Pass handle instead of the entire product
+        onPress={() => handleProductPress(item.node)}
         className="group"
         style={{ padding: 15 }}
       >
@@ -58,9 +63,10 @@ const ProductList = () => {
 
   return (
     <Container>
-      {selectedProduct ? (
-        <Product handle={selectedProduct} onClose={() => setSelectedProduct(null)} />
-      ) : (
+      {selectedProduct && (
+        <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} />
+      )}
+      {!selectedProduct && (
         <ProductGrid
           data={products}
           renderItem={renderItem}

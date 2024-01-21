@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styled } from "nativewind";
-import Carousel from "react-native-snap-carousel";
 import ProductList from "../Products/ProductList";
-import ViewPropTypes from 'deprecated-react-native-prop-types';
 
 const Container = styled(View);
 const Section = styled(View);
 const Trending = styled(Text);
-const Logo = styled(Image);
 
-const HomeScreen = () => {
+const HomeScreen = ({ setCarouselVisible }) => {
+
+  const handleProductSelect = (selectedProduct) => {
+    setCarouselVisible(false); // Hide the carousel when a product is selected
+    // Handle the selected product data in HomeScreen.js
+    console.log("Selected Product:", selectedProduct);
+
+  };
 
   return (
     <Container className="Iphone1415ProMax1 w-96 h-96 relative">
-
       <Section className="w-96 h-80 left-[25px] top-[495px] relative">
         {/* ProductList */}
-        <ProductList />
+        <ProductList onSelectProduct={handleProductSelect} />
       </Section>
       {/* Trending */}
       <TouchableOpacity
