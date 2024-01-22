@@ -10,6 +10,7 @@ import AccessoriesScreen from "./screens/AccessoriesScreen";
 import Carousel from "react-native-snap-carousel";
 import Product from "./Products/Product";
 import ProductList from "./Products/ProductList";
+import Cart from "./Products/Cart";
 
 const Container = styled(View);
 const Section = styled(View);
@@ -20,7 +21,9 @@ const App = () => {
   const [currentScreen, setCurrentScreen] = useState("home");
   const [selectedProductHandle, setSelectedProductHandle] = useState(null);
   const [carouselVisible, setCarouselVisible] = useState(true); // State for carousel visibility
-<Product  setCarouselVisible={setCarouselVisible} />
+
+
+<Product setCarouselVisible={setCarouselVisible} />
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -34,6 +37,8 @@ const App = () => {
         return <OuterwearScreen setCarouselVisible={setCarouselVisible} />;
       case "accessories":
         return <AccessoriesScreen setCarouselVisible={setCarouselVisible} />;
+        case "accessories":
+          return <Cart setCarouselVisible={setCarouselVisible} />;
       default:
         return null;
     }

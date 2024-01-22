@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { styled } from "nativewind";
+import Product from './Product'; // Import the Product component
 
 const Container = styled(View);
 const Heading = styled(Text);
@@ -10,12 +11,13 @@ const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
 
-const BottomsList = () => {
+const BottomsList = ({ onSelectProduct, setCarouselVisible }) => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     // Fetch products from the server
-    const fetchProducts = async () => {
+    const fetchProducts = async () => { 
       try {
         const response = await fetch('http://localhost:3001/getProducts/Bottoms');
         const data = await response.json();
@@ -28,6 +30,16 @@ const BottomsList = () => {
     fetchProducts();
   }, []);
 
+  const handleProductPress = (product) => {
+    setSelectedProduct(product);
+    onSelectProduct(product); // Pass the selected product data back to HomeScreen.js
+  };
+
+  const handleTapAway = () => {
+    // Handle tap away, set selectedProduct to null to return to the original view
+    setSelectedProduct(null);
+  };
+
   const renderItem = ({ item }) => {
     const mediaNode = item.node.media.edges[0]?.node; // Access the first media node
     const imageUrl = mediaNode?.previewImage.url || ""; // Access the preview image URL
@@ -35,7 +47,7 @@ const BottomsList = () => {
     return (
       <ProductItem
         key={item.node.id}
-        onPress={() => console.log("Product View")}
+        onPress={() => handleProductPress(item.node)}
         className="group"
         style={{ padding: 15 }}
       >
@@ -57,7 +69,10 @@ const BottomsList = () => {
 
   return (
     <Container>
-      {products && products.length > 0 && (
+    {selectedProduct && (
+      <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} setCarouselVisible={setCarouselVisible} />
+    )}
+    {!selectedProduct && (
         <ProductGrid
           data={products}
           renderItem={renderItem}

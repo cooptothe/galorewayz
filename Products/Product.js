@@ -10,7 +10,8 @@ const ProductPrice = styled(Text);
 
 const Product = ({ handle, onClose, setCarouselVisible }) => {
   const [product, setProduct] = useState(null);
-
+  const [cartId, setCartId] = useState(null); 
+  
   useEffect(() => {
     // Fetch product by handle
     const fetchProductByHandle = async () => {
