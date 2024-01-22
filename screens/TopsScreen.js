@@ -21,6 +21,13 @@ const TopsScreen = ({ setCarouselVisible }) => {
           setCarouselVisible={setCarouselVisible}
         />
       </Section>
+            {/* Image Banner Section (Fixed at the bottom) */}
+            <Section style={{ position: 'absolute', bottom: -485, left: 0, right: 0, alignItems: 'center' }}>
+        <Image
+          className="w-40 h-20 relative"
+          source={{ uri: "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/Web_banner.png?v=1705947435" }}
+        />
+      </Section>
     </Container>
   );
 };

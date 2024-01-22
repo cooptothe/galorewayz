@@ -187,12 +187,12 @@ const App = () => {
           }}
         >
           <Image
-            className="w-7 h-7 left-[340px] top-[-325px] relative"
+            className="w-[25px] h-[25px] left-[340px] top-[-315px] relative"
             source={{
               uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
             }}
           />
-          <Text className="left-[341px] top-[-326px] relative text-black font-normal text-xs">Cart</Text>
+          <Text className="left-[340px] top-[-355px] relative text-black font-normal text-xs">Cart</Text>
         </TouchableOpacity>
       </Section>
     </>
