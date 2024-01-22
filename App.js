@@ -22,8 +22,7 @@ const App = () => {
   const [selectedProductHandle, setSelectedProductHandle] = useState(null);
   const [carouselVisible, setCarouselVisible] = useState(true); // State for carousel visibility
 
-
-<Product setCarouselVisible={setCarouselVisible} />
+  <Product setCarouselVisible={setCarouselVisible} />;
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -37,13 +36,12 @@ const App = () => {
         return <OuterwearScreen setCarouselVisible={setCarouselVisible} />;
       case "accessories":
         return <AccessoriesScreen setCarouselVisible={setCarouselVisible} />;
-        case "accessories":
-          return <Cart setCarouselVisible={setCarouselVisible} />;
+      case "cart":
+        return <Cart setCarouselVisible={setCarouselVisible} />;
       default:
         return null;
     }
   };
-
 
   const carouselData = [
     {
@@ -110,24 +108,31 @@ const App = () => {
                 autoplayInterval={6000}
               />
               <Trending className="Trending left-[10px] top-[270px] absolute text-black text-3xl font-normal">
-              {screenTextMap[currentScreen]}
+                {screenTextMap[currentScreen]}
               </Trending>
             </Section>
           )}
         {renderScreen()}
 
         {/* Logo */}
-        <Pressable onPress={() => { setCurrentScreen("home"); setCarouselVisible(true); }}>
+        <Pressable
+          onPress={() => {
+            setCurrentScreen("home");
+            setCarouselVisible(true);
+          }}
+        >
           <Logo
-            className="GaloreLogo1 w-80 h-40 left-[25px] top-[-360px] absolute"
+            className="GaloreLogo1 w-80 h-40 left-[30px] top-[-360px] absolute"
             source={{ uri: "/Users/student/galorewayz/assets/galore-logo.png" }}
-            
           />
         </Pressable>
 
         {/* Product Types */}
         <TouchableOpacity
-          onPress={() => { setCurrentScreen("tops"); setCarouselVisible(true); }}
+          onPress={() => {
+            setCurrentScreen("tops");
+            setCarouselVisible(true);
+          }}
           className="Group1 w-20 h-8 left-[15px] top-[160px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
@@ -137,7 +142,10 @@ const App = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => { setCurrentScreen("bottoms"); setCarouselVisible(true); }}
+          onPress={() => {
+            setCurrentScreen("bottoms");
+            setCarouselVisible(true);
+          }}
           className="Group3 w-24 h-8 left-[110px] top-[160px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
@@ -147,7 +155,10 @@ const App = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => { setCurrentScreen("outerwear"); setCarouselVisible(true); }}
+          onPress={() => {
+            setCurrentScreen("outerwear");
+            setCarouselVisible(true);
+          }}
           className="Group2 w-22 h-8 left-[205px] top-[160px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
@@ -157,13 +168,31 @@ const App = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => { setCurrentScreen("accessories"); setCarouselVisible(true); }}
+          onPress={() => {
+            setCurrentScreen("accessories");
+            setCarouselVisible(true);
+          }}
           className="Group2 w-22 h-8 left-[300px] top-[160px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
-          <Text className="Kids w-15 h-6 left-[6px] top-[4px] absolute text-black font-normal text-xs font-['Jolly Lodger']">
+          <Text className="Kids w-15 h-6 left-[6px] top-[4px] absolute text-black font-normal text-xs">
             Accessories
           </Text>
+        </TouchableOpacity>
+        {/* Shopping Bag */}
+        <TouchableOpacity
+          onPress={() => {
+            setCurrentScreen("cart");
+            setCarouselVisible(true);
+          }}
+        >
+          <Image
+            className="w-7 h-7 left-[340px] top-[-325px] relative"
+            source={{
+              uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
+            }}
+          />
+          <Text className="left-[341px] top-[-326px] relative text-black font-normal text-xs">Cart</Text>
         </TouchableOpacity>
       </Section>
     </>
