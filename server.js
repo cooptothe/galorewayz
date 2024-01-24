@@ -63,8 +63,7 @@ app.get('/getProducts', async (req, res) => {
   }
 });
 
-app.get('/getProducts/:productType', async (req, res) => {
-  const { productType } = req.params;
+app.get('/getProducts/:productType', async ({ params: { productType } }, res) => {
   console.log(`Request received at /getProducts for product type: ${productType}`);
 
   try {
@@ -256,7 +255,6 @@ app.post('/createCart', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 
 app.get('/getCart/:cartId', async (req, res) => {
   const { cartId } = req.params;
@@ -642,6 +640,42 @@ app.post('/addCartLines/:cartId', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+// When a user logs in or initiates a session
+app.post('/initiateSession', async (req, res) => {
+  // Logic to create a cart and associate it with the user's session or account
+  try {
+    const response = await fetch('https://galorewayzlifestyle.com/api/2023-01/graphql.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': '5fabebbde54d675f57255be67d7f17da',
+      },
+      body: JSON.stringify({
+        query: `
+          mutation initiateSession {
+            cartCreate {
+              cart {
+                id
+              }
+            }
+          }
+        `,
+      }),
+    });
+
+    const data = await response.json();
+    const cartId = data.data.cartCreate.cart.id;
+
+    // Send the cartId to the client
+    res.json({ cartId });
+    console.log(cartId);
+  } catch (error) {
+    console.error('Error initiating session:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

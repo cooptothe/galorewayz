@@ -87,7 +87,7 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
-    left: 100,
+    left: 110,
     borderColor: 'black', // Add black border color
     borderWidth: 1, // Add border width
   }}
