@@ -15,16 +15,32 @@ const Cart = () => {
 
   useEffect(() => {
     const getCart = async () => {
+
+      let localCartData = JSON.parse(
+        await AsyncStorage.getItem('galorewayz:shopify:cart'),
+      );
+
+      if (localCartData) {
+        setCart({
+          id: localCartData.id,
+          checkoutUrl: localCartData.checkoutUrl,
+          estimatedCost: null,
+          lines: [],
+        });
+
+        return;
+      }
+
       try {
         console.log('Before fetch');
-        const response = await fetch('http://localhost:3001/createCart');
+        const response = await fetch('http://localhost:3001/createCart'); 
         console.log('After fetch');
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const localCartData = await response.json();
+         localCartData = await response.json();
 
         setCart({
           id: localCartData.data.cartCreate.cart.id,
@@ -35,7 +51,7 @@ const Cart = () => {
 
         try {
           await AsyncStorage.setItem(
-            'clothingStore:cart',
+            'galorewayz:shopify:cart',
             JSON.stringify(localCartData.data.cartCreate.cart)
           );
           console.log('Cart data set successfully:', cart);
@@ -50,8 +66,6 @@ const Cart = () => {
 
     getCart();
   }, []);
-
-  console.log(cart);
 
   const renderItem = ({ item }) => (
     <ProductItem>
