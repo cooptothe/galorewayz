@@ -182,9 +182,7 @@ app.get('/getProductByHandle/:handle', async (req, res) => {
   }
 });
 
-app.post('/createCart', async (req, res) => {
-  const { cartInput } = req.body; // Use req.body instead of req.params
-
+app.get('/createCart', async (req, res) => {
   console.log('Request received at /createCart');
 
   try {
@@ -196,60 +194,21 @@ app.post('/createCart', async (req, res) => {
       },
       body: JSON.stringify({
         query: `
-          mutation createCart($cartInput: CartInput) {
-            cartCreate(input: $cartInput) {
+          mutation createCart {
+            cartCreate {
               cart {
                 id
-                createdAt
-                updatedAt
                 checkoutUrl
-                lines(first: 10) {
-                  edges {
-                    node {
-                      id
-                      merchandise {
-                        ... on ProductVariant {
-                          id
-                        }
-                      }
-                    }
-                  }
-                }
-                attributes {
-                  key
-                  value
-                }
-                cost {
-                  totalAmount {
-                    amount
-                    currencyCode
-                  }
-                  subtotalAmount {
-                    amount
-                    currencyCode
-                  }
-                  totalTaxAmount {
-                    amount
-                    currencyCode
-                  }
-                  totalDutyAmount {
-                    amount
-                    currencyCode
-                  }
-                }
               }
             }
           }
         `,
-        variables: {
-          cartInput,
-        },
+        variables: {},
       }),
     });
 
     const data = await response.json();
     res.json(data);
-    console.log(data.data.id);
   } catch (error) {
     console.error('Error creating cart:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -637,41 +596,6 @@ app.post('/addCartLines/:cartId', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error adding cart lines:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-// When a user logs in or initiates a session
-app.post('/initiateSession', async (req, res) => {
-  // Logic to create a cart and associate it with the user's session or account
-  try {
-    const response = await fetch('https://galorewayzlifestyle.com/api/2023-01/graphql.json', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': '5fabebbde54d675f57255be67d7f17da',
-      },
-      body: JSON.stringify({
-        query: `
-          mutation initiateSession {
-            cartCreate {
-              cart {
-                id
-              }
-            }
-          }
-        `,
-      }),
-    });
-
-    const data = await response.json();
-    const cartId = data.data.cartCreate.cart.id;
-
-    // Send the cartId to the client
-    res.json({ cartId });
-    console.log(cartId);
-  } catch (error) {
-    console.error('Error initiating session:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
