@@ -1,17 +1,18 @@
-// Product.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { styled } from 'nativewind';
 
 const Container = styled(View);
 const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
+const Option = styled(TouchableOpacity);
+
 
 const Product = ({ handle, onClose, setCarouselVisible }) => {
   const [product, setProduct] = useState(null);
-  const [cartId, setCartId] = useState(null); 
-  
+  const [selectedOption, setSelectedOption] = useState(null);
+
   useEffect(() => {
     // Fetch product by handle
     const fetchProductByHandle = async () => {
@@ -41,61 +42,90 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
     variants: { edges: variantEdges },
   } = product;
 
-  // Access the first media node
-  const imageUrl = mediaEdges[0]?.node.previewImage.url || '';
-
   // Access the price amount
   const priceAmount = variantEdges[0]?.node.price.amount || 0;
 
-
   const handleAddToBag = () => {
-    setCarouselVisible(true);
-    // Perform the logic for adding to the bag here
-    // For now, just reset the product and close the Product component
-    setProduct(null);
-    onClose();
-
+    if (selectedColor && selectedSize) {
+      // Perform the logic for adding to the bag here
+      // For now, just reset the product and close the Product component
+      setProduct(null);
+      onClose();
+    } else {
+      alert('Please select color and size before adding to bag');
+    }
   };
 
   return (
     <Container style={{ backgroundColor: 'white', padding: 25, top: -400, left: -30 }}>
       {/* Image gallery */}
-      <Container style={{ aspectRatio: 3 / 4, overflow: 'hidden', borderRadius: 8 }}>
-        <ProductImage
-          source={{ uri: imageUrl }}
-          style={{ flex: 3, height: 300, width: 325, left: 15, top: 40 }}
-          resizeMode="contain"
-        />
-      </Container>
+      <FlatList
+        horizontal
+        data={mediaEdges}
+        keyExtractor={(item) => item.node.previewImage.url}
+        renderItem={({ item }) => (
+          <ProductImage
+            source={{ uri: item.node.previewImage.url }}
+            style={{ flex: 3, height: 325, width: 325, left: 15, top: 60 }}
+            resizeMode="contain"
+          />
+        )}
+      />
 
       {/* Product info */}
-      <Container style={{ marginTop: 16, top: -10 }}>
+      <Container style={{ marginTop: 16, top: 10 }}>
         <ProductTitle style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>{title}</ProductTitle>
         <ProductPrice style={{ fontSize: 16, color: 'gray', marginTop: 8 }}>{`$${priceAmount}0`}</ProductPrice>
 
-        {/* Description */}
-        <Text style={{ fontSize: 14, marginTop: 10 }}>{description}</Text>
+        {/* Color selection */}
+        <Text style={{ fontSize: 16, marginTop: 10 }}>Select Option:</Text>
+        <FlatList
+          horizontal
+          data={variantEdges}
+          keyExtractor={(item) => item.node.id}
+          renderItem={({ item }) => (
+            <Option
+              onPress={() => setSelectedOption(item.node.title)}
+              disabled={item.node.quantityAvailable === 0}
+              style={{
+                backgroundColor: item.node.title === selectedOption ? '#FFCC90' : 'white',
+                borderWidth: 1,
+                borderColor: 'black',
+                borderRadius: 5,
+                padding: 5,
+                marginTop: 10,
+                marginRight: 10,
+              }}
+            >
+              <Text>{item.node.title}</Text>
+            </Option>
+          )}
+        />
 
-{/* Add to bag button */}
-<TouchableOpacity
-  onPress={handleAddToBag}
-  style={{
-    width: 120,
-    height: 30,
-    backgroundColor: '#FFCC90', // Set your desired background color
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-    left: 110,
-    borderColor: 'black', // Add black border color
-    borderWidth: 1, // Add border width
-  }}
->
-  <Text style={{ color: 'black', fontSize: 16, fontWeight: 'normal' }}>
-    Add to Bag
-  </Text>
-</TouchableOpacity>
+        {/* Description */}
+        <Text style={{ fontSize: 14, marginTop: 20 }}>{description}</Text>
+
+        {/* Add to bag button */}
+        <TouchableOpacity
+          onPress={handleAddToBag}
+          style={{
+            width: 120,
+            height: 30,
+            backgroundColor: '#FFCC90',
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 30,
+            left: 110,
+            borderColor: 'black',
+            borderWidth: 1,
+          }}
+          disabled={!selectedOption}
+        >
+          <Text style={{ color: 'black', fontSize: 16, fontWeight: 'normal' }}>
+            Add to Bag
+          </Text>
+        </TouchableOpacity>
       </Container>
     </Container>
   );

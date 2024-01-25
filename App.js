@@ -12,6 +12,7 @@ import Product from "./Products/Product";
 import ProductList from "./Products/ProductList";
 import Cart from "./Products/Cart";
 
+
 const Container = styled(View);
 const Section = styled(View);
 const Trending = styled(Text);
@@ -86,13 +87,45 @@ const App = () => {
   };
 
   return (
-    <>
-      <Section>
+    <Container>
+          {renderScreen()}
+          <Section>
+           {/* Logo */}
+           <Pressable
+          onPress={() => {
+            setCurrentScreen("home");
+            setCarouselVisible(true);
+          }}
+        >
+          <Logo
+            className="GaloreLogo1 w-80 h-40 left-[30px] top-[-350px] absolute"
+            source={{ uri: "/Users/student/galorewayz/assets/galore-logo.png" }}
+          />
+        </Pressable>
+
+        <Container>
+             {/* Shopping Bag */}
+             <TouchableOpacity
+          onPress={() => {
+            setCurrentScreen("cart");
+            setCarouselVisible(true);
+          }}
+        >
+          <Image
+            className="w-[25px] h-[22px] left-[340px] top-[-300px] absolute"
+            source={{
+              uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
+            }}
+          />
+          <Text className="w-[23px] h-[13px] left-[340px] top-[-315px] absolute text-black font-normal text-xs">Cart</Text>
+        </TouchableOpacity>
+            </Container>
+
         {carouselVisible &&
           ["accessories", "bottoms", "home", "outerwear", "tops"].includes(
             currentScreen
           ) && (
-            <Section className="Frame7 w-96 h-72 left-[12px] top-[185px] absolute">
+            <Section className="Frame7 left-[12px] top-[-175px] absolute">
               <Carousel
                 data={carouselData}
                 renderItem={renderItem}
@@ -106,25 +139,11 @@ const App = () => {
                 autoplay={true}
                 autoplayInterval={6000}
               />
-              <Trending className="Trending left-[10px] top-[270px] absolute text-black text-3xl font-normal">
+              <Trending className="Trending left-[0px] top-[255px] absolute text-black text-xl font-normal">
                 {screenTextMap[currentScreen]}
               </Trending>
             </Section>
           )}
-        {renderScreen()}
-
-        {/* Logo */}
-        <Pressable
-          onPress={() => {
-            setCurrentScreen("home");
-            setCarouselVisible(true);
-          }}
-        >
-          <Logo
-            className="GaloreLogo1 w-80 h-40 left-[30px] top-[-360px] absolute"
-            source={{ uri: "/Users/student/galorewayz/assets/galore-logo.png" }}
-          />
-        </Pressable>
 
         {/* Product Types */}
         <TouchableOpacity
@@ -132,7 +151,7 @@ const App = () => {
             setCurrentScreen("tops");
             setCarouselVisible(true);
           }}
-          className="Group1 w-20 h-8 left-[15px] top-[160px] absolute"
+          className="Group1 w-20 h-8 left-[15px] top-[-200px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
           <Text className="Men w-8 h-6 left-[25px] top-[4px] absolute text-black text-xs font-normal font-['Jolly Lodger']">
@@ -145,7 +164,7 @@ const App = () => {
             setCurrentScreen("bottoms");
             setCarouselVisible(true);
           }}
-          className="Group3 w-24 h-8 left-[110px] top-[160px] absolute"
+          className="Group3 w-24 h-8 left-[110px] top-[-200px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
           <Text className="Women w-12 h-6 left-[15px] top-[4px] absolute text-black text-xs font-normal font-['Jolly Lodger']">
@@ -158,7 +177,7 @@ const App = () => {
             setCurrentScreen("outerwear");
             setCarouselVisible(true);
           }}
-          className="Group2 w-22 h-8 left-[205px] top-[160px] absolute"
+          className="Group2 w-22 h-8 left-[205px] top-[-200px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
           <Text className="Kids w-15 h-6 left-[9px] top-[4px] absolute text-black font-normal text-xs font-['Jolly Lodger']">
@@ -171,30 +190,15 @@ const App = () => {
             setCurrentScreen("accessories");
             setCarouselVisible(true);
           }}
-          className="Group2 w-22 h-8 left-[300px] top-[160px] absolute"
+          className="Group2 w-22 h-8 left-[300px] top-[-200px] absolute"
         >
           <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
           <Text className="Kids w-15 h-6 left-[6px] top-[4px] absolute text-black font-normal text-xs">
             Accessories
           </Text>
         </TouchableOpacity>
-        {/* Shopping Bag */}
-        <TouchableOpacity
-          onPress={() => {
-            setCurrentScreen("cart");
-            setCarouselVisible(true);
-          }}
-        >
-          <Image
-            className="w-[25px] h-[25px] left-[340px] top-[-312px] relative"
-            source={{
-              uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
-            }}
-          />
-          <Text className="w-[25px] h-[25px] left-[340px] top-[-352px] relative text-black font-normal text-xs">Cart</Text>
-        </TouchableOpacity>
       </Section>
-    </>
+    </Container>
   );
 };
 

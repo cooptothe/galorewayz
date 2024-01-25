@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Product from "./Product";
+import HomeScreen from "../screens/HomeScreen";
 
 const Container = styled(View);
 const ProductItem = styled(View);
@@ -10,9 +12,11 @@ const ProductInfo = styled(View);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
 const Logo = styled(Image);
+const Section = styled(View);
 
 const Cart = () => {
   const [cart, setCart] = useState({ id: null, checkoutUrl: null, lines: [] });
+  <Product cart={cart} />
 
   useEffect(() => {
     const getCart = async () => {
@@ -101,19 +105,16 @@ const Cart = () => {
   };
 
   return (
-    
-    <Container
-      className="Frame7 w-96 h-72 left-[12px] top-[185px] absolute"
-    >
-
+<Container style={{ backgroundColor: 'white', padding: 150 }}>
       {cart.lines.length === 0 ? (
+        <Section className="w-[40px] h-[40px]">
         <Text
-          style={{ fontSize: 24, textAlign: "center", marginTop: 20, top: 300 }}
+          style={{ fontSize: 24, textAlign: "center", top: 300 }}
         >
         Your cart is empty!
         </Text>
+        </Section>
 
-         
       ) : (
         <>
           <FlatList

@@ -15,6 +15,7 @@
     "@heroicons/react": "^2.1.1",
     "@heroicons/vue": "^2.1.1",
     "@react-native-async-storage/async-storage": "^1.21.0",
+    "@react-native-picker/picker": "^2.6.1",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "@shopify/shopify-api": "^9.0.2",
@@ -31,7 +32,9 @@
     "react-dom": "18.2.0",
     "react-native": "0.73.2",
     "react-native-dotenv": "^3.4.9",
+    "react-native-navigation": "^7.37.2",
     "react-native-snap-carousel": "^3.9.1",
+    "react-native-swiper": "^1.6.0",
     "react-native-web": "~0.19.6",
     "shopify-buy": "^2.21.1"
   },
