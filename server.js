@@ -235,7 +235,7 @@ app.get("/createCart", async (req, res) => {
 });
 
 app.get("/getCart/:cartId", async (req, res) => {
-  const { cartId } = req.params;
+  let { cartId } = req.params;
   
   console.log(`Request received at /getCart for cart ID: ${cartId}`);
   try {
@@ -249,7 +249,7 @@ app.get("/getCart/:cartId", async (req, res) => {
         },
         body: JSON.stringify({
           query: `
-          query getCart($cartId: ID!) {
+          query getCart($cartId: String!) {
           cart(id: $cartId) {
             id
             checkoutUrl
@@ -279,7 +279,7 @@ app.get("/getCart/:cartId", async (req, res) => {
         }
         `,
           variables: {
-            id,
+            cartId,
           },
         }),
       }

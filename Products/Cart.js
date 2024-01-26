@@ -16,6 +16,7 @@ const Section = styled(View);
 
 const Cart = () => {
   const [cart, setCart] = useState({ id: null, checkoutUrl: null, lines: [] });
+  const [cartId, setCartId] = useState(null);
   <Product cart={cart} />
 
   useEffect(() => {
@@ -31,7 +32,6 @@ const Cart = () => {
           cost: null,
           lines: [],
         });
-
         return;
       }
 
@@ -70,7 +70,11 @@ const Cart = () => {
     getCart();
   }, []);
 
-  console.log(cart.id);
+  const response2 = async () => await fetch(`http://localhost:3001/getCart/${encodeURIComponent(cart.id)}`);
+
+  response2();
+
+  console.log(encodeURIComponent(cart.id));
 
   const renderItem = ({ item }) => (
     <ProductItem>
