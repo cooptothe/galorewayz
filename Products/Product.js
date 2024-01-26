@@ -57,7 +57,7 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
   };
 
   return (
-    <Container style={{ backgroundColor: 'white', padding: 25, top: -400, left: -30 }}>
+    <Container style={{ backgroundColor: 'white', padding: 15, top: -400, left: -30 }}>
       {/* Image gallery */}
       <FlatList
         horizontal
@@ -66,14 +66,14 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
         renderItem={({ item }) => (
           <ProductImage
             source={{ uri: item.node.previewImage.url }}
-            style={{ flex: 3, height: 325, width: 325, left: 15, top: 60 }}
+            style={{ flex: 3, height: 400, width: 325, left: 15, top: 70 }}
             resizeMode="contain"
           />
         )}
       />
 
       {/* Product info */}
-      <Container style={{ marginTop: 16, top: 10 }}>
+      <Container style={{ marginTop: 16 }}>
         <ProductTitle style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>{title}</ProductTitle>
         <ProductPrice style={{ fontSize: 16, color: 'gray', marginTop: 8 }}>{`$${priceAmount}0`}</ProductPrice>
 
@@ -116,7 +116,7 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
             justifyContent: 'center',
             alignItems: 'center',
             marginTop: 30,
-            left: 110,
+            left: 120,
             borderColor: 'black',
             borderWidth: 1,
           }}

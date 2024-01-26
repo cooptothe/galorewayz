@@ -28,7 +28,7 @@ const Cart = () => {
         setCart({
           id: localCartData.id,
           checkoutUrl: localCartData.checkoutUrl,
-          estimatedCost: null,
+          cost: null,
           lines: [],
         });
 
@@ -49,7 +49,7 @@ const Cart = () => {
         setCart({
           id: localCartData.data.cartCreate.cart.id,
           checkoutUrl: localCartData.data.cartCreate.cart.checkoutUrl,
-          estimatedCost: null,
+          cost: null,
           lines: [],
         });
 
@@ -69,6 +69,8 @@ const Cart = () => {
 
     getCart();
   }, []);
+
+  console.log(cart.id);
 
   const renderItem = ({ item }) => (
     <ProductItem>
