@@ -249,7 +249,7 @@ app.get("/getCart/:cartId", async (req, res) => {
         },
         body: JSON.stringify({
           query: `
-          query getCart($cartId: String!) {
+          query getCart($cartId: ID!) {
           cart(id: $cartId) {
             id
             checkoutUrl
