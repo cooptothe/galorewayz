@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList, TouchableWithoutFeedback } from 'react-native';
 import { styled } from 'nativewind';
+
 
 const Container = styled(View);
 const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
 const Option = styled(TouchableOpacity);
-
 
 const Product = ({ handle, onClose, setCarouselVisible }) => {
   const [product, setProduct] = useState(null);
@@ -27,6 +27,13 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
 
     fetchProductByHandle();
   }, [handle]); // Update when the handle prop changes
+
+  const handleContainerTap = () => {
+    // Handle tap outside the container
+    onClose();
+  };
+
+
 
   // Check if product is still being fetched
   if (!product) {
@@ -57,7 +64,8 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
   };
 
   return (
-    <Container style={{ backgroundColor: 'white', padding: 15, top: -400, left: -30 }}>
+    <TouchableWithoutFeedback onPress={handleContainerTap}>
+        <Container style={{ backgroundColor: 'white', padding: 15, top: -400, left: -30 }}>
       {/* Image gallery */}
       <FlatList
         horizontal
@@ -73,6 +81,7 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
       />
 
       {/* Product info */}
+
       <Container style={{ marginTop: 16 }}>
         <ProductTitle style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>{title}</ProductTitle>
         <ProductPrice style={{ fontSize: 16, color: 'gray', marginTop: 8 }}>{`$${priceAmount}0`}</ProductPrice>
@@ -115,7 +124,7 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
             borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 30,
+            marginTop: 5,
             left: 120,
             borderColor: 'black',
             borderWidth: 1,
@@ -128,6 +137,8 @@ const Product = ({ handle, onClose, setCarouselVisible }) => {
         </TouchableOpacity>
       </Container>
     </Container>
+    </TouchableWithoutFeedback>
+    
   );
 };
 

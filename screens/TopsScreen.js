@@ -9,7 +9,6 @@ const Section = styled(View);
 const TopsScreen = ({ setCarouselVisible }) => {
   const handleProductSelect = (selectedProduct) => {
     setCarouselVisible(false); // Hide the carousel when a product is selected
-    console.log("Selected Product:", selectedProduct);
   };
 
   return (

@@ -9,7 +9,6 @@ const Section = styled(View);
 const AccessoriesScreen = ({ setCarouselVisible }) => {
   const handleProductSelect = (selectedProduct) => {
     setCarouselVisible(false);
-    console.log("Selected Product:", selectedProduct);
   };
 
   return (

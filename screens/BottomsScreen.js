@@ -11,7 +11,6 @@ const Section = styled(View);
 const BottomsScreen = ({ setCarouselVisible }) => {
   const handleProductSelect = (selectedProduct) => {
     setCarouselVisible(false);
-    console.log("Selected Product:", selectedProduct);
   };
 
   return (

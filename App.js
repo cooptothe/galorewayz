@@ -18,7 +18,7 @@ const Section = styled(View);
 const Trending = styled(Text);
 const Logo = styled(Image);
 
-const App = () => {
+const App = ({ onTapAway }) => {
   const [currentScreen, setCurrentScreen] = useState("home");
   const [carouselVisible, setCarouselVisible] = useState(true); // State for carousel visibility
 
@@ -69,6 +69,7 @@ const App = () => {
         "/Users/student/galorewayz/jpegmini_optimized/IMG_1444-removebg-preview.png",
     },
   ];
+
   const renderItem = ({ item }) => (
     <View className="w-90 h-72 justify-center items-center">
       <Image
@@ -95,6 +96,7 @@ const App = () => {
           onPress={() => {
             setCurrentScreen("home");
             setCarouselVisible(true);
+            onTapAway;
           }}
         >
           <Logo
@@ -109,6 +111,7 @@ const App = () => {
           onPress={() => {
             setCurrentScreen("cart");
             setCarouselVisible(true);
+            onTapAway;
           }}
         >
           <Image
@@ -150,6 +153,7 @@ const App = () => {
           onPress={() => {
             setCurrentScreen("tops");
             setCarouselVisible(true);
+            onTapAway;
           }}
           className="Group1 w-20 h-8 left-[15px] top-[-200px] absolute"
         >
@@ -163,6 +167,7 @@ const App = () => {
           onPress={() => {
             setCurrentScreen("bottoms");
             setCarouselVisible(true);
+            onTapAway;
           }}
           className="Group3 w-24 h-8 left-[110px] top-[-200px] absolute"
         >
@@ -176,6 +181,7 @@ const App = () => {
           onPress={() => {
             setCurrentScreen("outerwear");
             setCarouselVisible(true);
+            onTapAway;
           }}
           className="Group2 w-22 h-8 left-[205px] top-[-200px] absolute"
         >
@@ -189,6 +195,7 @@ const App = () => {
           onPress={() => {
             setCurrentScreen("accessories");
             setCarouselVisible(true);
+            onTapAway;
           }}
           className="Group2 w-22 h-8 left-[300px] top-[-200px] absolute"
         >
