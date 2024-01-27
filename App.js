@@ -1,6 +1,6 @@
 // App.js
 import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "nativewind";
 import HomeScreen from "./screens/HomeScreen";
 import TopsScreen from "./screens/TopsScreen";
@@ -11,6 +11,7 @@ import Carousel from "react-native-snap-carousel";
 import Product from "./Products/Product";
 import ProductList from "./Products/ProductList";
 import Cart from "./Products/Cart";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const Container = styled(View);
@@ -23,6 +24,68 @@ const App = ({ onTapAway }) => {
   const [carouselVisible, setCarouselVisible] = useState(true); // State for carousel visibility
 
   <Product setCarouselVisible={setCarouselVisible} />;
+
+  const [cart, setCart] = useState({ id: null, checkoutUrl: null, lines: [] });
+
+  useEffect(() => {
+    const getCart = async () => {
+      let localCartData = JSON.parse(
+        await AsyncStorage.getItem("galorewayz:shopify:cart")
+      );
+
+      if (localCartData) {
+        const existingCart = await fetch(
+          `http://localhost:3001/getCart/${encodeURIComponent(
+            localCartData.id
+          )}`
+        ).then((res) => res.json());
+
+        setCart({
+          id: localCartData.id,
+          checkoutUrl: localCartData.checkoutUrl,
+          cost: existingCart.data.cart.cost,
+          lines: existingCart.data.cart.lines.edges,
+        });
+
+        console.log(existingCart.data.cart);
+
+        return;
+      }
+
+      try {
+        console.log("Before fetch");
+        const response = await fetch("http://localhost:3001/createCart");
+        console.log("After fetch");
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        localCartData = await response.json();
+
+        setCart({
+          id: localCartData.data.cartCreate.cart.id,
+          checkoutUrl: localCartData.data.cartCreate.cart.checkoutUrl,
+          cost: null,
+          lines: [],
+        });
+
+        try {
+          await AsyncStorage.setItem(
+            "galorewayz:shopify:cart",
+            JSON.stringify(localCartData.data.cartCreate.cart)
+          );
+          console.log("Cart data set successfully:", cart);
+        } catch (storageError) {
+          console.error("Error storing cart data:", storageError);
+        }
+      } catch (error) {
+        console.error("Error in getCart:", error);
+      }
+    };
+
+    getCart();
+  }, []);
 
   const renderScreen = () => {
     switch (currentScreen) {

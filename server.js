@@ -271,6 +271,9 @@ app.get("/getCart/:cartId", async (req, res) => {
                       ... on ProductVariant {
                         id
                         title
+                        product {
+                          handle
+                        }
                         image {
                           url
                         }

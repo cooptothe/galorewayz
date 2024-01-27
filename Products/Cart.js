@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Product from "./Product";
+import App from "../App";
 
 const Container = styled(View);
 const ProductItem = styled(View);
@@ -77,14 +78,15 @@ const Cart = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <ProductItem>
+    <ProductItem style={{ alignSelf: "left"}}>
       <ProductImage
         source={{ uri: item.node.merchandise.image.url }}
-        style={{ width: 25, height: 25 }}
+        style={{ width: 50, height: 50 }}
       />
-      <ProductInfo>
-        <ProductTitle>{item.node.merchandise.title}</ProductTitle>
-        <ProductPrice>{`$${item.node.merchandise.price.amount}`}</ProductPrice>
+      <ProductInfo >
+        <ProductTitle>{item.node.merchandise.product.handle}</ProductTitle>
+        <ProductTitle>Size/Color: {item.node.merchandise.title}</ProductTitle>
+        <ProductPrice>Price: {`$${item.node.merchandise.price.amount}`}</ProductPrice>
       </ProductInfo>
     </ProductItem>
   );
@@ -111,8 +113,9 @@ const Cart = () => {
     console.log("Proceeding to checkout...");
   };
 
+
   return (
-    <Container style={{ backgroundColor: "white", padding: 190 }}>
+    <Container style={{ backgroundColor: "white", padding: 192, alignItems: "center", alignSelf: 'center' }}>
       {cart.lines.length === 0 ? (
         <Section style={{ alignSelf: "center", alignItems: "center", top: 100, position: "absolute", }}>
           <Text style={{ fontSize: 18, top: 300, position: "absolute", }}>
@@ -120,51 +123,55 @@ const Cart = () => {
           </Text>
         </Section>
       ) : (
-        <Container style={{ top: 300, position: "absolute", alignSelf: "center" }}>
-          <FlatList
-            data={cart.lines}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.node.id}
-          />
-
-          <TouchableOpacity
-            onPress={handleCheckout}
-            style={{
-              width: 120,
-              height: 30,
-              backgroundColor: "#FFCC90",
-              borderRadius: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 5,
-              borderColor: "black",
-              borderWidth: 1,
-            }}
-          >
-            <Text style={{ color: "black", fontSize: 16, fontWeight: "normal" }}>
-              Checkout
-            </Text>
-          </TouchableOpacity>
-          {/* Add the Empty Cart button */}
-          <TouchableOpacity
-            onPress={handleEmptyCart}
-            style={{
-              width: 120,
-              height: 30,
-              backgroundColor: "#FF6347",
-              borderRadius: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 5,
-              borderColor: "black",
-              borderWidth: 1,
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 16, fontWeight: "normal" }}>
-              Empty Cart
-            </Text>
-          </TouchableOpacity>
-        </Container>
+        <>
+        <Container style={{ position: "absolute", top: 300, width: 800, left: 0 }}>
+            <FlatList
+              data={cart.lines}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.node.id} />
+          </Container>
+          <Container style={{ position: "absolute", top: 800 }}>
+              <TouchableOpacity
+                onPress={handleCheckout}
+                style={{
+                  width: 120,
+                  height: 30,
+                  backgroundColor: "#FFCC90",
+                  borderRadius: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 5,
+                  borderColor: "black",
+                  borderWidth: 1,
+                  bottom: 100
+                }}
+              >
+                <Text style={{ color: "black", fontSize: 16, fontWeight: "normal" }}>
+                  Checkout
+                </Text>
+              </TouchableOpacity>
+              {/* Add the Empty Cart button */}
+              <TouchableOpacity
+                onPress={handleEmptyCart}
+                style={{
+                  width: 120,
+                  height: 30,
+                  backgroundColor: "#FF6347",
+                  borderRadius: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 5,
+                  borderColor: "black",
+                  borderWidth: 1,
+                  bottom: 100
+                }}
+              >
+                <Text style={{ color: "white", fontSize: 16, fontWeight: "normal" }}>
+                  Empty Cart
+                </Text>
+              </TouchableOpacity>
+            </Container>
+            </>
       )}
     </Container>
   );
