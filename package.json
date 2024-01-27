@@ -21,6 +21,7 @@
     "@shopify/shopify-api": "^9.0.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/react": "~18.2.45",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "deprecated-react-native-prop-types": "^5.0.0",
     "expo": "^50.0.3",

@@ -1,15 +1,22 @@
 import express from "express";
 import cors from "cors";
 import fetch from "node-fetch";
+import bodyParser from "body-parser";
 
 
 const app = express();
 const port = 3001;
 
-
+// MIDDLEWARE
 
 // Enable CORS for all routes
 app.use(cors());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
+// ROUTES
 
 app.get("/getProducts", async (req, res) => {
   console.log("Request received at /getProducts");
@@ -253,33 +260,40 @@ app.get("/getCart/:cartId", async (req, res) => {
         body: JSON.stringify({
           query: `
           query getCart($cartId: ID!) {
-          cart(id: $cartId) {
-            id
-            checkoutUrl
-            lines(first: 100) {
-              edges {
-                node {
-                  quantity
-                  merchandise {
-                    ... on ProductVariant {
-                      id
+            cart(id: $cartId) {
+              id
+              checkoutUrl
+              lines(first: 100) {
+                edges {
+                  node {
+                    quantity
+                    merchandise {
+                      ... on ProductVariant {
+                        id
+                        title
+                        image {
+                          url
+                        }
+                        price {
+                          amount
+                        }
+                      }
                     }
                   }
                 }
               }
-            }
-            cost {
-              totalAmount {
-                amount
-                currencyCode
-              }
-              subtotalAmount {
-                amount
-                currencyCode
+              cost {
+                totalAmount {
+                  amount
+                  currencyCode
+                }
+                subtotalAmount {
+                  amount
+                  currencyCode
+                }
               }
             }
           }
-        }
         `,
           variables: {
             cartId,
@@ -483,11 +497,11 @@ app.post("/removeCartLines/:cartId", async (req, res) => {
   }
 });
 
-app.post("/addCartLines/:cartId", async (req, res) => {
-  const { cartId } = req.params;
-  const { lines } = req.body;
+app.post("/addToCart", async (req, res) => {
+  console.log("Request Body:", req.body); // Log the request body
+  const { cartId, variantId } = req.body;
 
-  console.log(`Request received at /addCartLines for cart ID: ${cartId}`);
+  console.log(`Request received at /addToCart for cart ID: ${cartId}`);
 
   try {
     const response = await fetch(
@@ -496,56 +510,33 @@ app.post("/addCartLines/:cartId", async (req, res) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Shopify-Storefront-Access-Token":
-            "5fabebbde54d675f57255be67d7f17da",
+          "X-Shopify-Storefront-Access-Token": "5fabebbde54d675f57255be67d7f17da",
         },
         body: JSON.stringify({
           query: `
-          mutation addCartLines($cartId: ID!, $lines: [CartLineInput!]!) {
-            cartLinesAdd(cartId: $cartId, lines: $lines) {
-              cart {
-                id
-                lines(first: 10) {
-                  edges {
-                    node {
-                      quantity
-                      merchandise {
-                        ... on ProductVariant {
-                          id
+            mutation addToCart($cartId: ID!, $variantId: ID!) {
+              cartLinesAdd(cartId: $cartId, lines: [{ quantity: 1, merchandiseId: $variantId }]) {
+                cart {
+                  lines(first: 100) {
+                    edges {
+                      node {
+                        quantity
+                        merchandise {
+                          ... on ProductVariant {
+                            id
+                            title
+                          }
                         }
                       }
                     }
                   }
                 }
-                cost {
-                  totalAmount {
-                    amount
-                    currencyCode
-                  }
-                  subtotalAmount {
-                    amount
-                    currencyCode
-                  }
-                  totalTaxAmount {
-                    amount
-                    currencyCode
-                  }
-                  totalDutyAmount {
-                    amount
-                    currencyCode
-                  }
-                }
-              }
-              userErrors {
-                field
-                message
               }
             }
-          }
-        `,
+          `,
           variables: {
             cartId,
-            lines,
+            variantId
           },
         }),
       }

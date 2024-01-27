@@ -70,7 +70,7 @@ const AccessoriesList = ({ onSelectProduct, setCarouselVisible }) => {
   return (
     <Container>
     {selectedProduct && (
-      <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} setCarouselVisible={setCarouselVisible} />
+      <Product handle={selectedProduct.handle} onClose={() => {setSelectedProduct(null); setCarouselVisible(true);}} setCarouselVisible={setCarouselVisible} />
     )}
     {!selectedProduct && (
         <ProductGrid

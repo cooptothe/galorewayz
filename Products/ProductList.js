@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import { styled } from 'nativewind';
 import Product from './Product'; // Import the Product component
-import App from '../App';
+
 
 const Container = styled(View);
 const ProductGrid = styled(FlatList);
@@ -66,12 +66,10 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
     );
   };
 
-  <App onTapAway={handleTapAway} />
-
   return (
     <Container>
       {selectedProduct && (
-        <Product handle={selectedProduct.handle} onClose={() => setSelectedProduct(null)} setCarouselVisible={setCarouselVisible}  />
+        <Product handle={selectedProduct.handle} onClose={() => {setSelectedProduct(null); setCarouselVisible(true);}} setCarouselVisible={setCarouselVisible}  />
       )}
       {!selectedProduct && (
         <ProductGrid
