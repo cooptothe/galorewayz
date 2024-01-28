@@ -77,14 +77,14 @@ const Cart = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <ProductItem style={{ alignSelf: "left", paddingTop: 25}}>
+    <ProductItem style={{ paddingTop: 10, width: 330}}>
       <ProductImage
         source={{ uri: item.node.merchandise.image.url }}
-        style={{ width: 50, height: 50 }}
+        style={{ width: 100, height: 100 }}
       />
       <ProductInfo >
-        <ProductTitle>{item.node.merchandise.product.title}</ProductTitle>
-        <ProductTitle style={{ color: "black", fontSize: 10, fontWeight: "normal", marginTop: 1 }}>Size/Color: {item.node.merchandise.title}</ProductTitle>
+        <ProductTitle style={{ color: "black", fontSize: 18, fontWeight: "normal", textAlign: "left" }}>{item.node.merchandise.product.title}</ProductTitle>
+        <ProductTitle style={{ color: "black", fontSize: 10, fontWeight: "300", marginTop: 1 }}>Size/Color: {item.node.merchandise.title}</ProductTitle>
         <ProductPrice style={{ color: "black", fontSize: 12, fontWeight: "bold", textAlign: "right", marginTop: 1 }}>   Price: {`$${item.node.merchandise.price.amount}`}</ProductPrice>
       </ProductInfo>
     </ProductItem>
@@ -123,8 +123,9 @@ const Cart = () => {
         </Section>
       ) : (
         <>
-        <Container style={{ position: "absolute", top: 220, width: 800, left: 10 }}>
+        <Container style={{ position: "absolute", top: 210, width: 1000, alignItems: "center", alignSelf: 'center' }}>
             <FlatList
+            style={{ right: 10,  height: 500 }}
               data={cart.lines}
               renderItem={renderItem}
               keyExtractor={(item) => item.node.id} />
