@@ -1,6 +1,13 @@
 // App.js
-import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Pressable,
+  Dimensions,
+} from "react-native";
 import { styled } from "nativewind";
 import HomeScreen from "./screens/HomeScreen";
 import TopsScreen from "./screens/TopsScreen";
@@ -12,7 +19,11 @@ import Product from "./Products/Product";
 import ProductList from "./Products/ProductList";
 import Cart from "./Products/Cart";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RFValue } from "react-native-responsive-fontsize";
 
+const window = Dimensions.get("window");
+const screenWidth = window.width;
+const screenHeight = window.height;
 
 const Container = styled(View);
 const Section = styled(View);
@@ -22,9 +33,6 @@ const Logo = styled(Image);
 const App = ({ onTapAway }) => {
   const [currentScreen, setCurrentScreen] = useState("home");
   const [carouselVisible, setCarouselVisible] = useState(true); // State for carousel visibility
-
-  <Product setCarouselVisible={setCarouselVisible} />;
-
   const [cart, setCart] = useState({ id: null, checkoutUrl: null, lines: [] });
 
   useEffect(() => {
@@ -47,15 +55,11 @@ const App = ({ onTapAway }) => {
           lines: existingCart.data.cart.lines.edges,
         });
 
-        console.log(existingCart.data.cart);
-
         return;
       }
 
       try {
-        console.log("Before fetch");
         const response = await fetch("http://localhost:3001/createCart");
-        console.log("After fetch");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -75,7 +79,6 @@ const App = ({ onTapAway }) => {
             "galorewayz:shopify:cart",
             JSON.stringify(localCartData.data.cartCreate.cart)
           );
-          console.log("Cart data set successfully:", cart);
         } catch (storageError) {
           console.error("Error storing cart data:", storageError);
         }
@@ -132,11 +135,25 @@ const App = ({ onTapAway }) => {
         "/Users/student/galorewayz/jpegmini_optimized/IMG_1444-removebg-preview.png",
     },
   ];
-
   const renderItem = ({ item }) => (
-    <View className="w-90 h-72 justify-center items-center">
+    <View
+      style={{
+        width: screenWidth * 0.8,
+        height: screenWidth * 0.8,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Image
-        className="w-96 h-72 rounded-2xl shadow"
+        style={{
+          width: screenWidth * 0.8,
+          height: screenWidth * .8,
+          borderRadius: 10,
+          shadowRadius: 5,
+          shadowOpacity: 0.5,
+          top: screenWidth * .15,
+          right: screenWidth * .15,
+        }}
         source={{ uri: item.imageUrl }}
       />
     </View>
@@ -145,83 +162,129 @@ const App = ({ onTapAway }) => {
   const screenTextMap = {
     accessories: "Accessories",
     bottoms: "Bottoms",
-    home: "Trending", // Default text for the home screen
+    home: "Trending",
     outerwear: "Outerwear",
     tops: "Tops",
   };
 
   return (
     <Container>
-          {renderScreen()}
-          <Section>
-           {/* Logo */}
-           <Pressable
-          onPress={() => {
-            setCurrentScreen("home");
-            setCarouselVisible(true);
-            onTapAway;
-          }}
-        >
-          <Logo
-            className="GaloreLogo1 w-80 h-40 left-[30px] top-[-350px] absolute"
-            source={{ uri: "/Users/student/galorewayz/assets/galore-logo.png" }}
-          />
-        </Pressable>
+      {renderScreen()}
+      <Section>
 
-        <Container style={{ bottom: 15 }} >
-             {/* Shopping Bag */}
-             <TouchableOpacity
-          onPress={() => {
-            setCurrentScreen("cart");
-            setCarouselVisible(true);
-            onTapAway;
-          }}
-        >
-          <Image
-            className="w-[25px] h-[22px] left-[340px] top-[-300px] absolute"
-            source={{
-              uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
+        <Container style={{ top: RFValue(35), left: RFValue(10) }}>
+          <TouchableOpacity
+            onPress={() => {
+              setCurrentScreen("cart");
+              setCarouselVisible(true);
+              onTapAway;
             }}
-          />
-          <Text style={{ color: 'black', fontSize: 10, fontWeight: 'light', bottom: 314, left: 341 }}>Cart</Text>
-        </TouchableOpacity>
-            </Container>
+          >
+            <Image
+              style={{
+                width: RFValue(25),
+                height: RFValue(22),
+                left: RFValue(330),
+                bottom: RFValue(310),
+                position: "absolute",
+              }}
+              source={{
+                uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
+              }}
+            />
+            <Text
+              style={{
+                color: "black",
+                fontSize: RFValue(12),
+                fontWeight: "light",
+                bottom: RFValue(295),
+                left: RFValue(330),
+                position: "absolute",
+              }}
+            >
+              Cart
+            </Text>
+          </TouchableOpacity>
+        </Container>
 
         {carouselVisible &&
           ["accessories", "bottoms", "home", "outerwear", "tops"].includes(
             currentScreen
           ) && (
-            <Section className="Frame7 left-[12px] top-[-175px] absolute">
+            <Section
+              style={{
+                left: RFValue(5),
+                position: "relative",
+                bottom: screenWidth * .60,
+              }}
+            >
               <Carousel
                 data={carouselData}
                 renderItem={renderItem}
-                sliderWidth={370}
-                itemWidth={200}
+                sliderWidth={screenWidth * 1}
+                itemWidth={screenWidth * 0.49}
                 layout="default"
-                layoutCardOffset={30}
+                layoutCardOffset={RFValue(30)}
                 inactiveSlideOpacity={0.4}
                 inactiveSlideScale={0.4}
                 loop={true}
                 autoplay={true}
                 autoplayInterval={6000}
               />
-              <Trending className="Trending left-[0px] top-[255px] absolute text-black text-xl font-normal">
+              <Trending
+                style={{
+                  left: RFValue(0),
+                  top: RFValue(255),
+                  position: "absolute",
+                  color: "black",
+                  fontSize: RFValue(24),
+                  fontWeight: "normal",
+                }}
+              >
                 {screenTextMap[currentScreen]}
               </Trending>
             </Section>
           )}
 
-        {/* Product Types */}
         <TouchableOpacity
           onPress={() => {
             setCurrentScreen("tops");
             setCarouselVisible(true);
             onTapAway;
           }}
-          className="Group1 w-20 h-8 left-[15px] top-[-200px] absolute"
+          style={{
+            width: RFValue(120),
+            height: RFValue(40),
+            left: RFValue(30),
+            top: RFValue(-200),
+            position: "absolute",
+          }}
         >
-          <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
-          <Text className="Men w-8 h-6 left-[25px] top-[4px] absolute text-black text-xs font-normal font-['Jolly Lodger']">
+          <View
+            style={{
+              width: screenWidth * 0.25,
+              height: RFValue(23),
+              right: screenWidth * 0.2,
+              top: screenWidth * 0.18,
+              position: "absolute",
+              backgroundColor: "#FFCC90",
+              borderRadius: RFValue(8),
+              borderWidth: RFValue(1),
+              borderColor: "black",
+            }}
+          />
+          <Text
+            style={{
+              width: screenWidth * 0.25,
+              height: RFValue(40),
+              left: RFValue(2),
+              top: screenWidth * 0.19,
+              position: "absolute",
+              color: "black",
+              fontSize: RFValue(14),
+              fontWeight: "normal",
+            }}
+          >
             Tops
           </Text>
         </TouchableOpacity>
@@ -232,10 +295,39 @@ const App = ({ onTapAway }) => {
             setCarouselVisible(true);
             onTapAway;
           }}
-          className="Group3 w-24 h-8 left-[110px] top-[-200px] absolute"
+          style={{
+            width: RFValue(120),
+            height: RFValue(40),
+            left: RFValue(30),
+            top: RFValue(-200),
+            position: "absolute",
+          }}
         >
-          <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
-          <Text className="Women w-12 h-6 left-[15px] top-[4px] absolute text-black text-xs font-normal font-['Jolly Lodger']">
+          <View
+            style={{
+              width: RFValue(86),
+              height: RFValue(23),
+              left: RFValue(70),
+              bottom: RFValue(65),
+              position: "absolute",
+              backgroundColor: "#FFCC90",
+              borderRadius: RFValue(8),
+              borderWidth: RFValue(1),
+              borderColor: "black",
+            }}
+          />
+          <Text
+            style={{
+              width: RFValue(80),
+              height: RFValue(40),
+              left: RFValue(85),
+              bottom: RFValue(47),
+              position: "absolute",
+              color: "black",
+              fontSize: RFValue(14),
+              fontWeight: "normal",
+            }}
+          >
             Bottoms
           </Text>
         </TouchableOpacity>
@@ -246,10 +338,39 @@ const App = ({ onTapAway }) => {
             setCarouselVisible(true);
             onTapAway;
           }}
-          className="Group2 w-22 h-8 left-[205px] top-[-200px] absolute"
+          style={{
+            width: RFValue(120),
+            height: RFValue(40),
+            left: RFValue(30),
+            top: RFValue(-200),
+            position: "absolute",
+          }}
         >
-          <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
-          <Text className="Kids w-15 h-6 left-[9px] top-[4px] absolute text-black font-normal text-xs font-['Jolly Lodger']">
+          <View
+            style={{
+              width: RFValue(86),
+              height: RFValue(23),
+              left: RFValue(167),
+              bottom: RFValue(65),
+              position: "absolute",
+              backgroundColor: "#FFCC90",
+              borderRadius: RFValue(8),
+              borderWidth: RFValue(1),
+              borderColor: "black",
+            }}
+          />
+          <Text
+            style={{
+              width: RFValue(80),
+              height: RFValue(40),
+              left: RFValue(175),
+              bottom: RFValue(47),
+              position: "absolute",
+              color: "black",
+              fontSize: RFValue(14),
+              fontWeight: "normal",
+            }}
+          >
             Outerwear
           </Text>
         </TouchableOpacity>
@@ -260,13 +381,62 @@ const App = ({ onTapAway }) => {
             setCarouselVisible(true);
             onTapAway;
           }}
-          className="Group2 w-22 h-8 left-[300px] top-[-200px] absolute"
+          style={{
+            width: RFValue(120),
+            height: RFValue(40),
+            left: RFValue(285),
+            top: RFValue(-200),
+            position: "absolute",
+          }}
         >
-          <View className="Rectangle1 w-20 h-6 left-0 top-0 absolute bg-orange-200 bg-opacity-10 rounded-lg border border-black" />
-          <Text className="Kids w-15 h-6 left-[6px] top-[4px] absolute text-black font-normal text-xs">
+          <View
+            style={{
+              width: RFValue(86),
+              height: RFValue(23),
+              left: RFValue(7),
+              bottom: RFValue(65),
+              position: "absolute",
+              backgroundColor: "#FFCC90",
+              borderRadius: RFValue(8),
+              borderWidth: RFValue(1),
+              borderColor: "black",
+            }}
+          />
+          <Text
+            style={{
+              width: RFValue(80),
+              height: RFValue(40),
+              right: RFValue(32),
+              bottom: RFValue(47),
+              position: "absolute",
+              color: "black",
+              fontSize: RFValue(14),
+              fontWeight: "normal",
+            }}
+          >
             Accessories
           </Text>
         </TouchableOpacity>
+
+        <Pressable
+          onPress={() => {
+            setCurrentScreen("home");
+            setCarouselVisible(true);
+            onTapAway;
+          }}
+        >
+          <Logo
+            style={{
+              width: screenWidth * 0.96,
+              height: screenWidth * .28,
+              bottom: screenWidth * 1.29,
+              position: "absolute",
+            }}
+            source={{
+              uri: "/Users/student/galorewayz/assets/galore-logo.png",
+            }}
+          />
+        </Pressable>
       </Section>
     </Container>
   );
