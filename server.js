@@ -273,6 +273,7 @@ app.get("/getCart/:cartId", async (req, res) => {
                         title
                         product {
                           handle
+                          title
                         }
                         image {
                           url

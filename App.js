@@ -168,7 +168,7 @@ const App = ({ onTapAway }) => {
           />
         </Pressable>
 
-        <Container>
+        <Container style={{ bottom: 15 }} >
              {/* Shopping Bag */}
              <TouchableOpacity
           onPress={() => {
@@ -183,7 +183,7 @@ const App = ({ onTapAway }) => {
               uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
             }}
           />
-          <Text className="w-[23px] h-[13px] left-[340px] top-[-315px] absolute text-black font-normal text-xs">Cart</Text>
+          <Text style={{ color: 'black', fontSize: 10, fontWeight: 'light', bottom: 314, left: 341 }}>Cart</Text>
         </TouchableOpacity>
             </Container>
 

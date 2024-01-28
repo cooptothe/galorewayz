@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Product from "./Product";
-import App from "../App";
 
 const Container = styled(View);
 const ProductItem = styled(View);
@@ -37,7 +36,7 @@ const Cart = () => {
           lines: existingCart.data.cart.lines.edges,
         });
 
-        console.log(existingCart.data.cart);
+        console.log(cart.cost.totalAmount);
 
         return;
       }
@@ -78,15 +77,15 @@ const Cart = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <ProductItem style={{ alignSelf: "left"}}>
+    <ProductItem style={{ alignSelf: "left", paddingTop: 25}}>
       <ProductImage
         source={{ uri: item.node.merchandise.image.url }}
         style={{ width: 50, height: 50 }}
       />
       <ProductInfo >
-        <ProductTitle>{item.node.merchandise.product.handle}</ProductTitle>
-        <ProductTitle>Size/Color: {item.node.merchandise.title}</ProductTitle>
-        <ProductPrice>Price: {`$${item.node.merchandise.price.amount}`}</ProductPrice>
+        <ProductTitle>{item.node.merchandise.product.title}</ProductTitle>
+        <ProductTitle style={{ color: "black", fontSize: 10, fontWeight: "normal", marginTop: 1 }}>Size/Color: {item.node.merchandise.title}</ProductTitle>
+        <ProductPrice style={{ color: "black", fontSize: 12, fontWeight: "bold", textAlign: "right", marginTop: 1 }}>   Price: {`$${item.node.merchandise.price.amount}`}</ProductPrice>
       </ProductInfo>
     </ProductItem>
   );
@@ -124,13 +123,16 @@ const Cart = () => {
         </Section>
       ) : (
         <>
-        <Container style={{ position: "absolute", top: 300, width: 800, left: 0 }}>
+        <Container style={{ position: "absolute", top: 220, width: 800, left: 10 }}>
             <FlatList
               data={cart.lines}
               renderItem={renderItem}
               keyExtractor={(item) => item.node.id} />
           </Container>
           <Container style={{ position: "absolute", top: 800 }}>
+          <Text style={{ color: "black", fontSize: 16, fontWeight: "bold", textAlign: "center" }}>
+                    Total: {`$${cart.cost.totalAmount.amount}`}
+                </Text>
               <TouchableOpacity
                 onPress={handleCheckout}
                 style={{
@@ -166,7 +168,7 @@ const Cart = () => {
                   bottom: 100
                 }}
               >
-                <Text style={{ color: "white", fontSize: 16, fontWeight: "normal" }}>
+                <Text style={{ color: "black", fontSize: 16, fontWeight: "normal" }}>
                   Empty Cart
                 </Text>
               </TouchableOpacity>
