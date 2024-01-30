@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList, Dimensions } from 'react-native';
 import { styled } from "nativewind";
-import Product from './Product'; // Import the Product component 
+import Product from './Product'; // Import the Product component
+import { RFValue } from "react-native-responsive-fontsize";
+
+const window = Dimensions.get("window");
+const screenWidth = window.width;
+const screenHeight = window.height;
 
 const Container = styled(View);
 const ProductGrid = styled(FlatList);
@@ -48,19 +53,43 @@ const OuterwearList = ({ onSelectProduct, setCarouselVisible }) => {
         key={item.node.id}
         onPress={() => handleProductPress(item.node)}
         className="group"
-        style={{ padding: 15 }}
+        style={{ padding: RFValue(20) }}
       >
         <ProductImage
           alt={mediaNode?.alt || item.node.title}
-          style={{ height: 125, width: 125, left: 0 }}
+          style={{ height: RFValue(60), width: RFValue(80), right: RFValue(25) }}
           source={{ uri: imageUrl }}
         />
-        <ProductTitle className="mt-4 text-xs text-gray-700">
+        <ProductTitle
+          style={{
+            position: "relative",
+            color: "black",
+            fontSize: RFValue(10),
+            fontWeight: "normal",
+            width: screenWidth * .4,
+            right: RFValue(20),
+            paddingBottom: RFValue(1),
+            paddingTop: RFValue(1)
+          }}
+        >
           {item.node.title}
         </ProductTitle>
-        <ProductPrice className="mt-1 text-xs font-dark text-gray-900">
+
+        <ProductPrice
+          style={{
+            position: "relative",
+            color: "black",
+            fontSize: RFValue(8),
+            fontWeight: "normal",
+            width: screenWidth * .3,
+            right: RFValue(20),
+            paddingBottom: RFValue(1),
+            paddingTop: RFValue(1)
+          }}
+        >
           {"$"}
-          {item.node.variants.edges[0]?.node.price.amount}{"0"}
+          {item.node.variants.edges[0]?.node.price.amount}
+          {"0"}
         </ProductPrice>
       </ProductItem>
     );

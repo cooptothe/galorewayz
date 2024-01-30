@@ -1,7 +1,16 @@
 import React from "react";
-import { View, Image } from "react-native";
+import {
+  View,
+  Image,
+  Dimensions,
+} from "react-native";
 import { styled } from "nativewind";
 import ProductList from "../Products/ProductList";
+import { RFValue } from "react-native-responsive-fontsize";
+
+const window = Dimensions.get("window");
+const screenWidth = window.width;
+const screenHeight = window.height;
 
 const Container = styled(View);
 const Section = styled(View);
@@ -12,9 +21,9 @@ const HomeScreen = ({ setCarouselVisible }) => {
   };
 
   return (
-    <Container className="Iphone1415ProMax1 w-96 h-96 relative">
+    <Container style={{ position: "absolute", height: screenWidth * 0.1, width: screenWidth * 0.96 }}>
       {/* ProductList Section */}
-      <Section className="w-96 h-80 left-[25px] top-[495px] relative">
+      <Section style={{ position: "absolute", height: screenWidth * 0.96, width: screenWidth * .96, top: screenWidth * 1.08, right: RFValue(0) }}>
         <ProductList
           onSelectProduct={handleProductSelect}
           setCarouselVisible={setCarouselVisible}
@@ -22,7 +31,7 @@ const HomeScreen = ({ setCarouselVisible }) => {
       </Section>
 
       {/* Image Banner Section (Fixed at the bottom) */}
-      <Section style={{ position: 'absolute', top: 785, left: 10, right: 0, alignItems: 'center' }}>
+      <Section style={{ position: 'absolute', top: screenWidth * 1.92, left: RFValue(97.5) }}>
         <Image
           className="w-40 h-20 relative"
           source={{ uri: "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/Web_banner.png?v=1705947435" }}

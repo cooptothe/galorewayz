@@ -1,8 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
-import { styled } from 'nativewind';
-import Product from './Product'; // Import the Product component
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+} from "react-native";
+import { styled } from "nativewind";
+import Product from "./Product"; // Import the Product component
+import { RFValue } from "react-native-responsive-fontsize";
 
+const window = Dimensions.get("window");
+const screenWidth = window.width;
+const screenHeight = window.height;
 
 const Container = styled(View);
 const ProductGrid = styled(FlatList);
@@ -19,16 +30,16 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
     // Fetch products from the server
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/getProducts');
+        const response = await fetch("http://localhost:3001/getProducts");
         const data = await response.json();
         setProducts(data.data.products.edges);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error("Error fetching products:", error);
       }
     };
 
     fetchProducts();
-  }, []); 
+  }, []);
 
   const handleProductPress = (product) => {
     setSelectedProduct(product);
@@ -38,29 +49,53 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
   const handleTapAway = () => {
     // Handle tap away, set selectedProduct to null to return to the original view
     setSelectedProduct(null);
-    console.log('hey')
+    console.log("hey");
   };
 
   const renderItem = ({ item }) => {
     const mediaNode = item.node.media.edges[0]?.node;
-    const imageUrl = mediaNode?.previewImage.url || '';
+    const imageUrl = mediaNode?.previewImage.url || "";
 
     return (
       <ProductItem
         key={item.node.id}
         onPress={() => handleProductPress(item.node)}
         className="group"
-        style={{ padding: 15 }}
+        style={{ padding: RFValue(20) }}
       >
         <ProductImage
           alt={mediaNode?.alt || item.node.title}
-          style={{ height: 125, width: 125, left: 0 }}
+          style={{ height: RFValue(60), width: RFValue(80) }}
           source={{ uri: imageUrl }}
         />
-        <ProductTitle className="mt-4 text-xs text-gray-700">{item.node.title}</ProductTitle>
-        <ProductPrice className="mt-1 text-xs font-dark text-gray-900">
-          {'$'}
-          {item.node.variants.edges[0]?.node.price.amount}{'0'}
+        <ProductTitle
+          style={{
+            position: "relative",
+            color: "black",
+            fontSize: RFValue(10),
+            fontWeight: "normal",
+            right: RFValue(10),
+            paddingBottom: RFValue(1),
+            paddingTop: RFValue(1)
+          }}
+        >
+          {item.node.title}
+        </ProductTitle>
+
+        <ProductPrice
+          style={{
+            position: "relative",
+            color: "black",
+            fontSize: RFValue(9),
+            fontWeight: "normal",
+            right: RFValue(8),
+            paddingBottom: RFValue(1),
+            paddingTop: RFValue(1)
+          }}
+        >
+          {"$"}
+          {item.node.variants.edges[0]?.node.price.amount}
+          {"0"}
         </ProductPrice>
       </ProductItem>
     );
@@ -69,7 +104,14 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
   return (
     <Container>
       {selectedProduct && (
-        <Product handle={selectedProduct.handle} onClose={() => {setSelectedProduct(null); setCarouselVisible(true);}} setCarouselVisible={setCarouselVisible}  />
+        <Product
+          handle={selectedProduct.handle}
+          onClose={() => {
+            setSelectedProduct(null);
+            setCarouselVisible(true);
+          }}
+          setCarouselVisible={setCarouselVisible}
+        />
       )}
       {!selectedProduct && (
         <ProductGrid
