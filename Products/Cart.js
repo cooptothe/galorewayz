@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  FlatList
+} from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Product from "./Product";
+
 
 const Container = styled(View);
 const ProductItem = styled(View);
@@ -114,7 +121,7 @@ const Cart = () => {
 
 
   return (
-    <Container style={{ backgroundColor: "white", padding: 192, alignItems: "center", alignSelf: 'center' }}>
+    <Container style={{ backgroundColor: "white", alignItems: "center", alignSelf: 'center' }}>
       {cart.lines.length === 0 ? (
         <Section style={{ alignSelf: "center", alignItems: "center", top: 100, position: "absolute", }}>
           <Text style={{ fontSize: 18, top: 300, position: "absolute", }}>

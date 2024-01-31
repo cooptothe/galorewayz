@@ -69,7 +69,7 @@ const OuterwearList = ({ onSelectProduct, setCarouselVisible }) => {
             width: screenWidth * .4,
             right: RFValue(20),
             paddingBottom: RFValue(1),
-            paddingTop: RFValue(1)
+            paddingTop: RFValue(5)
           }}
         >
           {item.node.title}
@@ -82,7 +82,7 @@ const OuterwearList = ({ onSelectProduct, setCarouselVisible }) => {
             fontSize: RFValue(8),
             fontWeight: "normal",
             width: screenWidth * .3,
-            right: RFValue(20),
+            right: RFValue(15),
             paddingBottom: RFValue(1),
             paddingTop: RFValue(1)
           }}

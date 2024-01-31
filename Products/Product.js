@@ -5,10 +5,17 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP, heightPercentageToDP } from "react-native-responsive-screen";
+
+const window = Dimensions.get("window");
+const screenWidth = window.width;
+const screenHeight = window.height;
+
 
 const Container = styled(View);
 const ProductImage = styled(Image);
@@ -21,7 +28,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [product2, setProduct2] = useState(null);
-  let variant;
+
 
 
   useEffect(() => {
@@ -114,7 +121,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
 
   return (
     <Container
-      style={{ backgroundColor: "white", padding: 15, bottom: 400, left: -30 }}
+      style={{ backgroundColor: "white", bottom: RFValue(250), right: screenWidth * .05 }}
     >
       {/* Image gallery */}
       <FlatList
@@ -124,7 +131,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
         renderItem={({ item }) => (
           <ProductImage
             source={{ uri: item.node.previewImage.url }}
-            style={{ flex: 3, height: 400, width: 325, left: 30, top: 70 }}
+            style={{ flex: 3, height: heightPercentageToDP("50%"), width: widthPercentageToDP("100%") }}
             resizeMode="contain"
           />
         )}
@@ -134,16 +141,17 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
       <TouchableOpacity
         onPress={handleAddToBag}
         style={{
-          width: 120,
-          height: 30,
+          width: RFValue(100),
+          height: RFValue(25),
           backgroundColor: "#FFCC90",
           borderRadius: 10,
           justifyContent: "center",
           alignItems: "center",
           marginTop: 5,
-          left: 130,
+          alignSelf: 'center',
           borderColor: "black",
           borderWidth: 1,
+          bottom: RFValue(50)
         }}
         disabled={!selectedOption}
       >
@@ -153,18 +161,18 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
       </TouchableOpacity>
 
       {/* Product info */}
-      <Container style={{ marginTop: 10 }}>
+      <Container style={{ marginTop: RFValue(1), bottom: RFValue(30) }}>
         <ProductTitle
-          style={{ fontSize: 20, fontWeight: "bold", color: "black" }}
+          style={{ fontSize: RFValue(15), fontWeight: "bold", color: "black" }}
         >
           {title}
         </ProductTitle>
         <ProductPrice
-          style={{ fontSize: 16, color: "gray", marginTop: 8 }}
+          style={{ fontSize: RFValue(13), color: "gray", marginTop: 8 }}
         >{`$${priceAmount}0`}</ProductPrice>
 
         {/* Color selection */}
-        <Text style={{ fontSize: 16, marginTop: 10 }}>Select Option:</Text>
+        <Text style={{ fontSize: RFValue(13), marginTop: RFValue(5) }}>Select Option:</Text>
         <FlatList
           horizontal
           data={variantEdges}
@@ -193,7 +201,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
         />
 
         {/* Description */}
-        <Text style={{ fontSize: 14, marginTop: 5 }}>{description}</Text>
+        <Text style={{ fontSize: RFValue(10), marginTop: RFValue(10) }}>{description}</Text>
       </Container>
     </Container>
   );

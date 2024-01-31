@@ -177,7 +177,7 @@ const App = ({ onTapAway }) => {
           ) && (
             <Section
               style={{
-                left: RFValue(5),
+                right: RFValue(0),
                 position: "relative",
                 bottom: screenWidth * 0.68,
               }}
@@ -202,14 +202,22 @@ const App = ({ onTapAway }) => {
                   color: "black",
                   fontSize: RFValue(24),
                   fontWeight: "normal",
+                  left: RFValue(10),
                 }}
               >
                 {screenTextMap[currentScreen]}
               </Trending>
             </Section>
           )}
-<Section style={{ bottom: screenWidth * 0.8 }} >
-<TouchableOpacity
+      </Section>
+
+      <Container style={{ top: screenWidth * 0.105, alignSelf: "flex-start" }}>
+        {renderScreen()}
+      </Container>
+
+      {/* NAV */}
+      <Section style={{ top: screenWidth * 0.96 }}>
+        <TouchableOpacity
           onPress={() => {
             setCurrentScreen("tops");
             setCarouselVisible(true);
@@ -370,69 +378,65 @@ const App = ({ onTapAway }) => {
             Accessories
           </Text>
         </TouchableOpacity>
-</Section>
-
-
-{/* LOGO */}
-    <Section>
-          <Pressable
-            onPress={() => {
-              setCurrentScreen("home");
-              setCarouselVisible(true);
-            }}
-          >
-            <Logo
-              style={{
-                width: screenWidth * 0.96,
-                height: screenWidth * 0.29,
-                bottom: screenWidth * 1.35,
-                position: "absolute",
-              }}
-              source={{
-                uri: "/Users/student/galorewayz/assets/galore-logo.png",
-              }}
-            />
-          </Pressable>
-    </Section>
-
-
-    <Container style={{ bottom: screenWidth * 0.41, right: RFValue(50) }}>
-          <TouchableOpacity
-            onPress={() => {
-              setCurrentScreen("cart");
-              setCarouselVisible(true);
-            }}
-          >
-            <Image
-              style={{
-                width: RFValue(20),
-                height: RFValue(20),
-                left: RFValue(330),
-                bottom: RFValue(305),
-                position: "absolute",
-              }}
-              source={{
-                uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
-              }}
-            />
-            <Text
-              style={{
-                color: "black",
-                fontSize: RFValue(10),
-                fontWeight: "light",
-                bottom: RFValue(295),
-                left: RFValue(330),
-                position: "absolute",
-              }}
-            >
-              Cart
-            </Text>
-          </TouchableOpacity>
-    </Container>
       </Section>
-      <Container style={{ top: screenWidth * 0.105 }}>
-        {renderScreen()}
-      </Container>
+
+      {/* LOGO */}
+      <Section>
+        <Pressable
+          onPress={() => {
+            setCurrentScreen("home");
+            setCarouselVisible(true);
+          }}
+        >
+          <Logo
+            style={{
+              width: screenWidth * 0.96,
+              height: screenWidth * 0.3,
+              top: screenWidth * 0.12,
+              position: "relative",
+              alignSelf: "center",
+            }}
+            source={{
+              uri: "/Users/student/galorewayz/assets/galore-logo.png",
+            }}
+          />
+        </Pressable>
+      </Section>
+
+      {/* cart */}
+      
+      <TouchableOpacity
+        onPress={() => {
+          setCurrentScreen("cart");
+          setCarouselVisible(true);
+        }}
+        style={{
+          top: screenWidth * .01,
+          alignSelf: 'flex-end',
+          right: RFValue(10)
+        }}
+      >
+        <Image
+          style={{
+            width: RFValue(20),
+            height: RFValue(20),
+            position: "relative",
+          }}
+          source={{
+            uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
+          }}
+        />
+        <Text
+          style={{
+            color: "black",
+            fontSize: RFValue(10),
+            fontWeight: "light",
+            position: "relative",
+          }}
+        >
+          Cart
+        </Text>
+      </TouchableOpacity>
     </Container>
   );
 };

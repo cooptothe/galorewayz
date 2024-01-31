@@ -65,7 +65,7 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
       >
         <ProductImage
           alt={mediaNode?.alt || item.node.title}
-          style={{ height: RFValue(60), width: RFValue(80) }}
+          style={{ height: RFValue(60), width: RFValue(80), right: RFValue(25) }}
           source={{ uri: imageUrl }}
         />
         <ProductTitle
@@ -74,9 +74,10 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
             color: "black",
             fontSize: RFValue(10),
             fontWeight: "normal",
-            right: RFValue(10),
+            width: screenWidth * .4,
+            right: RFValue(20),
             paddingBottom: RFValue(1),
-            paddingTop: RFValue(1)
+            paddingTop: RFValue(5)
           }}
         >
           {item.node.title}
@@ -86,9 +87,10 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
           style={{
             position: "relative",
             color: "black",
-            fontSize: RFValue(9),
+            fontSize: RFValue(8),
             fontWeight: "normal",
-            right: RFValue(8),
+            width: screenWidth * .3,
+            right: RFValue(15),
             paddingBottom: RFValue(1),
             paddingTop: RFValue(1)
           }}
@@ -102,7 +104,7 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
   };
 
   return (
-    <Container>
+    <Container style={{ left: RFValue(20) }} >
       {selectedProduct && (
         <Product
           handle={selectedProduct.handle}
