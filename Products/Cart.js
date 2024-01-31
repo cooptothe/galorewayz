@@ -118,7 +118,7 @@ const Cart = () => {
     // Implement the logic to navigate to the checkout screen or perform the checkout action
     // This can include additional API calls and navigation logic
     // For now, let's just log a message
-    console.log("Proceeding to checkout...");
+    console.log("Proceeding to checkout...", cart.checkoutUrl);
   };
 
 
@@ -147,14 +147,16 @@ const Cart = () => {
               <TouchableOpacity
                 onPress={handleCheckout}
                 style={{
-                  width: 120,
-                  height: 30,
+                  width: RFValue(100),
+                  height: RFValue(25),
                   backgroundColor: "#FFCC90",
-                  borderRadius: 10,
+                  borderRadius: RFValue(10),
                   justifyContent: "center",
                   alignItems: "center",
                   borderColor: "black",
+                  alignSelf: 'center',
                   borderWidth: 1,
+                  marginBottom: RFValue(10)
                 }}
               >
                 <Text style={{ color: "black", fontSize: RFValue(12), fontWeight: "normal" }}>
@@ -165,23 +167,24 @@ const Cart = () => {
               <TouchableOpacity
                 onPress={handleEmptyCart}
                 style={{
-                  width: 120,
-                  height: 30,
+                  width: RFValue(80),
+                  height: RFValue(20),
                   backgroundColor: "#FF6347",
-                  borderRadius: 10,
+                  borderRadius: RFValue(8),
                   justifyContent: "center",
                   alignItems: "center",
-                  marginTop: 5,
+                  alignSelf: 'center',
                   borderColor: "black",
                   borderWidth: 1,
+                  marginBottom: RFValue(10)
                 }}
               >
-                <Text style={{ color: "black", fontSize: RFValue(12), fontWeight: "normal" }}>
+                <Text style={{ color: "black", fontSize: RFValue(10), fontWeight: "normal" }}>
                   Empty Cart
                 </Text>
               </TouchableOpacity>
 
-              <Text style={{ color: "black", fontSize: RFValue(12), fontWeight: "bold", alignSelf: 'center', marginTop: RFValue(5) }}>
+              <Text style={{ color: "black", fontSize: RFValue(12), fontWeight: "bold", alignSelf: 'center', marginTop: RFValue(15) }}>
                     Total: {`$${cart.cost.totalAmount.amount}0`}
                 </Text>
             </Container>

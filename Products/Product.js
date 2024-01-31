@@ -155,7 +155,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
         }}
         disabled={!selectedOption}
       >
-        <Text style={{ color: "black", fontSize: 16, fontWeight: "normal" }}>
+        <Text style={{ color: "black", fontSize: RFValue(14), fontWeight: "normal" }}>
           Add to Bag
         </Text>
       </TouchableOpacity>
@@ -189,10 +189,10 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
                 item.node.title === selectedOption ? "#FFCC90" : "white",
                 borderWidth: 1,
                 borderColor: "black",
-                borderRadius: 5,
-                padding: 5,
-                marginTop: 10,
-                marginRight: 10,
+                borderRadius: RFValue(5),
+                padding: RFValue(5),
+                marginTop: RFValue(10),
+                marginRight: RFValue(10),
               }}
             >
               <Text>{item.node.title}</Text>
