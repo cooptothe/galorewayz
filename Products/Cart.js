@@ -4,11 +4,14 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  Dimensions,
 } from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Product from "./Product";
+import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP, heightPercentageToDP } from "react-native-responsive-screen";
 
 
 const Container = styled(View);
@@ -42,8 +45,6 @@ const Cart = () => {
           cost: existingCart.data.cart.cost,
           lines: existingCart.data.cart.lines.edges,
         });
-
-        console.log(cart.cost.totalAmount);
 
         return;
       }
@@ -84,15 +85,16 @@ const Cart = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <ProductItem style={{ paddingTop: 10, width: 330}}>
+    <ProductItem style={{ paddingTop: RFValue(10), paddingLeft: RFValue(10), width: widthPercentageToDP("90%"), height: heightPercentageToDP('18%') }}>
       <ProductImage
+        keyExtractor={(item) => item.node.id}
         source={{ uri: item.node.merchandise.image.url }}
-        style={{ width: 100, height: 100 }}
+        style={{ width: widthPercentageToDP("20%"), height: heightPercentageToDP("10%") }}
       />
       <ProductInfo >
-        <ProductTitle style={{ color: "black", fontSize: 18, fontWeight: "normal", textAlign: "left" }}>{item.node.merchandise.product.title}</ProductTitle>
-        <ProductTitle style={{ color: "black", fontSize: 10, fontWeight: "300", marginTop: 1 }}>Size/Color: {item.node.merchandise.title}</ProductTitle>
-        <ProductPrice style={{ color: "black", fontSize: 12, fontWeight: "bold", textAlign: "right", marginTop: 1 }}>   Price: {`$${item.node.merchandise.price.amount}`}</ProductPrice>
+        <ProductTitle style={{ color: "black", fontSize: RFValue(13), fontWeight: "normal", textAlign: "left" }}>{item.node.merchandise.product.title}</ProductTitle>
+        <ProductTitle style={{ color: "black", fontSize: RFValue(9), fontWeight: "300" }}>Size/Color: {item.node.merchandise.title}</ProductTitle>
+        <ProductPrice style={{ color: "black", fontSize: RFValue(10), fontWeight: "bold", textAlign: "right", marginTop: 1 }}>Price: {`$${item.node.merchandise.price.amount}0`}</ProductPrice>
       </ProductInfo>
     </ProductItem>
   );
@@ -121,26 +123,27 @@ const Cart = () => {
 
 
   return (
-    <Container style={{ backgroundColor: "white", alignItems: "center", alignSelf: 'center' }}>
+    <Container style={{ backgroundColor: "white", position: 'relative', width: widthPercentageToDP("100%"), height: heightPercentageToDP("0%") }}>
       {cart.lines.length === 0 ? (
-        <Section style={{ alignSelf: "center", alignItems: "center", top: 100, position: "absolute", }}>
-          <Text style={{ fontSize: 18, top: 300, position: "absolute", }}>
+        <Section>
+          <Text style={{ fontSize: RFValue(20), position: "relative", width: widthPercentageToDP("100%"), height: heightPercentageToDP("100%"), textAlign: 'center', top: RFValue(400) }}>
             Your cart is empty!
           </Text>
         </Section>
       ) : (
         <>
-        <Container style={{ position: "absolute", top: 210, width: 1000, alignItems: "center", alignSelf: 'center' }}>
+
+        <Container style={{ position: "relative", width: widthPercentageToDP("100%"), height: heightPercentageToDP('50%'), bottom: RFValue(-155) }}>
             <FlatList
-            style={{ right: 10,  height: 500 }}
               data={cart.lines}
               renderItem={renderItem}
               keyExtractor={(item) => item.node.id} />
           </Container>
-          <Container style={{ position: "absolute", top: 800 }}>
-          <Text style={{ color: "black", fontSize: 16, fontWeight: "bold", textAlign: "center" }}>
-                    Total: {`$${cart.cost.totalAmount.amount}`}
-                </Text>
+
+
+
+
+          <Container style={{ position: "relative", alignSelf: 'center', width: widthPercentageToDP("28%"), height: heightPercentageToDP('10%'), bottom: RFValue(-190)  }}>
               <TouchableOpacity
                 onPress={handleCheckout}
                 style={{
@@ -150,13 +153,11 @@ const Cart = () => {
                   borderRadius: 10,
                   justifyContent: "center",
                   alignItems: "center",
-                  marginTop: 5,
                   borderColor: "black",
                   borderWidth: 1,
-                  bottom: 100
                 }}
               >
-                <Text style={{ color: "black", fontSize: 16, fontWeight: "normal" }}>
+                <Text style={{ color: "black", fontSize: RFValue(12), fontWeight: "normal" }}>
                   Checkout
                 </Text>
               </TouchableOpacity>
@@ -173,14 +174,19 @@ const Cart = () => {
                   marginTop: 5,
                   borderColor: "black",
                   borderWidth: 1,
-                  bottom: 100
                 }}
               >
-                <Text style={{ color: "black", fontSize: 16, fontWeight: "normal" }}>
+                <Text style={{ color: "black", fontSize: RFValue(12), fontWeight: "normal" }}>
                   Empty Cart
                 </Text>
               </TouchableOpacity>
+
+              <Text style={{ color: "black", fontSize: RFValue(12), fontWeight: "bold", alignSelf: 'center', marginTop: RFValue(5) }}>
+                    Total: {`$${cart.cost.totalAmount.amount}0`}
+                </Text>
             </Container>
+
+            
             </>
       )}
     </Container>

@@ -404,7 +404,6 @@ const App = ({ onTapAway }) => {
       </Section>
 
       {/* cart */}
-      
       <TouchableOpacity
         onPress={() => {
           setCurrentScreen("cart");
