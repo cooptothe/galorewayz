@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
+  Linking
 } from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -115,10 +116,17 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    // Implement the logic to navigate to the checkout screen or perform the checkout action
-    // This can include additional API calls and navigation logic
-    // For now, let's just log a message
-    console.log("Proceeding to checkout...", cart.checkoutUrl);
+    if (cart.checkoutUrl) {
+      Linking.openURL(cart.checkoutUrl)
+        .then((result) => {
+          console.log('Opened successfully:', result);
+        })
+        .catch((error) => {
+          console.error('Error opening URL:', error);
+        });
+    } else {
+      console.warn('Checkout URL is not available.');
+    }
   };
 
 
