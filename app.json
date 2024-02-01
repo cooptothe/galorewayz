@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "galorewayz",
-    "slug": "galorewayz",
+    "name": "Galore Wayz",
+    "slug": "galore-wayz",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/galore-logo.png",
+    "icon": "./assets/galore-logo-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/Web_banner.png",
