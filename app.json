@@ -20,7 +20,6 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/Web_banner.png",
-        "resizeMode": "contain",
         "backgroundColor": "#ffffff"
       }
     },

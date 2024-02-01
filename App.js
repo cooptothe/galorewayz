@@ -20,6 +20,7 @@ import ProductList from "./Products/ProductList";
 import Cart from "./Products/Cart";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RFValue } from "react-native-responsive-fontsize";
+import { widthPercentageToDP, heightPercentageToDP } from "react-native-responsive-screen";
 
 const window = Dimensions.get("window");
 const screenWidth = window.width;
@@ -112,27 +113,23 @@ const App = ({ onTapAway }) => {
   const carouselData = [
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized/IMG_1438-removebg-preview.png",
+        "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/valentines_collection-4.png?v=1706045692",
     },
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized/IMG_1439-removebg-preview.png",
+        "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/BD0BC418-F0B7-49F7-B565-257B67D9DC7A.png?v=1704739453",
     },
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized/IMG_1441-removebg-preview.png",
+        "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/valentines_collection-2_292379ec-1148-4cbe-9021-488942237d33.png?v=1706045619",
     },
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized/IMG_1442-removebg-preview.png",
+        "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/Welcome_to_our_website_-_2.png?v=1704671408",
     },
     {
       imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized/IMG_1443-removebg-preview.png",
-    },
-    {
-      imageUrl:
-        "/Users/student/galorewayz/jpegmini_optimized/IMG_1444-removebg-preview.png",
+        "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/Untitled_design-4.png?v=1704942366",
     },
   ];
 
@@ -141,19 +138,18 @@ const App = ({ onTapAway }) => {
       style={{
         width: screenWidth * 0.8,
         height: screenWidth * 0.8,
-        justifyContent: "center",
-        alignItems: "center",
+        alignSelf: 'center',
+        alignItems: 'center',
       }}
     >
       <Image
         style={{
-          width: screenWidth * 0.8,
-          height: screenWidth * 0.6,
-          borderRadius: 10,
-          shadowRadius: 5,
-          shadowOpacity: 0.35,
-          top: screenWidth * 0.15,
-          right: screenWidth * 0.13,
+          width: widthPercentageToDP('96%'),
+          height: heightPercentageToDP('22%'),
+          borderRadius: RFValue(15),
+          alignSelf: 'center',
+          resizeMode: 'cover',
+          top: RFValue(85)
         }}
         source={{ uri: item.imageUrl }}
       />
@@ -185,8 +181,9 @@ const App = ({ onTapAway }) => {
               <Carousel
                 data={carouselData}
                 renderItem={renderItem}
-                sliderWidth={screenWidth * 1}
-                itemWidth={screenWidth * 0.49}
+                sliderWidth={widthPercentageToDP('100%')}
+                sliderHeight={heightPercentageToDP('100%')}
+                itemWidth={widthPercentageToDP('100%')}
                 layout="default"
                 layoutCardOffset={RFValue(30)}
                 inactiveSlideOpacity={0.4}
