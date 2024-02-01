@@ -117,11 +117,9 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
     }
   };
 
-  // console.log(variant);
-
   return (
     <Container
-      style={{ backgroundColor: "white", bottom: RFValue(250), right: screenWidth * .05 }}
+      style={{ backgroundColor: "white", bottom: RFValue(235), right: screenWidth * .038 }}
     >
       {/* Image gallery */}
       <FlatList
@@ -131,7 +129,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
         renderItem={({ item }) => (
           <ProductImage
             source={{ uri: item.node.previewImage.url }}
-            style={{ flex: 3, height: heightPercentageToDP("50%"), width: widthPercentageToDP("100%") }}
+            style={{ flex: 3, height: heightPercentageToDP("50%"), width: widthPercentageToDP("100%"), top: screenWidth * .07 }}
             resizeMode="contain"
           />
         )}
@@ -151,7 +149,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
           alignSelf: 'center',
           borderColor: "black",
           borderWidth: 1,
-          bottom: RFValue(50)
+          bottom: screenWidth * .04
         }}
         disabled={!selectedOption}
       >
@@ -161,18 +159,18 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
       </TouchableOpacity>
 
       {/* Product info */}
-      <Container style={{ marginTop: RFValue(1), bottom: RFValue(30) }}>
+      <Container style={{ marginTop: RFValue(20), bottom: RFValue(30) }}>
         <ProductTitle
           style={{ fontSize: RFValue(15), fontWeight: "bold", color: "black" }}
         >
           {title}
         </ProductTitle>
         <ProductPrice
-          style={{ fontSize: RFValue(13), color: "gray", marginTop: 8 }}
+          style={{ fontSize: RFValue(12), color: "gray", marginTop: RFValue(2) }}
         >{`$${priceAmount}0`}</ProductPrice>
 
         {/* Color selection */}
-        <Text style={{ fontSize: RFValue(13), marginTop: RFValue(5) }}>Select Option:</Text>
+        <Text style={{ fontSize: RFValue(13), marginTop: RFValue(2) }}>Select Option:</Text>
         <FlatList
           horizontal
           data={variantEdges}
@@ -191,7 +189,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
                 borderColor: "black",
                 borderRadius: RFValue(5),
                 padding: RFValue(5),
-                marginTop: RFValue(10),
+                marginTop: RFValue(5),
                 marginRight: RFValue(10),
               }}
             >
@@ -201,7 +199,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
         />
 
         {/* Description */}
-        <Text style={{ fontSize: RFValue(10), marginTop: RFValue(10) }}>{description}</Text>
+        <Text style={{ fontSize: RFValue(10), marginTop: RFValue(5) }}>{description}</Text>
       </Container>
     </Container>
   );
