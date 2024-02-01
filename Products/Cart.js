@@ -83,7 +83,7 @@ const Cart = () => {
     };
 
     getCart();
-  }, []);
+  }, [cart.id]);
 
   const renderItem = ({ item }) => (
     <ProductItem style={{ paddingTop: RFValue(10), paddingLeft: RFValue(10), width: widthPercentageToDP("90%"), height: heightPercentageToDP('18%') }}>
