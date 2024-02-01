@@ -151,7 +151,8 @@ const Cart = () => {
 
 
 
-          <Container style={{ position: "relative", alignSelf: 'center', width: widthPercentageToDP("28%"), height: heightPercentageToDP('10%'), bottom: RFValue(-190)  }}>
+          <Container style={{ position: "relative", alignSelf: 'center', width: widthPercentageToDP("28%"), height: heightPercentageToDP('10%'), bottom: RFValue(-190),                   justifyContent: "center",
+                  alignItems: "center",  }}>
               <TouchableOpacity
                 onPress={handleCheckout}
                 style={{
