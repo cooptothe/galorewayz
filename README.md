@@ -16,11 +16,4 @@ Galore Wayz is built with a powerful and versatile tech stack, including:
 * GraphQL: Leveraged for efficient and flexible data fetching.
 
 ## Live Demo
-<iframe class="youtube-embed" src="https://www.youtube.com/embed/2pPN3q6IV2w?si=jOwaqKGq4n7GHw8s" frameborder="0" allowfullscreen="true"> </iframe>
-
-<style>
-  .youtube-embed {
-    width: 100%;
-    height: 315px;
-  }
-</style>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2pPN3q6IV2w?si=CvJ4yDcjV4vgMwcR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
