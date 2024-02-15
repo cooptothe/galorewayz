@@ -15,13 +15,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cooptothe.galorewayz"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/Web_banner.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.cooptothe.galorewayz"
     },
     "web": {
       "favicon": "./assets/galore-logo.png"

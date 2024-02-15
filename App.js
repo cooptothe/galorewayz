@@ -168,9 +168,49 @@ const App = ({ onTapAway }) => {
 
   return (
     <Container>
-            <Container style={{ position: "absolute", bottom: screenWidth * 0.12 }}>
+      <Section style={{ position: "absolute", top: screenHeight * 0.85 }}>
+        {carouselVisible &&
+          ["accessories", "bottoms", "home", "outerwear", "tops"].includes(
+            currentScreen
+          ) && (
+            <Section 
+            style={{
+              position: "absolute",
+              bottom: screenWidth * .5
+            }}>
+              <Carousel
+                data={carouselData}
+                renderItem={renderItem}
+                sliderWidth={widthPercentageToDP("100%")}
+                itemWidth={widthPercentageToDP("100%")}
+                layout="default"
+                layoutCardOffset={RFValue(30)}
+                inactiveSlideOpacity={0.4}
+                inactiveSlideScale={0.4}
+                loop={true}
+                autoplay={true}
+                autoplayInterval={6000}
+              />
+                      <Trending
+          style={{
+            position: "absolute",
+            color: "black",
+            fontSize: RFValue(24),
+            fontWeight: "normal",
+            left: RFValue(10),
+            top: screenHeight * .22
+          }}
+        >
+          {screenTextMap[currentScreen]}
+        </Trending>
+            </Section>
+          )}
+      </Section>
+
+      <Container style={{ position: "absolute", bottom: screenHeight * 0.05 }}>
         {renderScreen()}
       </Container>
+
       {/* LOGO */}
       <Section>
         <Pressable
@@ -184,7 +224,7 @@ const App = ({ onTapAway }) => {
               width: screenWidth * 0.96,
               height: screenWidth * 0.3,
               position: "absolute",
-              top: RFValue(50),
+              top: screenHeight * 0.06,
               left: (screenWidth - screenWidth * 0.96) / 2,
               alignSelf: "center",
             }}
@@ -198,7 +238,7 @@ const App = ({ onTapAway }) => {
       {/* NAV */}
       <Section
         style={{
-          top: screenWidth * 0.48,
+          top: screenHeight * 0.2,
           width: "100%",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -381,44 +421,6 @@ const App = ({ onTapAway }) => {
         </TouchableOpacity>
       </Section>
 
-      <Section style={{ position: "absolute", bottom: screenWidth * -1.65 }}>
-        {carouselVisible &&
-          ["accessories", "bottoms", "home", "outerwear", "tops"].includes(
-            currentScreen
-          ) && (
-            <Section 
-            style={{
-              position: "absolute",
-              bottom: screenWidth * .48
-            }}>
-              <Carousel
-                data={carouselData}
-                renderItem={renderItem}
-                sliderWidth={widthPercentageToDP("100%")}
-                itemWidth={widthPercentageToDP("100%")}
-                layout="default"
-                layoutCardOffset={RFValue(30)}
-                inactiveSlideOpacity={0.4}
-                inactiveSlideScale={0.4}
-                loop={true}
-                autoplay={true}
-                autoplayInterval={6000}
-              />
-                      <Trending
-          style={{
-            position: "absolute",
-            color: "black",
-            fontSize: RFValue(24),
-            fontWeight: "normal",
-            left: RFValue(10),
-            top: screenWidth * .5
-          }}
-        >
-          {screenTextMap[currentScreen]}
-        </Trending>
-            </Section>
-          )}
-      </Section>
     </Container>
   );
 };

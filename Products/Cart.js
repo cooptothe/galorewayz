@@ -6,14 +6,20 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
-  Linking
+  Linking,
 } from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Product from "./Product";
 import { RFValue } from "react-native-responsive-fontsize";
-import { widthPercentageToDP, heightPercentageToDP } from "react-native-responsive-screen";
+import {
+  widthPercentageToDP,
+  heightPercentageToDP,
+} from "react-native-responsive-screen";
 
+const window = Dimensions.get("window");
+const screenWidth = window.width;
+const screenHeight = window.height;
 
 const Container = styled(View);
 const ProductItem = styled(View);
@@ -83,23 +89,55 @@ const Cart = () => {
     };
 
     getCart();
-  }, [cart.id]);
+  }, [cart]);
 
   const renderItem = ({ item }) => (
-    <ProductItem style={{ paddingTop: RFValue(10), paddingLeft: RFValue(10), width: widthPercentageToDP("90%"), height: heightPercentageToDP('18%') }}>
+    <ProductItem
+      style={{
+        paddingTop: RFValue(10),
+        paddingLeft: RFValue(10),
+        width: widthPercentageToDP("90%"),
+        height: heightPercentageToDP("18%"),
+      }}
+    >
       <ProductImage
         keyExtractor={(item) => item.node.id}
         source={{ uri: item.node.merchandise.image.url }}
-        style={{ width: widthPercentageToDP("20%"), height: heightPercentageToDP("10%") }}
+        style={{
+          width: widthPercentageToDP("20%"),
+          height: heightPercentageToDP("10%"),
+        }}
       />
-      <ProductInfo >
-        <ProductTitle style={{ color: "black", fontSize: RFValue(13), fontWeight: "normal", textAlign: "left" }}>{item.node.merchandise.product.title}</ProductTitle>
-        <ProductTitle style={{ color: "black", fontSize: RFValue(9), fontWeight: "300" }}>Size/Color: {item.node.merchandise.title}</ProductTitle>
-        <ProductPrice style={{ color: "black", fontSize: RFValue(10), fontWeight: "bold", textAlign: "right", marginTop: 1 }}>Price: {`$${item.node.merchandise.price.amount}0`}</ProductPrice>
+      <ProductInfo>
+        <ProductTitle
+          style={{
+            color: "black",
+            fontSize: RFValue(13),
+            fontWeight: "normal",
+            textAlign: "left",
+          }}
+        >
+          {item.node.merchandise.product.title}
+        </ProductTitle>
+        <ProductTitle
+          style={{ color: "black", fontSize: RFValue(9), fontWeight: "300" }}
+        >
+          Size/Color: {item.node.merchandise.title}
+        </ProductTitle>
+        <ProductPrice
+          style={{
+            color: "black",
+            fontSize: RFValue(10),
+            fontWeight: "bold",
+            textAlign: "right",
+            marginTop: 1,
+          }}
+        >
+          Price: {`$${item.node.merchandise.price.amount}0`}
+        </ProductPrice>
       </ProductInfo>
     </ProductItem>
   );
-  
 
   const handleEmptyCart = async () => {
     try {
@@ -119,87 +157,133 @@ const Cart = () => {
     if (cart.checkoutUrl) {
       Linking.openURL(cart.checkoutUrl)
         .then((result) => {
-          console.log('Opened successfully:', result);
+          console.log("Opened successfully:", result);
         })
         .catch((error) => {
-          console.error('Error opening URL:', error);
+          console.error("Error opening URL:", error);
         });
     } else {
-      console.warn('Checkout URL is not available.');
+      console.warn("Checkout URL is not available.");
     }
   };
 
-
   return (
-    <Container style={{ backgroundColor: "white", position: 'relative', width: widthPercentageToDP("100%"), height: heightPercentageToDP("0%") }}>
+    <Container
+      style={{
+        backgroundColor: "white",
+        position: "absolute",
+        width: widthPercentageToDP("100%"),
+        height: heightPercentageToDP("0%"),
+      }}
+    >
       {cart.lines.length === 0 ? (
         <Section>
-          <Text style={{ fontSize: RFValue(20), position: "relative", width: widthPercentageToDP("100%"), height: heightPercentageToDP("100%"), textAlign: 'center', top: RFValue(400) }}>
+          <Text
+            style={{
+              fontSize: RFValue(20),
+              position: "absolute",
+              width: widthPercentageToDP("100%"),
+              height: heightPercentageToDP("100%"),
+              textAlign: "center",
+              top: RFValue(400),
+            }}
+          >
             Your cart is empty!
           </Text>
         </Section>
       ) : (
         <>
-
-        <Container style={{ position: "relative", width: widthPercentageToDP("100%"), height: heightPercentageToDP('50%'), bottom: RFValue(-155) }}>
+          <Container
+            style={{
+              position: "absolute",
+              width: widthPercentageToDP("100%"),
+              height: heightPercentageToDP("50%"),
+              top: screenHeight * 0.2,
+            }}
+          >
             <FlatList
               data={cart.lines}
               renderItem={renderItem}
-              keyExtractor={(item) => item.node.id} />
+              keyExtractor={(item) => item.node.id}
+            />
           </Container>
 
-
-
-
-          <Container style={{ position: "relative", alignSelf: 'center', width: widthPercentageToDP("28%"), height: heightPercentageToDP('10%'), bottom: RFValue(-190),                   justifyContent: "center",
-                  alignItems: "center",  }}>
-              <TouchableOpacity
-                onPress={handleCheckout}
+          <Container
+            style={{
+              position: "absolute",
+              alignSelf: "center",
+              width: widthPercentageToDP("28%"),
+              height: heightPercentageToDP("10%"),
+              top: screenHeight * 0.8,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={handleCheckout}
+              style={{
+                width: RFValue(100),
+                height: RFValue(25),
+                backgroundColor: "#FFCC90",
+                borderRadius: RFValue(10),
+                justifyContent: "center",
+                alignItems: "center",
+                borderColor: "black",
+                alignSelf: "center",
+                borderWidth: 1,
+                marginBottom: RFValue(10),
+              }}
+            >
+              <Text
                 style={{
-                  width: RFValue(100),
-                  height: RFValue(25),
-                  backgroundColor: "#FFCC90",
-                  borderRadius: RFValue(10),
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderColor: "black",
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  marginBottom: RFValue(10)
+                  color: "black",
+                  fontSize: RFValue(12),
+                  fontWeight: "normal",
                 }}
               >
-                <Text style={{ color: "black", fontSize: RFValue(12), fontWeight: "normal" }}>
-                  Checkout
-                </Text>
-              </TouchableOpacity>
-              {/* Add the Empty Cart button */}
-              <TouchableOpacity
-                onPress={handleEmptyCart}
+                Checkout
+              </Text>
+            </TouchableOpacity>
+            {/* Add the Empty Cart button */}
+            <TouchableOpacity
+              onPress={handleEmptyCart}
+              style={{
+                width: RFValue(80),
+                height: RFValue(20),
+                backgroundColor: "#FF6347",
+                borderRadius: RFValue(8),
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                borderColor: "black",
+                borderWidth: 1,
+                marginBottom: RFValue(10),
+              }}
+            >
+              <Text
                 style={{
-                  width: RFValue(80),
-                  height: RFValue(20),
-                  backgroundColor: "#FF6347",
-                  borderRadius: RFValue(8),
-                  justifyContent: "center",
-                  alignItems: "center",
-                  alignSelf: 'center',
-                  borderColor: "black",
-                  borderWidth: 1,
-                  marginBottom: RFValue(10)
+                  color: "black",
+                  fontSize: RFValue(10),
+                  fontWeight: "normal",
                 }}
               >
-                <Text style={{ color: "black", fontSize: RFValue(10), fontWeight: "normal" }}>
-                  Empty Cart
-                </Text>
-              </TouchableOpacity>
+                Empty Cart
+              </Text>
+            </TouchableOpacity>
 
-              <Text style={{ color: "black", fontSize: RFValue(12), fontWeight: "bold", alignSelf: 'center', marginTop: RFValue(15) }}>
-                    Total: {`$${cart.cost.totalAmount.amount}0`}
-                </Text>
-            </Container>
-
-            
-            </>
+            <Text
+              style={{
+                color: "black",
+                fontSize: RFValue(12),
+                fontWeight: "bold",
+                alignSelf: "center",
+                marginTop: RFValue(15),
+              }}
+            >
+              Total: {`$${cart.cost.totalAmount.amount}0`}
+            </Text>
+          </Container>
+        </>
       )}
     </Container>
   );
