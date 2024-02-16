@@ -17,8 +17,9 @@ const AccessoriesScreen = ({ setCarouselVisible }) => {
   };
 
   return (
-    <Container style={{ position: "absolute", height: screenWidth * 0.1, width: screenWidth * 0.96 }}>
-      <Section style={{ position: "absolute", height: screenWidth * 0.96, width: screenWidth * .96, top: screenWidth * 1.08, left: RFValue(20) }}>
+    <Container style={{ position: "absolute", height: screenWidth * 0.1, width: screenWidth * 0.96, alignSelf: "auto",
+    alignItems: "center" }}>
+      <Section style={{ position: "absolute", height: screenWidth * 0.96, width: screenWidth * .96, top: screenWidth * 1.08, left: RFValue(10) }}>
         {/* ProductList */}
         <AccessoriesList
           onSelectProduct={handleProductSelect}
@@ -26,7 +27,7 @@ const AccessoriesScreen = ({ setCarouselVisible }) => {
         />
       </Section>
             {/* Image Banner Section (Fixed at the bottom) */}
-            <Section style={{ position: 'absolute', top: screenWidth * 1.92, left: RFValue(97.5) }}>
+            <Section style={{ position: 'absolute', top: screenWidth * 1.92 }}>
         <Image
           className="w-40 h-20 relative"
           source={{ uri: "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/Web_banner.png?v=1705947435" }}

@@ -96,7 +96,7 @@ const OuterwearList = ({ onSelectProduct, setCarouselVisible }) => {
   };
 
   return (
-    <Container>
+    <Container style={{ height: screenWidth * .5, top: screenWidth * .4 }} >
     {selectedProduct && (
       <Product handle={selectedProduct.handle} onClose={() => {setSelectedProduct(null); setCarouselVisible(true);}} setCarouselVisible={setCarouselVisible} />
     )}

@@ -96,7 +96,7 @@ const TopsList = ({ onSelectProduct, setCarouselVisible }) => {
   };
 
   return (
-      <Container style={{ right: RFValue(1) }} >
+    <Container style={{ height: screenWidth * .5, top: screenWidth * .4 }} >
         {selectedProduct && (
           <Product handle={selectedProduct.handle} onClose={() => {setSelectedProduct(null); setCarouselVisible(true);}} setCarouselVisible={setCarouselVisible} />
         )}

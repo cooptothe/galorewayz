@@ -174,6 +174,7 @@ const Cart = () => {
         position: "absolute",
         width: widthPercentageToDP("100%"),
         height: heightPercentageToDP("0%"),
+        top: screenHeight * 0.61,
       }}
     >
       {cart.lines.length === 0 ? (
@@ -198,7 +199,7 @@ const Cart = () => {
               position: "absolute",
               width: widthPercentageToDP("100%"),
               height: heightPercentageToDP("50%"),
-              top: screenHeight * 0.2,
+              top: screenHeight * 0.11,
             }}
           >
             <FlatList
@@ -214,7 +215,7 @@ const Cart = () => {
               alignSelf: "center",
               width: widthPercentageToDP("28%"),
               height: heightPercentageToDP("10%"),
-              top: screenHeight * 0.8,
+              top: screenHeight * 0.65,
               justifyContent: "center",
               alignItems: "center",
             }}

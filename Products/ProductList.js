@@ -94,7 +94,7 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
             paddingBottom: RFValue(1),
             paddingTop: RFValue(1)
           }}
-        >
+        > 
           {"$"}
           {item.node.variants.edges[0]?.node.price.amount}
           {"0"}
@@ -104,7 +104,7 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
   };
 
   return (
-    <Container style={{ left: RFValue(20) }} >
+    <Container style={{ height: screenWidth * .5, top: screenWidth * .4 }} >
       {selectedProduct && (
         <Product
           handle={selectedProduct.handle}

@@ -10,12 +10,14 @@ import {
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RFValue } from "react-native-responsive-fontsize";
-import { widthPercentageToDP, heightPercentageToDP } from "react-native-responsive-screen";
+import {
+  widthPercentageToDP,
+  heightPercentageToDP,
+} from "react-native-responsive-screen";
 
 const window = Dimensions.get("window");
 const screenWidth = window.width;
 const screenHeight = window.height;
-
 
 const Container = styled(View);
 const ProductImage = styled(Image);
@@ -29,8 +31,6 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [product2, setProduct2] = useState(null);
 
-
-
   useEffect(() => {
     // Fetch product by handle
     const fetchProductByHandle = async () => {
@@ -40,7 +40,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
         );
         const data = await response.json();
         setProduct(data.data.product);
-        setProduct2(data.data.product)
+        setProduct2(data.data.product);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
@@ -67,7 +67,6 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
     media: { edges: mediaEdges },
     variants: { edges: variantEdges },
   } = product;
-
 
   // Access the price amount
   const priceAmount = variantEdges[0]?.node.price.amount || 0;
@@ -118,89 +117,133 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
   };
 
   return (
-    <Container
-      style={{ backgroundColor: "white", bottom: RFValue(235), right: screenWidth * .038 }}
-    >
-      {/* Image gallery */}
-      <FlatList
-        horizontal
-        data={mediaEdges}
-        keyExtractor={(item) => item.node.previewImage.url}
-        renderItem={({ item }) => (
-          <ProductImage
-            source={{ uri: item.node.previewImage.url }}
-            style={{ flex: 3, height: heightPercentageToDP("50%"), width: widthPercentageToDP("100%"), top: screenWidth * .07 }}
-            resizeMode="contain"
-          />
-        )}
-      />
+    <Container style={{ backgroundColor: "white", height: screenWidth * .95, width: screenWidth * 1 }}>
 
-      {/* Add to bag button */}
-      <TouchableOpacity
-        onPress={handleAddToBag}
+<Container style={{ bottom: screenWidth * 1.2 }}>
+
+{/* Image gallery */}
+<View style={{ alignSelf: 'center', top: screenWidth * .1 }}>
+  <FlatList
+    horizontal
+    data={mediaEdges}
+    keyExtractor={(item) => item.node.previewImage.url}
+    renderItem={({ item }) => (
+      <ProductImage
+        source={{ uri: item.node.previewImage.url }}
         style={{
-          width: RFValue(100),
-          height: RFValue(25),
-          backgroundColor: "#FFCC90",
-          borderRadius: 10,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 5,
-          alignSelf: 'center',
-          borderColor: "black",
-          borderWidth: 1,
-          bottom: screenWidth * .04
+          height: heightPercentageToDP("50%"),
+          width: widthPercentageToDP("100%"),
+          top: screenWidth * .6
         }}
-        disabled={!selectedOption}
+        resizeMode="contain"
+      />
+    )}
+    pagingEnabled={true} // Enable pagination for scrolling through each image
+  />
+</View>
+
+{/* Product info */}
+<View style={{ top: screenWidth * .1 }} >
+
+  {/* Add to bag button */}
+  <TouchableOpacity
+    onPress={handleAddToBag}
+    style={{
+      width: RFValue(100),
+      height: RFValue(25),
+      backgroundColor: "#FFCC90",
+      borderRadius: 10,
+      justifyContent: "center",
+      alignItems: "center",
+      alignSelf: "center",
+      borderColor: "black",
+      borderWidth: 1,
+    }}
+    disabled={!selectedOption}
+  >
+    <Text
+      style={{
+        color: "black",
+        fontSize: RFValue(14),
+        fontWeight: "normal",
+        alignSelf: "center",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      Add to Bag
+    </Text>
+  </TouchableOpacity>
+
+
+  <ProductTitle
+    style={{
+      fontSize: RFValue(15),
+      fontWeight: "bold",
+      color: "black",
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
+      top: screenWidth * .01
+    }}
+  >
+    {title}
+  </ProductTitle>
+  <ProductPrice
+    style={{
+      fontSize: RFValue(12),
+      color: "gray",
+      marginTop: RFValue(2),
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
+      top: screenWidth * .01
+    }}
+  >{`$${priceAmount}0`}</ProductPrice>
+
+  {/* Color selection */}
+  <Text style={{ fontSize: RFValue(13), marginTop: RFValue(2) }}>
+    Select Option:
+  </Text>
+  <FlatList
+    horizontal
+    data={variantEdges}
+    keyExtractor={(item) => item.node.id}
+    renderItem={({ item }) => (
+      <Option
+        onPress={() => {
+          setSelectedOption(item.node.title);
+          setSelectedVariant(item.node.id);
+        }}
+        disabled={item.node.quantityAvailable === 0}
+        style={{
+          backgroundColor:
+            item.node.title === selectedOption ? "#FFCC90" : "white",
+          borderWidth: 1,
+          borderColor: "black",
+          borderRadius: RFValue(5),
+          padding: RFValue(5),
+          marginTop: RFValue(5),
+          marginRight: RFValue(10),
+        }}
       >
-        <Text style={{ color: "black", fontSize: RFValue(14), fontWeight: "normal" }}>
-          Add to Bag
-        </Text>
-      </TouchableOpacity>
+        <Text>{item.node.title}</Text>
+      </Option>
+    )}
+  />
 
-      {/* Product info */}
-      <Container style={{ marginTop: RFValue(20), bottom: RFValue(30) }}>
-        <ProductTitle
-          style={{ fontSize: RFValue(15), fontWeight: "bold", color: "black" }}
-        >
-          {title}
-        </ProductTitle>
-        <ProductPrice
-          style={{ fontSize: RFValue(12), color: "gray", marginTop: RFValue(2) }}
-        >{`$${priceAmount}0`}</ProductPrice>
+  {/* Description */}
+  <Text
+    style={{
+      fontSize: RFValue(10),
+      marginTop: RFValue(5)
+    }}
+  >
+    {description}
+  </Text>
+</View>
+</Container>
 
-        {/* Color selection */}
-        <Text style={{ fontSize: RFValue(13), marginTop: RFValue(2) }}>Select Option:</Text>
-        <FlatList
-          horizontal
-          data={variantEdges}
-          keyExtractor={(item) => item.node.id}
-          renderItem={({ item }) => (
-            <Option
-              onPress={() => {
-                setSelectedOption(item.node.title);
-                setSelectedVariant(item.node.id);
-              }}
-              disabled={item.node.quantityAvailable === 0}
-              style={{
-                backgroundColor:
-                item.node.title === selectedOption ? "#FFCC90" : "white",
-                borderWidth: 1,
-                borderColor: "black",
-                borderRadius: RFValue(5),
-                padding: RFValue(5),
-                marginTop: RFValue(5),
-                marginRight: RFValue(10),
-              }}
-            >
-              <Text>{item.node.title}</Text>
-            </Option>
-          )}
-        />
-
-        {/* Description */}
-        <Text style={{ fontSize: RFValue(10), marginTop: RFValue(5) }}>{description}</Text>
-      </Container>
     </Container>
   );
 };
