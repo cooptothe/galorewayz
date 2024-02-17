@@ -140,8 +140,8 @@ const App = ({ onTapAway }) => {
   const renderItem = ({ item }) => (
     <View
       style={{
-        width: screenWidth * 0.8,
-        height: screenWidth * 0.8,
+        width: screenWidth * 0.96,
+        height: screenWidth * 0.96,
         alignSelf: "center",
         alignItems: "center",
       }}
@@ -153,6 +153,7 @@ const App = ({ onTapAway }) => {
           borderRadius: RFValue(15),
           alignSelf: "center",
           resizeMode: "cover",
+          bottom: RFValue(0)
         }}
         source={{ uri: item.imageUrl }}
       />
@@ -170,23 +171,18 @@ const App = ({ onTapAway }) => {
   return (
     <View style={{ flex: 1 }}>
       {/* renderScreen */}
-      <Section
-        style={{
-          top: screenHeight * -.4,
-        }}
-      >
         {renderScreen()}
-      </Section>
 
       {/* Carousel */}
       <Section
         style={{
           position: "absolute",
-          top: screenHeight * 0.35, // Adjust the vertical position as needed
+          top: RFValue(140), // Adjust the vertical position as needed
           left: 0,
           right: 0,
           alignItems: "center", // Center horizontally
-          height: screenWidth * 0.45,
+          height: screenWidth * 0.5,
+          marginTop: RFValue(40)
         }}
       >
         {carouselVisible &&
@@ -198,7 +194,7 @@ const App = ({ onTapAway }) => {
                 data={carouselData}
                 renderItem={renderItem}
                 sliderWidth={widthPercentageToDP("100%")}
-                itemWidth={widthPercentageToDP("80%")} // Adjust the width as needed
+                itemWidth={widthPercentageToDP("100%")} // Adjust the width as needed
                 layout="default"
                 layoutCardOffset={RFValue(30)}
                 inactiveSlideOpacity={0.4}
@@ -214,7 +210,8 @@ const App = ({ onTapAway }) => {
                   fontSize: RFValue(24),
                   fontWeight: "normal",
                   left: RFValue(10),
-                  top: screenHeight * 0.24,
+                  top: RFValue(150),
+                  backgroundColor: 'white'
                 }}
               >
                 {screenTextMap[currentScreen]}
@@ -224,7 +221,7 @@ const App = ({ onTapAway }) => {
       </Section>
 
       {/* LOGO */}
-      <Section style={{ alignItems: "center" }}>
+      <Section style={{ alignItems: "center", top: RFValue(40)}}>
         <Pressable
           onPress={() => {
             setCurrentScreen("home");
@@ -235,7 +232,6 @@ const App = ({ onTapAway }) => {
             style={{
               width: screenWidth * 0.96,
               height: screenWidth * 0.29,
-              marginTop: screenHeight * 0.06,
             }}
             source={{
               uri: "/Users/student/galorewayz/assets/galore-logo.png",
@@ -283,11 +279,12 @@ const App = ({ onTapAway }) => {
       <Section
         style={{
           position: "absolute",
-          top: screenHeight * 0.28, // Adjust the value as needed
+          top: RFValue(100), // Adjust the value as needed
           width: "100%",
           flexDirection: "row",
           justifyContent: "space-evenly",
-          height: RFValue(1)
+          height: RFValue(1),
+          marginTop: RFValue(45)
         }}
       >
         <TouchableOpacity

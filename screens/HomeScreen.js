@@ -24,7 +24,7 @@ const HomeScreen = ({ setCarouselVisible }) => {
     <Container style={{ position: "absolute", height: screenWidth * 0.1, width: screenWidth * 0.96, alignSelf: "auto",
     alignItems: "center" }}>
       {/* ProductList Section */}
-      <Section style={{ position: "absolute", height: screenWidth * 0.96, width: screenWidth * .96, top: screenWidth * 1.08, left: RFValue(10) }}>
+      <Section style={{ position: "absolute", height: screenWidth * 0.96, width: screenWidth * .96, top: RFValue(200), left: RFValue(20) }}>
         <ProductList
           onSelectProduct={handleProductSelect}
           setCarouselVisible={setCarouselVisible}

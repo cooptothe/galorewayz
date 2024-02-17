@@ -117,12 +117,12 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
   };
 
   return (
-    <Container style={{ backgroundColor: "white", height: screenWidth * .95, width: screenWidth * 1 }}>
+    <Container style={{ backgroundColor: "white", height: screenWidth * .96, width: screenWidth * .96 }}>
 
-<Container style={{ bottom: screenWidth * 1.2 }}>
+<Container style={{ bottom: RFValue(470), right: RFValue(15) }}>
 
 {/* Image gallery */}
-<View style={{ alignSelf: 'center', top: screenWidth * .1 }}>
+<View style={{ alignSelf: 'center', top: RFValue(15) }}>
   <FlatList
     horizontal
     data={mediaEdges}
@@ -133,7 +133,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
         style={{
           height: heightPercentageToDP("50%"),
           width: widthPercentageToDP("100%"),
-          top: screenWidth * .6
+          top: RFValue(230)
         }}
         resizeMode="contain"
       />
@@ -143,7 +143,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
 </View>
 
 {/* Product info */}
-<View style={{ top: screenWidth * .1 }} >
+<View style={{ bottom: RFValue(70), marginTop: RFValue(60) }} >
 
   {/* Add to bag button */}
   <TouchableOpacity

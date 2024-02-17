@@ -174,7 +174,6 @@ const Cart = () => {
         position: "absolute",
         width: widthPercentageToDP("100%"),
         height: heightPercentageToDP("0%"),
-        top: screenHeight * 0.61,
       }}
     >
       {cart.lines.length === 0 ? (
@@ -197,9 +196,9 @@ const Cart = () => {
           <Container
             style={{
               position: "absolute",
-              width: widthPercentageToDP("100%"),
-              height: heightPercentageToDP("50%"),
-              top: screenHeight * 0.11,
+              width: screenWidth * .96,
+              height: screenWidth * .96,
+              top: RFValue(160)
             }}
           >
             <FlatList
@@ -215,9 +214,9 @@ const Cart = () => {
               alignSelf: "center",
               width: widthPercentageToDP("28%"),
               height: heightPercentageToDP("10%"),
-              top: screenHeight * 0.65,
               justifyContent: "center",
               alignItems: "center",
+              top: RFValue(580),
             }}
           >
             <TouchableOpacity
