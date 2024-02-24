@@ -53,6 +53,7 @@ const App = ({ onTapAway }) => {
           )}`
         ).then((res) => res.json());
 
+
         setCart({
           id: localCartData.id,
           checkoutUrl: localCartData.checkoutUrl,
