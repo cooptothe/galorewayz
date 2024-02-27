@@ -1,5 +1,5 @@
 // App.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   Pressable,
   Dimensions,
   ScrollView,
+  Button,
+  Platform
 } from "react-native";
 import { styled } from "nativewind";
 import HomeScreen from "./screens/HomeScreen";
@@ -25,6 +27,19 @@ import {
   widthPercentageToDP,
   heightPercentageToDP,
 } from "react-native-responsive-screen";
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+
+
+// push notifications
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 
 const window = Dimensions.get("window");
 const screenWidth = window.width;
@@ -39,8 +54,14 @@ const App = ({ onTapAway }) => {
   const [currentScreen, setCurrentScreen] = useState("home");
   const [carouselVisible, setCarouselVisible] = useState(true); // State for carousel visibility
   const [cart, setCart] = useState({ id: null, checkoutUrl: null, lines: [] });
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
 
   useEffect(() => {
+    schedulePushNotification()
     const getCart = async () => {
       let localCartData = JSON.parse(
         await AsyncStorage.getItem("galorewayz:shopify:cart")
@@ -96,6 +117,24 @@ const App = ({ onTapAway }) => {
     getCart();
   }, []);
 
+  async function schedulePushNotification() {
+    // Set the trigger to every Sunday at 3 PM
+    const triggerDay = 0; // 0 corresponds to Sunday
+    const triggerHour = 15; // 24-hour format, 15 corresponds to 3 PM
+  
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "New Arrivals! 🚨",
+        body: 'Come shop latest the gear!',
+      },
+      trigger: {
+        weekDay: triggerDay,
+        hour: triggerHour,
+        minute: 0, // Set the minute to 0 (top of the hour)
+      },
+    });
+  }
+
   const renderScreen = () => {
     switch (currentScreen) {
       case "home":
@@ -109,7 +148,7 @@ const App = ({ onTapAway }) => {
       case "accessories":
         return <AccessoriesScreen setCarouselVisible={setCarouselVisible} />;
       case "cart":
-        return <Cart setCarouselVisible={setCarouselVisible} />;
+        return <Cart setCarouselVisible={setCarouselVisible} schedulePushNotification={schedulePushNotification} />;
       default:
         return null;
     }
@@ -178,7 +217,7 @@ const App = ({ onTapAway }) => {
       <Section
         style={{
           position: "absolute",
-          top: RFValue(140), // Adjust the vertical position as needed
+          top: RFValue(120), // Adjust the vertical position as needed
           left: 0,
           right: 0,
           alignItems: "center", // Center horizontally
@@ -211,7 +250,7 @@ const App = ({ onTapAway }) => {
                   fontSize: RFValue(24),
                   fontWeight: "normal",
                   left: RFValue(10),
-                  top: RFValue(150),
+                  marginTop: RFValue(165),
                   backgroundColor: 'white'
                 }}
               >
@@ -280,7 +319,7 @@ const App = ({ onTapAway }) => {
       <Section
         style={{
           position: "absolute",
-          top: RFValue(100), // Adjust the value as needed
+          top: RFValue(90), // Adjust the value as needed
           width: "100%",
           flexDirection: "row",
           justifyContent: "space-evenly",

@@ -38,6 +38,19 @@
     },
     "updates": {
       "url": "https://u.expo.dev/36d33619-7115-4d1a-9af3-c2434ce55791"
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/galore-logo-icon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./local/assets/notification-sound.wav",
+            "./local/assets/notification-sound-other.wav"
+          ]
+        }
+      ]
+    ]
   }
 }

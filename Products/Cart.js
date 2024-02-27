@@ -7,6 +7,7 @@ import {
   FlatList,
   Dimensions,
   Linking,
+  AppState
 } from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -16,6 +17,17 @@ import {
   widthPercentageToDP,
   heightPercentageToDP,
 } from "react-native-responsive-screen";
+import * as Notifications from 'expo-notifications';
+
+
+// push notifications
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const window = Dimensions.get("window");
 const screenWidth = window.width;
@@ -33,63 +45,101 @@ const Section = styled(View);
 const Cart = () => {
   const [cart, setCart] = useState({ id: null, checkoutUrl: null, lines: [] });
 
-  useEffect(() => {
-    const getCart = async () => {
-      let localCartData = JSON.parse(
-        await AsyncStorage.getItem("galorewayz:shopify:cart")
-      );
+  const getCart = async () => {
+    let localCartData = JSON.parse(
+      await AsyncStorage.getItem("galorewayz:shopify:cart")
+    );
 
-      if (localCartData) {
-        const existingCart = await fetch(
-          `http://localhost:3001/getCart/${encodeURIComponent(
-            localCartData.id
-          )}`
-        ).then((res) => res.json());
+    if (localCartData) {
+      const existingCart = await fetch(
+        `http://localhost:3001/getCart/${encodeURIComponent(
+          localCartData.id
+        )}`
+      ).then((res) => res.json());
 
-        setCart({
-          id: localCartData.id,
-          checkoutUrl: localCartData.checkoutUrl,
-          cost: existingCart.data.cart.cost,
-          lines: existingCart.data.cart.lines.edges,
-        });
+      setCart({
+        id: localCartData.id,
+        checkoutUrl: localCartData.checkoutUrl,
+        cost: existingCart.data.cart.cost,
+        lines: existingCart.data.cart.lines.edges,
+      });
 
-        return;
+      return;
+    }
+
+    try {
+      console.log("Before fetch");
+      const response = await fetch("http://localhost:3001/createCart");
+      console.log("After fetch");
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      localCartData = await response.json();
+
+      setCart({
+        id: localCartData.data.cartCreate.cart.id,
+        checkoutUrl: localCartData.data.cartCreate.cart.checkoutUrl,
+        cost: null,
+        lines: [],
+      });
 
       try {
-        console.log("Before fetch");
-        const response = await fetch("http://localhost:3001/createCart");
-        console.log("After fetch");
+        await AsyncStorage.setItem(
+          "galorewayz:shopify:cart",
+          JSON.stringify(localCartData.data.cartCreate.cart)
+        );
+        console.log("Cart data set successfully:", cart);
+      } catch (storageError) {
+        console.error("Error storing cart data:", storageError);
+      }
+    } catch (error) {
+      console.error("Error in getCart:", error);
+    }
+  };
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        localCartData = await response.json();
-
-        setCart({
-          id: localCartData.data.cartCreate.cart.id,
-          checkoutUrl: localCartData.data.cartCreate.cart.checkoutUrl,
-          cost: null,
-          lines: [],
-        });
-
-        try {
-          await AsyncStorage.setItem(
-            "galorewayz:shopify:cart",
-            JSON.stringify(localCartData.data.cartCreate.cart)
-          );
-          console.log("Cart data set successfully:", cart);
-        } catch (storageError) {
-          console.error("Error storing cart data:", storageError);
-        }
-      } catch (error) {
-        console.error("Error in getCart:", error);
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      if (nextAppState === 'background' && cart.lines.length > 0) {
+        schedulePushNotification();
       }
     };
-
+  
+    // Subscribe to app state changes
+    AppState.addEventListener('change', handleAppStateChange);
+  
+    // Cleanup function to unsubscribe when the component unmounts
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange);
+    };
+  
+    // Fetch initial cart data
     getCart();
-  }, [cart]);
+  }, [cart.lines.length]);
+  
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "You've forgot something! 🛒",
+        body: 'Come back and finish checking out',
+        data: { data: 'goes here' },
+      },
+      trigger: { seconds: 300 },
+    });
+  }
+  
+
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "You've forgot something! 🛒",
+        body: 'Come back and finish checking out',
+        data: { data: 'goes here' },
+      },
+      trigger: { seconds: 2 },
+    });
+  }
 
   const renderItem = ({ item }) => (
     <ProductItem
@@ -147,6 +197,9 @@ const Cart = () => {
       // Update the state to reflect the empty cart
       setCart({ id: null, checkoutUrl: null, lines: [] });
 
+      // run get cart
+      getCart();
+
       console.log("Cart emptied successfully");
     } catch (error) {
       console.error("Error emptying the cart:", error);
@@ -166,6 +219,7 @@ const Cart = () => {
       console.warn("Checkout URL is not available.");
     }
   };
+
 
   return (
     <Container
