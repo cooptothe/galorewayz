@@ -2,7 +2,7 @@
   "expo": {
     "name": "Galore Wayz",
     "slug": "galore-wayz",
-    "version": "1.0.4",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/galore-logo-icon.png",
     "userInterfaceStyle": "light",
