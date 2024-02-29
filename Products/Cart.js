@@ -100,20 +100,6 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    const handleAppStateChange = (nextAppState) => {
-      if (nextAppState === 'background' && cart.lines.length > 0) {
-        schedulePushNotification();
-      }
-    };
-  
-    // Subscribe to app state changes
-    AppState.addEventListener('change', handleAppStateChange);
-  
-    // Cleanup function to unsubscribe when the component unmounts
-    return () => {
-      AppState.removeEventListener('change', handleAppStateChange);
-    };
-  
     // Fetch initial cart data
     getCart();
   }, [cart.lines.length]);
