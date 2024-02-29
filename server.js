@@ -555,5 +555,5 @@ app.post("/addToCart", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server is running at http://127.0.0.1:${port}`);
 });

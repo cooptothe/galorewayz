@@ -86,7 +86,7 @@ const App = ({ onTapAway }) => {
       }
 
       try {
-        const response = await fetch("http://localhost:3001/createCart");
+        const response = await fetch("http:/localhost:3001/createCart");
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -148,7 +148,7 @@ const App = ({ onTapAway }) => {
       case "accessories":
         return <AccessoriesScreen setCarouselVisible={setCarouselVisible} />;
       case "cart":
-        return <Cart setCarouselVisible={setCarouselVisible} schedulePushNotification={schedulePushNotification} />;
+        return <Cart setCarouselVisible={setCarouselVisible} />;
       default:
         return null;
     }
@@ -261,7 +261,7 @@ const App = ({ onTapAway }) => {
       </Section>
 
       {/* LOGO */}
-      <Section style={{ alignItems: "center", top: RFValue(40)}}>
+      <Section style={{ alignItems: "center", top: RFValue(35)}}>
         <Pressable
           onPress={() => {
             setCurrentScreen("home");
@@ -274,7 +274,7 @@ const App = ({ onTapAway }) => {
               height: screenWidth * 0.29,
             }}
             source={{
-              uri: "/Users/student/galorewayz/assets/galore-logo.png",
+              uri: "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/galore-logo.png?v=1709226912",
             }}
           />
         </Pressable>
@@ -299,7 +299,7 @@ const App = ({ onTapAway }) => {
               height: RFValue(20),
             }}
             source={{
-              uri: "/Users/student/galorewayz/assets/Shopping-bag.png",
+              uri: "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/Shopping-bag.png?v=1709226925",
             }}
           />
           <Text

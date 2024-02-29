@@ -82,7 +82,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
       console.log(selectedVariant);
 
       if (selectedOption) {
-        const result = await fetch("http://localhost:3001/addToCart", {
+        const result = await fetch("http://localhost :3001/addToCart", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

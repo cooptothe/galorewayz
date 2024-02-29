@@ -1,6 +1,6 @@
 {
   "name": "galorewayz",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -25,7 +25,7 @@
     "cors": "^2.8.5",
     "deprecated-react-native-prop-types": "^5.0.0",
     "expo": "^50.0.3",
-    "expo-dev-client": "^3.3.8",
+    "expo-dev-client": "~3.3.9",
     "expo-device": "^5.9.3",
     "expo-notifications": "~0.27.6",
     "expo-status-bar": "~1.11.1",
