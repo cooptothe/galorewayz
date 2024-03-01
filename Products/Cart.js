@@ -52,7 +52,7 @@ const Cart = () => {
 
     if (localCartData) {
       const existingCart = await fetch(
-        `http://localhost:3001/getCart/${encodeURIComponent(
+        `https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/getCart/${encodeURIComponent(
           localCartData.id
         )}`
       ).then((res) => res.json());
@@ -69,7 +69,7 @@ const Cart = () => {
 
     try {
       console.log("Before fetch");
-      const response = await fetch("http://localhost:3001/createCart");
+      const response = await fetch("https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/createCart");
       console.log("After fetch");
 
       if (!response.ok) {

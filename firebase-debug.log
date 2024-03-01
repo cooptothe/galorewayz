@@ -1,0 +1,144 @@
+[debug] [2024-03-01T20:37:37.679Z] ----------------------------------------------------------------------
+[debug] [2024-03-01T20:37:37.682Z] Command:       /Users/student/.nvm/versions/node/v21.5.0/bin/node /Users/student/.nvm/versions/node/v21.5.0/bin/firebase deploy --debug
+[debug] [2024-03-01T20:37:37.682Z] CLI Version:   13.4.0
+[debug] [2024-03-01T20:37:37.683Z] Platform:      darwin
+[debug] [2024-03-01T20:37:37.683Z] Node Version:  v21.5.0
+[debug] [2024-03-01T20:37:37.683Z] Time:          Fri Mar 01 2024 14:37:37 GMT-0600 (Central Standard Time)
+[debug] [2024-03-01T20:37:37.683Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-01T20:37:37.740Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-01T20:37:37.741Z] > authorizing via signed-in user (edward.cooper97@gmail.com)
+[debug] [2024-03-01T20:37:37.741Z] [iam] checking project galore-wayz-b0b8f for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2024-03-01T20:37:37.743Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/galore-wayz-b0b8f:testIamPermissions [none]
+[debug] [2024-03-01T20:37:37.743Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/galore-wayz-b0b8f:testIamPermissions x-goog-quota-user=projects/galore-wayz-b0b8f
+[debug] [2024-03-01T20:37:37.743Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/galore-wayz-b0b8f:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-03-01T20:37:38.455Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/galore-wayz-b0b8f:testIamPermissions 200
+[debug] [2024-03-01T20:37:38.456Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/galore-wayz-b0b8f:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-03-01T20:37:38.456Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/galore-wayz-b0b8f/serviceAccounts/galore-wayz-b0b8f@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-03-01T20:37:38.456Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/galore-wayz-b0b8f/serviceAccounts/galore-wayz-b0b8f@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-03-01T20:37:38.973Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/galore-wayz-b0b8f/serviceAccounts/galore-wayz-b0b8f@appspot.gserviceaccount.com:testIamPermissions 404
+[debug] [2024-03-01T20:37:38.973Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/galore-wayz-b0b8f/serviceAccounts/galore-wayz-b0b8f@appspot.gserviceaccount.com:testIamPermissions {"error":{"code":404,"message":"Unknown service account","status":"NOT_FOUND"}}
+[debug] [2024-03-01T20:37:38.974Z] [functions] service account IAM check errored, deploy may fail: HTTP Error: 404, Unknown service account {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":404,"message":"Unknown service account","status":"NOT_FOUND"}},"response":{"statusCode":404}},"exit":1,"message":"HTTP Error: 404, Unknown service account","status":404}
+[info] 
+[info] === Deploying to 'galore-wayz-b0b8f'...
+[info] 
+[info] i  deploying functions 
+[debug] [2024-03-01T20:37:38.977Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/galore-wayz-b0b8f [none]
+[debug] [2024-03-01T20:37:39.352Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/galore-wayz-b0b8f 200
+[debug] [2024-03-01T20:37:39.353Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/galore-wayz-b0b8f {"projectId":"galore-wayz-b0b8f","projectNumber":"1065661948232","displayName":"Galore Wayz","name":"projects/galore-wayz-b0b8f","resources":{"hostingSite":"galore-wayz-b0b8f"},"state":"ACTIVE","etag":"1_22f8ce9c-b2b8-4722-89db-17ccac13b64a"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2024-03-01T20:37:39.354Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/cloudfunctions.googleapis.com [none]
+[debug] [2024-03-01T20:37:39.355Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/galore-wayz-b0b8f
+[debug] [2024-03-01T20:37:39.356Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/runtimeconfig.googleapis.com [none]
+[debug] [2024-03-01T20:37:39.356Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/galore-wayz-b0b8f
+[debug] [2024-03-01T20:37:39.357Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/cloudbuild.googleapis.com [none]
+[debug] [2024-03-01T20:37:39.358Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/cloudbuild.googleapis.com x-goog-quota-user=projects/galore-wayz-b0b8f
+[debug] [2024-03-01T20:37:39.359Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/artifactregistry.googleapis.com [none]
+[debug] [2024-03-01T20:37:39.359Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/artifactregistry.googleapis.com x-goog-quota-user=projects/galore-wayz-b0b8f
+[debug] [2024-03-01T20:37:40.222Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/artifactregistry.googleapis.com 200
+[debug] [2024-03-01T20:37:40.222Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2024-03-01T20:37:40.225Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/runtimeconfig.googleapis.com 200
+[debug] [2024-03-01T20:37:40.225Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2024-03-01T20:37:40.226Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/cloudbuild.googleapis.com 200
+[debug] [2024-03-01T20:37:40.226Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2024-03-01T20:37:40.227Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/cloudfunctions.googleapis.com 200
+[debug] [2024-03-01T20:37:40.227Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/galore-wayz-b0b8f/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2024-03-01T20:37:40.228Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/galore-wayz-b0b8f/adminSdkConfig [none]
+[debug] [2024-03-01T20:37:40.403Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/galore-wayz-b0b8f/adminSdkConfig 200
+[debug] [2024-03-01T20:37:40.404Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/galore-wayz-b0b8f/adminSdkConfig {"projectId":"galore-wayz-b0b8f","storageBucket":"galore-wayz-b0b8f.appspot.com"}
+[debug] [2024-03-01T20:37:40.404Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/galore-wayz-b0b8f/configs [none]
+[debug] [2024-03-01T20:37:41.550Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/galore-wayz-b0b8f/configs 200
+[debug] [2024-03-01T20:37:41.550Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/galore-wayz-b0b8f/configs {}
+[debug] [2024-03-01T20:37:41.551Z] Validating nodejs source
+[debug] [2024-03-01T20:37:42.728Z] > [functions] package.json contents: {
+  "name": "galorewayz",
+  "version": "1.0.5",
+  "main": "server.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "deploy": "firebase deploy --only functions"
+  },
+  "dependencies": {
+    "@expo/webpack-config": "~19.0.1",
+    "@headlessui/react": "^1.7.18",
+    "@headlessui/vue": "^1.7.17",
+    "@heroicons/react": "^2.1.1",
+    "@heroicons/vue": "^2.1.1",
+    "@react-native-async-storage/async-storage": "^1.21.0",
+    "@react-native-picker/picker": "^2.6.1",
+    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/native-stack": "^6.9.17",
+    "@shopify/shopify-api": "^9.4.1",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@types/react": "~18.2.45",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "deprecated-react-native-prop-types": "^5.0.0",
+    "expo": "^50.0.3",
+    "expo-dev-client": "~3.3.9",
+    "expo-device": "^5.9.3",
+    "expo-notifications": "~0.27.6",
+    "expo-status-bar": "~1.11.1",
+    "expo-updates": "~0.24.9",
+    "express": "^4.18.2",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^4.7.0",
+    "node-fetch": "^3.3.2",
+    "nodemon": "^3.0.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.73.2",
+    "react-native-dotenv": "^3.4.9",
+    "react-native-navigation": "^7.37.2",
+    "react-native-responsive-fontsize": "^0.5.1",
+    "react-native-responsive-screen": "^1.4.2",
+    "react-native-snap-carousel": "^3.9.1",
+    "react-native-swiper": "^1.6.0",
+    "react-native-web": "~0.19.6",
+    "shopify-buy": "^2.21.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-react": "^7.23.3",
+    "@types/cors": "^2.8.17",
+    "nativewind": "^2.0.11",
+    "tailwindcss": "3.3.2",
+    "typescript": "^5.3.0"
+  },
+  "private": true,
+  "type": "module"
+}
+[debug] [2024-03-01T20:37:42.729Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2024-03-01T20:37:42.730Z] Could not find functions.yaml. Must use http discovery
+[debug] [2024-03-01T20:37:42.742Z] Found firebase-functions binary at '/Users/student/galorewayz/node_modules/.bin/firebase-functions'
+[info] Serving at port 8809
+
+[debug] [2024-03-01T20:37:43.471Z] Got response from /__/functions.yaml {"endpoints":{"api":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"api"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[info] Server is running at https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api
+
+[info] i  functions: preparing / directory for uploading... 
+[debug] [2024-03-01T20:37:54.315Z] Error: ENOENT: no such file or directory, stat '/Users/student/galorewayz/ios/Pods/Headers/Private/React-RCTFabric/React/RCTThirdPartyFabricComponentsProvider.h'
+    at Object.statSync (node:fs:1666:25)
+    at /Users/student/.nvm/versions/node/v21.5.0/lib/node_modules/firebase-tools/node_modules/graceful-fs/polyfills.js:319:16
+    at readdirRecursiveHelper (/Users/student/.nvm/versions/node/v21.5.0/lib/node_modules/firebase-tools/lib/fsAsync.js:14:47)
+    at readdirRecursiveHelper (/Users/student/.nvm/versions/node/v21.5.0/lib/node_modules/firebase-tools/lib/fsAsync.js:21:27)
+    at readdirRecursiveHelper (/Users/student/.nvm/versions/node/v21.5.0/lib/node_modules/firebase-tools/lib/fsAsync.js:21:27)
+    at readdirRecursiveHelper (/Users/student/.nvm/versions/node/v21.5.0/lib/node_modules/firebase-tools/lib/fsAsync.js:21:27)
+    at readdirRecursiveHelper (/Users/student/.nvm/versions/node/v21.5.0/lib/node_modules/firebase-tools/lib/fsAsync.js:21:27)
+    at readdirRecursiveHelper (/Users/student/.nvm/versions/node/v21.5.0/lib/node_modules/firebase-tools/lib/fsAsync.js:21:27)
+    at readdirRecursiveHelper (/Users/student/.nvm/versions/node/v21.5.0/lib/node_modules/firebase-tools/lib/fsAsync.js:21:27)
+    at Object.readdirRecursive (/Users/student/.nvm/versions/node/v21.5.0/lib/node_modules/firebase-tools/lib/fsAsync.js:38:12)
+[error] 
+[error] Error: Could not read source directory. Remove links and shortcuts and try again.

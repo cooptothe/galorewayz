@@ -23,7 +23,7 @@ const OuterwearList = ({ onSelectProduct, setCarouselVisible }) => {
     // Fetch products from the server
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/getProducts/Outerwear');
+        const response = await fetch('https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/getProducts/Outerwear');
         const data = await response.json();
         setProducts(data.data.products.edges);
       } catch (error) {

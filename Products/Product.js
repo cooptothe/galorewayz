@@ -36,7 +36,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
     const fetchProductByHandle = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/getProductByHandle/${handle}`
+          `https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/getProductByHandle/${handle}`
         );
         const data = await response.json();
         setProduct(data.data.product);
@@ -82,7 +82,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
       console.log(selectedVariant);
 
       if (selectedOption) {
-        const result = await fetch("http://localhost:3001/addToCart", {
+        const result = await fetch("https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/addToCart", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

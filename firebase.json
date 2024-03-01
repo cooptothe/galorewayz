@@ -1,22 +1,15 @@
 {
-  "hosting": {
-    "public": "/Users/student/galorewayz/server.js",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  },
   "functions": [
     {
-      "source": "functions",
+      "source": "/server",
       "codebase": "default",
       "ignore": [
         "node_modules",
         ".git",
         "firebase-debug.log",
         "firebase-debug.*.log"
-      ]
+      ],
+      "runtime": "nodejs18"
     }
   ]
 }
