@@ -52,7 +52,7 @@ const Cart = () => {
 
     if (localCartData) {
       const existingCart = await fetch(
-        `http://localhost:3001/getCart/${encodeURIComponent(
+        `http://ec2-user@ec2-3-15-34-14.us-east-2.compute.amazonaws.com:3001/getCart/${encodeURIComponent(
           localCartData.id
         )}`
       ).then((res) => res.json());
@@ -69,7 +69,7 @@ const Cart = () => {
 
     try {
       console.log("Before fetch");
-      const response = await fetch("http://localhost:3001/createCart");
+      const response = await fetch("http://ec2-user@ec2-3-15-34-14.us-east-2.compute.amazonaws.com:3001/createCart");
       console.log("After fetch");
 
       if (!response.ok) {
@@ -112,18 +112,6 @@ const Cart = () => {
         data: { data: 'goes here' },
       },
       trigger: { seconds: 300 },
-    });
-  }
-  
-
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You've forgot something! 🛒",
-        body: 'Come back and finish checking out',
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 2 },
     });
   }
 

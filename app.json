@@ -2,7 +2,7 @@
   "expo": {
     "name": "Galore Wayz",
     "slug": "galore-wayz",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/galore-logo-icon.png",
     "userInterfaceStyle": "light",
@@ -33,7 +33,7 @@
         "projectId": "36d33619-7115-4d1a-9af3-c2434ce55791"
       }
     },
-    "runtimeVersion": "1.0.5",
+    "runtimeVersion": "1.0.6",
     "updates": {
       "url": "https://u.expo.dev/36d33619-7115-4d1a-9af3-c2434ce55791"
     },

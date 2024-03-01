@@ -24,7 +24,7 @@ const BottomsList = ({ onSelectProduct, setCarouselVisible }) => {
     // Fetch products from the server
     const fetchProducts = async () => { 
       try {
-        const response = await fetch('http://localhost:3001/getProducts/Bottoms');
+        const response = await fetch('http://ec2-user@ec2-3-15-34-14.us-east-2.compute.amazonaws.com:3001/getProducts/Bottoms');
         const data = await response.json();
         setProducts(data.data.products.edges);
       } catch (error) {

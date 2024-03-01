@@ -61,46 +61,65 @@ const App = ({ onTapAway }) => {
 
 
   useEffect(() => {
-    schedulePushNotification()
+    schedulePushNotification();
+  
     const getCart = async () => {
       let localCartData = JSON.parse(
         await AsyncStorage.getItem("galorewayz:shopify:cart")
       );
-
+  
       if (localCartData) {
-        const existingCart = await fetch(
-          `http://localhost:3001/getCart/${encodeURIComponent(
-            localCartData.id
-          )}`
-        ).then((res) => res.json());
-
-
-        setCart({
-          id: localCartData.id,
-          checkoutUrl: localCartData.checkoutUrl,
-          cost: existingCart.data.cart.cost,
-          lines: existingCart.data.cart.lines.edges,
-        });
-
+        try {
+          const existingCart = await fetch(
+            `http://127.0.0.1:3001/getCart/${encodeURIComponent(
+              localCartData.id
+            )}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+            }
+          ).then((res) => res.json());
+  
+          setCart({
+            id: localCartData.id,
+            checkoutUrl: localCartData.checkoutUrl,
+            cost: existingCart.data.cart.cost,
+            lines: existingCart.data.cart.lines.edges,
+          });
+        } catch (error) {
+          console.error("Error fetching existing cart:", error);
+        }
+  
         return;
       }
-
+  
       try {
-        const response = await fetch("http:/localhost:3001/createCart");
-
+        const response = await fetch(
+          "http://127.0.0.1:3001/createCart",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+          }
+        );
+  
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
+  
         localCartData = await response.json();
-
+  
         setCart({
           id: localCartData.data.cartCreate.cart.id,
           checkoutUrl: localCartData.data.cartCreate.cart.checkoutUrl,
           cost: null,
           lines: [],
         });
-
+  
         try {
           await AsyncStorage.setItem(
             "galorewayz:shopify:cart",
@@ -113,9 +132,10 @@ const App = ({ onTapAway }) => {
         console.error("Error in getCart:", error);
       }
     };
-
+  
     getCart();
   }, []);
+  
 
   async function schedulePushNotification() {
     // Set the trigger to every Sunday at 3 PM

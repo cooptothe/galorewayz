@@ -30,7 +30,7 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
     // Fetch products from the server
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3001/getProducts");
+        const response = await fetch("http://127.0.0.1:3001/getProducts");
         const data = await response.json();
         setProducts(data.data.products.edges);
       } catch (error) {

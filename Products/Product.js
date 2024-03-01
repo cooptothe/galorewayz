@@ -36,7 +36,7 @@ const Product = ({ handle, onClose, setCarouselVisible, cart }) => {
     const fetchProductByHandle = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/getProductByHandle/${handle}`
+          `http://ec2-user@ec2-3-15-34-14.us-east-2.compute.amazonaws.com:3001/getProductByHandle/${handle}`
         );
         const data = await response.json();
         setProduct(data.data.product);
