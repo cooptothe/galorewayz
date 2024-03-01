@@ -52,7 +52,7 @@ const Cart = () => {
 
     if (localCartData) {
       const existingCart = await fetch(
-        `http://ec2-user@ec2-3-15-34-14.us-east-2.compute.amazonaws.com:3001/getCart/${encodeURIComponent(
+        `http://localhost:3001/getCart/${encodeURIComponent(
           localCartData.id
         )}`
       ).then((res) => res.json());
@@ -69,7 +69,7 @@ const Cart = () => {
 
     try {
       console.log("Before fetch");
-      const response = await fetch("http://ec2-user@ec2-3-15-34-14.us-east-2.compute.amazonaws.com:3001/createCart");
+      const response = await fetch("http://localhost:3001/createCart");
       console.log("After fetch");
 
       if (!response.ok) {
@@ -194,6 +194,8 @@ const Cart = () => {
     }
   };
 
+  
+
 
   return (
     <Container
@@ -232,7 +234,7 @@ const Cart = () => {
             <FlatList
               data={cart.lines}
               renderItem={renderItem}
-              keyExtractor={(item) => item.node.id}
+              key={(item) => item.node.id}
             />
           </Container>
 
