@@ -7,7 +7,7 @@ import {
   FlatList,
   Dimensions,
   Linking,
-  AppState
+  AppState,
 } from "react-native";
 import { styled } from "nativewind";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,17 +17,7 @@ import {
   widthPercentageToDP,
   heightPercentageToDP,
 } from "react-native-responsive-screen";
-import * as Notifications from 'expo-notifications';
-
-
-// push notifications
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+import * as Notifications from "expo-notifications";
 
 const window = Dimensions.get("window");
 const screenWidth = window.width;
@@ -50,6 +40,8 @@ const Cart = () => {
       await AsyncStorage.getItem("galorewayz:shopify:cart")
     );
 
+    console.log(localCartData);
+
     if (localCartData) {
       const existingCart = await fetch(
         `https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/getCart/${encodeURIComponent(
@@ -69,7 +61,9 @@ const Cart = () => {
 
     try {
       console.log("Before fetch");
-      const response = await fetch("https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/createCart");
+      const response = await fetch(
+        "https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/createCart"
+      );
       console.log("After fetch");
 
       if (!response.ok) {
@@ -101,19 +95,9 @@ const Cart = () => {
 
   useEffect(() => {
     // Fetch initial cart data
+    console.log(cart);
     getCart();
   }, [cart.lines.length]);
-  
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You've forgot something! 🛒",
-        body: 'Come back and finish checking out',
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 300 },
-    });
-  }
 
   const renderItem = ({ item }) => (
     <ProductItem
@@ -194,9 +178,6 @@ const Cart = () => {
     }
   };
 
-  
-
-
   return (
     <Container
       style={{
@@ -226,9 +207,9 @@ const Cart = () => {
           <Container
             style={{
               position: "absolute",
-              width: screenWidth * .96,
-              height: screenWidth * .96,
-              top: RFValue(160)
+              width: screenWidth * 0.96,
+              height: screenWidth * 0.96,
+              top: RFValue(160),
             }}
           >
             <FlatList
@@ -249,6 +230,17 @@ const Cart = () => {
               top: RFValue(580),
             }}
           >
+            <Text
+              style={{
+                color: "black",
+                fontSize: RFValue(12),
+                fontWeight: "bold",
+                alignSelf: "center",
+                marginBottom: RFValue(10),
+              }}
+            >
+              Total: {`$${cart.cost.totalAmount.amount}0`}
+            </Text>
             <TouchableOpacity
               onPress={handleCheckout}
               style={{
@@ -261,7 +253,7 @@ const Cart = () => {
                 borderColor: "black",
                 alignSelf: "center",
                 borderWidth: 1,
-                marginBottom: RFValue(10),
+                marginBottom: RFValue(5),
               }}
             >
               <Text
@@ -287,7 +279,6 @@ const Cart = () => {
                 alignSelf: "center",
                 borderColor: "black",
                 borderWidth: 1,
-                marginBottom: RFValue(10),
               }}
             >
               <Text
@@ -300,18 +291,6 @@ const Cart = () => {
                 Empty Cart
               </Text>
             </TouchableOpacity>
-
-            <Text
-              style={{
-                color: "black",
-                fontSize: RFValue(12),
-                fontWeight: "bold",
-                alignSelf: "center",
-                marginTop: RFValue(15),
-              }}
-            >
-              Total: {`$${cart.cost.totalAmount.amount}0`}
-            </Text>
           </Container>
         </>
       )}

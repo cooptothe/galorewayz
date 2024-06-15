@@ -11,6 +11,7 @@ import { styled } from "nativewind";
 import Product from "./Product"; // Import the Product component
 import { RFValue } from "react-native-responsive-fontsize";
 
+
 const window = Dimensions.get("window");
 const screenWidth = window.width;
 const screenHeight = window.height;
@@ -21,20 +22,80 @@ const ProductItem = styled(TouchableOpacity);
 const ProductImage = styled(Image);
 const ProductTitle = styled(Text);
 const ProductPrice = styled(Text);
+const Section = styled(View);
 
 const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
-    // Fetch products from the server
+    // Fetch products
     const fetchProducts = async () => {
+      // try {
+      //   const response = await fetch("https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/getProducts");
+      //   const data = await response.json();
+      //   setProducts(data.data.products.edges);
+      // } catch (error) {
+      //   console.error("Error fetching products:", error);
+      // }
+      console.log("Request received at /getProducts");
       try {
-        const response = await fetch("https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/getProducts");
+        const response = await fetch(
+          "https://galorewayzlifestyle.com/api/2023-01/graphql.json",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Shopify-Storefront-Access-Token":
+              process.env.EXPO_PUBLIC_API_KEY,
+            },
+            body: JSON.stringify({
+              query: `
+              query getProducts {
+                products(first: 100) {
+                  edges {
+                    node {
+                      id
+                      title
+                      productType
+                      description
+                      handle
+                      media(first: 1) {
+                        edges {
+                          node {
+                            previewImage {
+                              url
+                            }
+                          }
+                        }
+                      }
+                      variants(first: 1) {
+                        edges {
+                          node {
+                          id
+                            title
+                            quantityAvailable
+                            price {
+                              amount
+                              currencyCode
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            }),
+          }
+        );
+        console.log()
         const data = await response.json();
         setProducts(data.data.products.edges);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching data:", error);
+        res.status(500).json({ error: "Internal Server Error" });
       }
     };
 
@@ -65,7 +126,11 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
       >
         <ProductImage
           alt={mediaNode?.alt || item.node.title}
-          style={{ height: RFValue(60), width: RFValue(80), right: RFValue(25) }}
+          style={{
+            height: RFValue(60),
+            width: RFValue(80),
+            right: RFValue(25),
+          }}
           source={{ uri: imageUrl }}
         />
         <ProductTitle
@@ -74,10 +139,10 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
             color: "black",
             fontSize: RFValue(10),
             fontWeight: "normal",
-            width: screenWidth * .4,
+            width: screenWidth * 0.4,
             right: RFValue(20),
             paddingBottom: RFValue(1),
-            paddingTop: RFValue(5)
+            paddingTop: RFValue(5),
           }}
         >
           {item.node.title}
@@ -89,12 +154,12 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
             color: "black",
             fontSize: RFValue(8),
             fontWeight: "normal",
-            width: screenWidth * .3,
+            width: screenWidth * 0.3,
             right: RFValue(15),
             paddingBottom: RFValue(1),
-            paddingTop: RFValue(1)
+            paddingTop: RFValue(1),
           }}
-        > 
+        >
           {"$"}
           {item.node.variants.edges[0]?.node.price.amount}
           {"0"}
@@ -104,7 +169,7 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
   };
 
   return (
-    <Container style={{ top: RFValue(170) }} >
+    <Container style={{ top: RFValue(170) }}>
       {selectedProduct && (
         <Product
           handle={selectedProduct.handle}

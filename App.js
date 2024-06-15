@@ -1,5 +1,5 @@
 // App.js
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,9 +7,6 @@ import {
   TouchableOpacity,
   Pressable,
   Dimensions,
-  ScrollView,
-  Button,
-  Platform
 } from "react-native";
 import { styled } from "nativewind";
 import HomeScreen from "./screens/HomeScreen";
@@ -18,18 +15,14 @@ import BottomsScreen from "./screens/BottomsScreen";
 import OuterwearScreen from "./screens/OuterwearScreen";
 import AccessoriesScreen from "./screens/AccessoriesScreen";
 import Carousel from "react-native-snap-carousel";
-import Product from "./Products/Product";
-import ProductList from "./Products/ProductList";
 import Cart from "./Products/Cart";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import NavBar from "./NavBar";
 import { RFValue } from "react-native-responsive-fontsize";
 import {
   widthPercentageToDP,
   heightPercentageToDP,
 } from "react-native-responsive-screen";
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-
+import * as Notifications from "expo-notifications";
 
 // push notifications
 Notifications.setNotificationHandler({
@@ -40,48 +33,15 @@ Notifications.setNotificationHandler({
   }),
 });
 
-
 const window = Dimensions.get("window");
 const screenWidth = window.width;
-const screenHeight = window.height;
-
-const Container = styled(View);
 const Section = styled(View);
 const Trending = styled(Text);
 const Logo = styled(Image);
 
-const App = ({ onTapAway }) => {
-  const [currentScreen, setCurrentScreen] = useState("home");
+const App = () => {
   const [carouselVisible, setCarouselVisible] = useState(true); // State for carousel visibility
-  const [cart, setCart] = useState({ id: null, checkoutUrl: null, lines: [] });
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
-
-
-  useEffect(() => {
-    schedulePushNotification();
-  }, []);
-  
-
-  async function schedulePushNotification() {
-    // Set the trigger to every Sunday at 3 PM
-    const triggerDay = 0; // 0 corresponds to Sunday
-    const triggerHour = 15; // 24-hour format, 15 corresponds to 3 PM
-  
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "New Arrivals! 🚨",
-        body: 'Come shop latest the gear!',
-      },
-      trigger: {
-        weekDay: triggerDay,
-        hour: triggerHour,
-        minute: 0, // Set the minute to 0 (top of the hour)
-      },
-    });
-  }
+  const [currentScreen, setCurrentScreen] = useState("home");
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -96,12 +56,19 @@ const App = ({ onTapAway }) => {
       case "accessories":
         return <AccessoriesScreen setCarouselVisible={setCarouselVisible} />;
       case "cart":
-        return <Cart setCarouselVisible={setCarouselVisible} />;
+        return <Cart />;
       default:
         return null;
     }
   };
 
+  const screenTextMap = {
+    accessories: "Accessories",
+    bottoms: "Bottoms",
+    home: "Trending",
+    outerwear: "Outerwear",
+    tops: "Tops",
+  };
   const carouselData = [
     {
       imageUrl:
@@ -141,36 +108,28 @@ const App = ({ onTapAway }) => {
           borderRadius: RFValue(15),
           alignSelf: "center",
           resizeMode: "cover",
-          bottom: RFValue(0)
+          bottom: RFValue(0),
         }}
         source={{ uri: item.imageUrl }}
       />
     </View>
   );
 
-  const screenTextMap = {
-    accessories: "Accessories",
-    bottoms: "Bottoms",
-    home: "Trending",
-    outerwear: "Outerwear",
-    tops: "Tops",
-  };
-
   return (
     <View style={{ flex: 1 }}>
       {/* renderScreen */}
-        {renderScreen()}
+      {renderScreen()}
 
       {/* Carousel */}
       <Section
         style={{
           position: "absolute",
-          top: RFValue(120), // Adjust the vertical position as needed
+          top: RFValue(110), // Adjust the vertical position as needed
           left: 0,
           right: 0,
           alignItems: "center", // Center horizontally
-          height: screenWidth * 0.5,
-          marginTop: RFValue(40)
+          height: screenWidth * 0.8,
+          marginTop: RFValue(40),
         }}
       >
         {carouselVisible &&
@@ -199,7 +158,7 @@ const App = ({ onTapAway }) => {
                   fontWeight: "normal",
                   left: RFValue(10),
                   marginTop: RFValue(165),
-                  backgroundColor: 'white'
+                  backgroundColor: "white",
                 }}
               >
                 {screenTextMap[currentScreen]}
@@ -209,7 +168,7 @@ const App = ({ onTapAway }) => {
       </Section>
 
       {/* LOGO */}
-      <Section style={{ alignItems: "center", top: RFValue(35)}}>
+      <Section style={{ alignItems: "center", top: RFValue(35) }}>
         <Pressable
           onPress={() => {
             setCurrentScreen("home");
@@ -218,8 +177,8 @@ const App = ({ onTapAway }) => {
         >
           <Logo
             style={{
-              width: screenWidth * 0.96,
-              height: screenWidth * 0.29,
+              width: screenWidth * 0.80,
+              height: screenWidth * 0.3,
             }}
             source={{
               uri: "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/galore-logo.png?v=1709226912",
@@ -230,7 +189,12 @@ const App = ({ onTapAway }) => {
 
       {/* cart */}
       <Section
-        style={{ position: "absolute", top: RFValue(50), right: RFValue(10), height: RFValue(1) }}
+        style={{
+          position: "absolute",
+          top: RFValue(45),
+          right: RFValue(25),
+          height: RFValue(1),
+        }}
       >
         <TouchableOpacity
           onPress={() => {
@@ -264,156 +228,20 @@ const App = ({ onTapAway }) => {
       </Section>
 
       {/* NAV */}
-      <Section
-        style={{
-          position: "absolute",
-          top: RFValue(90), // Adjust the value as needed
-          width: "100%",
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          height: RFValue(1),
-          marginTop: RFValue(45)
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setCurrentScreen("tops");
-            setCarouselVisible(true);
-          }}
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              width: screenWidth * 0.23,
-              height: RFValue(23),
-              backgroundColor: "#FFCC90",
-              borderRadius: RFValue(8),
-              borderWidth: RFValue(1),
-              borderColor: "black",
-            }}
-          />
+      <NavBar
+        setCarouselVisible={setCarouselVisible}
+        currentScreen={currentScreen}
+        setCurrentScreen={setCurrentScreen}
+      />
 
-          <Text
-            style={{
-              width: screenWidth * 0.25,
-              height: RFValue(40),
-              color: "black",
-              fontSize: RFValue(14),
-              fontWeight: "normal",
-              textAlign: "center",
-              bottom: RFValue(20),
-            }}
-          >
-            Tops
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            setCurrentScreen("bottoms");
-            setCarouselVisible(true);
+      {/* Image Banner Section (Fixed at the bottom) */}
+      <Section style={{ alignItems: "center", top: RFValue(540) }}>
+        <Image
+          className="w-40 h-20 relative"
+          source={{
+            uri: "https://cdn.shopify.com/s/files/1/0680/4815/8968/files/Web_banner.png?v=1705947435",
           }}
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              width: screenWidth * 0.23,
-              height: RFValue(23),
-              backgroundColor: "#FFCC90",
-              borderRadius: RFValue(8),
-              borderWidth: RFValue(1),
-              borderColor: "black",
-            }}
-          />
-
-          <Text
-            style={{
-              width: screenWidth * 0.25,
-              height: RFValue(40),
-              color: "black",
-              fontSize: RFValue(14),
-              fontWeight: "normal",
-              textAlign: "center",
-              bottom: RFValue(20),
-            }}
-          >
-            Bottoms
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            setCurrentScreen("outerwear");
-            setCarouselVisible(true);
-          }}
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              width: screenWidth * 0.23,
-              height: RFValue(23),
-              backgroundColor: "#FFCC90",
-              borderRadius: RFValue(8),
-              borderWidth: RFValue(1),
-              borderColor: "black",
-            }}
-          />
-
-          <Text
-            style={{
-              width: screenWidth * 0.25,
-              height: RFValue(40),
-              color: "black",
-              fontSize: RFValue(14),
-              fontWeight: "normal",
-              textAlign: "center",
-              bottom: RFValue(20),
-            }}
-          >
-            Outerwear
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            setCurrentScreen("accessories");
-            setCarouselVisible(true);
-          }}
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              width: screenWidth * 0.23,
-              height: RFValue(23),
-              backgroundColor: "#FFCC90",
-              borderRadius: RFValue(8),
-              borderWidth: RFValue(1),
-              borderColor: "black",
-            }}
-          />
-
-          <Text
-            style={{
-              width: screenWidth * 0.25,
-              height: RFValue(40),
-              color: "black",
-              fontSize: RFValue(13),
-              fontWeight: "normal",
-              textAlign: "center",
-              bottom: RFValue(20),
-            }}
-          >
-            Accessories
-          </Text>
-        </TouchableOpacity>
+        />
       </Section>
     </View>
   );
