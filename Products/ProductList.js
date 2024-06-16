@@ -31,72 +31,14 @@ const ProductList = ({ onSelectProduct, setCarouselVisible }) => {
   useEffect(() => {
     // Fetch products
     const fetchProducts = async () => {
-      // try {
-      //   const response = await fetch("https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/getProducts");
-      //   const data = await response.json();
-      //   setProducts(data.data.products.edges);
-      // } catch (error) {
-      //   console.error("Error fetching products:", error);
-      // }
-      console.log("Request received at /getProducts");
       try {
-        const response = await fetch(
-          "https://galorewayzlifestyle.com/api/2023-01/graphql.json",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-Shopify-Storefront-Access-Token":
-              process.env.EXPO_PUBLIC_API_KEY,
-            },
-            body: JSON.stringify({
-              query: `
-              query getProducts {
-                products(first: 100) {
-                  edges {
-                    node {
-                      id
-                      title
-                      productType
-                      description
-                      handle
-                      media(first: 1) {
-                        edges {
-                          node {
-                            previewImage {
-                              url
-                            }
-                          }
-                        }
-                      }
-                      variants(first: 1) {
-                        edges {
-                          node {
-                          id
-                            title
-                            quantityAvailable
-                            price {
-                              amount
-                              currencyCode
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            `,
-            }),
-          }
-        );
-        console.log()
+        const response = await fetch("https://us-central1-galore-wayz-b0b8f.cloudfunctions.net/api/getProducts");
         const data = await response.json();
         setProducts(data.data.products.edges);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error("Error fetching products:", error);
       }
+      console.log("Request received at /getProducts");
     };
 
     fetchProducts();

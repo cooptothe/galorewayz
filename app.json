@@ -2,7 +2,7 @@
   "expo": {
     "name": "Galore Wayz",
     "slug": "galore-wayz",
-    "version": "1.0.9",
+    "version": "1.1.9",
     "orientation": "portrait",
     "icon": "./assets/galore-logo-icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,8 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.cooptothe.galorewayz"
+      "bundleIdentifier": "com.cooptothe.galorewayz",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
@@ -33,7 +34,7 @@
         "projectId": "36d33619-7115-4d1a-9af3-c2434ce55791"
       }
     },
-    "runtimeVersion": "1.1.1",
+    "runtimeVersion": "1.1.4",
     "updates": {
       "url": "https://u.expo.dev/36d33619-7115-4d1a-9af3-c2434ce55791"
     },

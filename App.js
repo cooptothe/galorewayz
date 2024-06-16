@@ -124,7 +124,7 @@ const App = () => {
       <Section
         style={{
           position: "absolute",
-          top: RFValue(110), // Adjust the vertical position as needed
+          top: RFValue(125), // Adjust the vertical position as needed
           left: 0,
           right: 0,
           alignItems: "center", // Center horizontally
